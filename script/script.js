@@ -3,8 +3,8 @@ var DATA_RAW = null;
 var DATA_RUP = null;
 
 //  load data
-function load_data() {
-  data = d3.csv("https://raw.githubusercontent.com/Baragouine/cause_of_deaths_around_the_world_1990_2019.csv/master/cause_of_deaths.csv",
+async function load_data() {
+  var data = await d3.csv("https://raw.githubusercontent.com/Baragouine/cause_of_deaths_around_the_world_1990_2019.csv/master/cause_of_deaths.csv",
     d => {
       for (const property in d) {
         if (property != "Country/Territory" &&
@@ -37,8 +37,8 @@ function load_data() {
 }
 
 //  main
-function main() {
-  load_data();
+async function main() {
+  await load_data();
   draw_fig1();
 }
 
