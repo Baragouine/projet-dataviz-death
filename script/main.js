@@ -48,27 +48,6 @@ function get_text_color() {
   return TEXT_COLOR;
 }
 
-//  round by first digit (ex: 123456 => 100000)
-function round_by_first_digit(n) {
-  var sign = 1;
-
-  if (n < 0)
-    sign = -1;
-
-  var n_s = n.toString();
-  var tmp = n_s[0] + ".";
-
-  for (let i = 1; i < n_s.length; ++i) {
-    tmp += n_s[i];
-  }
-
-  var res = Math.round(Number(tmp)) + "";
-  for (let i = 0; i < n_s.length - 1; ++i)
-    res += "0";
-
-  return Number(res);
-}
-
 //  sum death for a line
 function get_sum_deaths_line(line, list_cause) {
   var sum = 0;
