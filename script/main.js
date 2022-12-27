@@ -1,5 +1,6 @@
 //  data
 var DATA_RAW = null;
+var DATA_PROP = null;
 var DATA_MAP = null;
 var ALL_CAUSES = [];
 var LIST_CODE = [];
@@ -11,6 +12,11 @@ var TEXT_COLOR = "#fff";
 //  return dataset
 function get_data_raw() {
   return DATA_RAW;
+}
+
+//  return dataset (proportion of deaths)
+function get_data_prop() {
+  return DATA_PROP;
 }
 
 //  return data of geomap
@@ -134,6 +140,26 @@ async function load_data() {
           property != "Code" &&
           property != "Year") {
           d[property] = +d[property]
+        }
+      }
+      d["Year"] = d3.utcParse("%Y")(d["Year"])
+      return d
+    }
+  )
+
+  DATA_PROP = await d3.csv("https://raw.githubusercontent.com/Baragouine/visualization-number-of-deaths-by-cause-around-world-per-year/main/data/cause_of_deaths_with_population.csv",
+    d => {
+      for (const property in d) {
+        if (property != "Country/Territory" &&
+          property != "Code" &&
+          property != "Year") {
+          d[property] = +d[property];
+          if (property != "Population") {
+            d[property] = d[property] / +d["Population"];
+            if (d[property] > 1) {
+              d[property] = 0;
+            }
+          }
         }
       }
       d["Year"] = d3.utcParse("%Y")(d["Year"])
