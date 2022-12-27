@@ -57,14 +57,33 @@ function get_sum_deaths_line(line, list_cause) {
   return sum;
 }
 
+//  proportion of a death for a line
+function get_prop_deaths_line(line, list_cause) {
+  var sum = 0;
+
+  list_cause.forEach(cause => sum += line[cause]);
+
+  return sum / line.Population;
+}
+
 //  max sum deaths
 function get_max_sum_deaths(data, list_cause) {
   return data.reduce((a, line) => Math.max(get_sum_deaths_line(line, list_cause), a), get_sum_deaths_line(data[0], list_cause));
 }
 
+//  max proportion deaths
+function get_max_prop_deaths(data, list_cause) {
+  return data.reduce((a, line) => Math.max(get_prop_deaths_line(line, list_cause), a), get_prop_deaths_line(data[0], list_cause));
+}
+
 //  min sum deaths
 function get_min_sum_deaths(data, list_cause) {
   return data.reduce((a, line) => Math.min(get_sum_deaths_line(line, list_cause), a), get_sum_deaths_line(data[0], list_cause));
+}
+
+//  min proportion deaths
+function get_min_prop_deaths(data, list_cause) {
+  return data.reduce((a, line) => Math.min(get_prop_deaths_line(line, list_cause), a), get_prop_deaths_line(data[0], list_cause));
 }
 
 //  sum deaths by year and country code
@@ -84,6 +103,25 @@ function get_sum_deaths(data, year, code, list_cause) {
   }
 
   return sum;
+}
+
+//  Proportion of deaths by year and country code
+function get_prop_deaths(data, year, code, list_cause) {
+  var dataForYear = data.filter(e => e.Year.getFullYear() == year);
+  var infoPays = dataForYear.filter(e => e.Code == code);
+
+  if (infoPays.length == 0)
+    return 0;
+
+  infoPays = infoPays[0];
+
+  var sum = 0;
+
+  for (let i = 0; i < list_cause.length; ++i) {
+    sum += infoPays[list_cause[i]];
+  }
+
+  return sum / infoPays.Population;
 }
 
 //  load data

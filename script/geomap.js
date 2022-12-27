@@ -1,6 +1,10 @@
 //  update geomap
 function update_geomap() {
-  draw_geo_map(get_data_raw(), get_list_of_selected_cause_geomap(), $("#slider_geomap").val(), document.getElementById("logscale_geomap").checked);
+  if (document.getElementById("prop_geomap").checked) {
+
+  } else {
+    draw_geo_map(get_data_raw(), get_list_of_selected_cause_geomap(), $("#slider_geomap").val(), document.getElementById("logscale_geomap").checked);
+  }
 }
 
 //  return selected causes
@@ -43,10 +47,8 @@ function select_only_first_causes_geomap() {
 }
 
 //  draw geomap by number of death
-function draw_geo_map(data, list_cause, year, log_scale = false) {
-  const margin = ({top: 0, right: 200, bottom: 0, left: 0})
-  const w = 800
-  const h = 400
+function draw_geo_map(data, list_cause, year, log_scale = false, w = 800, h = 600) {
+  const margin = ({top: 0, right: 0, bottom: 0, left: 0})
 
   const min_deaths = Math.max(get_min_sum_deaths(data, list_cause), 1);
   const max_deaths = get_max_sum_deaths(data, list_cause);
@@ -59,11 +61,16 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
   const colorScaleLinear = d3.scaleSequential((d) => d3.interpolateReds(linearScale(d)))
 
   const colorScale = log_scale ? colorScaleLog : colorScaleLinear;
-  
+
+  const legend_h = 7*20;
+  const legend_w = 10;
+
   const svg = d3.select("#geomapw").attr("height", h).attr("width", w)
-  
+  const svgLegend = d3.select("#geomap_legend").attr("height", Math.round(legend_h * 1.5), 200);
+
   //  clear svg
-  svg.selectAll('*').remove()
+  svg.selectAll('*').remove();
+  svgLegend.selectAll("*").remove();
   
   const projection = d3.geoNaturalEarth1()
     .scale((w - margin.right - margin.left) / 5.5)
@@ -84,8 +91,6 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
   .style("stroke", "#fff")
 
   //  draw legend
-  var legend_h = 7*20;
-  var legend_w = 10;
   var sample = [min_deaths == 0 ? 1 : min_deaths];
   var etapes = [0];
   if (log_scale) {
@@ -114,42 +119,42 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
     etapes[etapes.length - 1] = sample.length - 1;
   sample.reverse();
 
-  svg.selectAll("line")
+  svgLegend.selectAll("line")
      .data(sample).enter()
      .append("line")
-     .attr("y1", (_, i) => 20 + i)
-     .attr("y2", (_, i) => 20 + i)
-     .attr("x1", w - margin.right + 10)
-     .attr("x2", w - margin.right + 10 + legend_w)
+     .attr("y1", (_, i) => 10 +i)
+     .attr("y2", (_, i) => 10 + i)
+     .attr("x1", 10)
+     .attr("x2", 10 + legend_w)
      .attr("stroke", c => colorScale(c))
 
   etapes.forEach((v, i) => {
     var y = v * (sample.length - 1) / etapes[etapes.length - 1];
 
-    svg.append('line')
+    svgLegend.append('line')
        .style("stroke", get_text_color())
-       .attr("x1", w - margin.right + 10 + legend_w)
-       .attr("y1", 20 + (sample.length - 1) - y)
-       .attr("x2", w - margin.right + 10 + legend_w + 5)
-       .attr("y2", 20 + (sample.length - 1) - y);
+       .attr("x1", 10 + legend_w)
+       .attr("y1", 10 + (sample.length - 1) - y)
+       .attr("x2", 10 + legend_w + 5)
+       .attr("y2", 10 + (sample.length - 1) - y);
 
-    svg.append("text")
-       .attr("x", w - margin.right + 10 + legend_w + 5 + 3)
-       .attr("y", 20 + (sample.length - 1) - y + 4)
+    svgLegend.append("text")
+       .attr("x", 10 + legend_w + 5 + 3)
+       .attr("y", 10 + (sample.length - 1) - y + 4)
        .text(Math.round(sample[Math.max(0, Math.min(sample.length - v, sample.length - 1))]).toString())
        .style("font-size", "12px")
        .style("fill", get_text_color());
 
-    svg.append("rect")
-       .attr("x", w - margin.right + 10)
-       .attr("y", 20 + 150)
+    svgLegend.append("rect")
+       .attr("x", 10)
+       .attr("y", 10 + 150)
        .attr("width", legend_w)
        .attr("height", legend_w)
        .attr("fill", "#ccc");
 
-    svg.append("text")
-       .attr("x", w - margin.right + 10 + legend_w + 5 + 3)
-       .attr("y", 20 + 150 + 10)
+    svgLegend.append("text")
+       .attr("x", 10 + legend_w + 5 + 3)
+       .attr("y", 10 + 150 + 10)
        .text("0 ou données absentes")
        .style("font-size", "12px")
        .style("fill", get_text_color());
@@ -177,7 +182,7 @@ function geomap_main() {
       //  garder aux moins une cause coché
       if (get_list_of_selected_cause_geomap().length == 0)
         document.getElementById("geomap-" + cause).checked = true;
-      draw_geo_map(get_data_raw(), get_list_of_selected_cause_geomap(), $("#slider_geomap").val(), document.getElementById("logscale_geomap").checked)
+        update_geomap();
     })
   });
   
