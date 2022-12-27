@@ -169,12 +169,12 @@ function geomap_main() {
   var l = document.getElementById("list_cause");
 
   l.innerHTML =
-    '<li><input type="button" value="Tout sélectionner" onclick="select_all_causes_geomap();"></li>' +
-    '<li><input type="button" value="Sélectionner seulement la première" onclick="select_only_first_causes_geomap();"</li>';
+    '<li><input class="btn btn-light" type="button" value="Select all" onclick="select_all_causes_geomap();"></li>' +
+    '<li><input class="btn btn-light" type="button" value="Sélect first" onclick="select_only_first_causes_geomap();"</li>';
   
   for (let i = 0; i < list_all_cause.length; ++i) {
     l.innerHTML +=
-      '<li><input type="checkbox" id="geomap-' + list_all_cause[i] + '" ' + (i == 0 ? 'checked' : '') + '>' + list_all_cause[i] + '</li>';
+      '<li><input class="checkbox" type="checkbox" id="geomap-' + list_all_cause[i] + '" ' + (i == 0 ? 'checked' : '') + '>' + list_all_cause[i] + '</li>';
   }
 
   list_all_cause.forEach(cause => {
@@ -186,13 +186,7 @@ function geomap_main() {
     })
   });
   
-  var checkList = document.getElementById('list_cause_parent');
-  checkList.getElementsByClassName('anchor')[0].onclick = function(evt) {
-    if (checkList.classList.contains('visible'))
-      checkList.classList.remove('visible');
-    else
-      checkList.classList.add('visible');
-  }
+  
 
   //  logscale checkbox js
   var checkbox = document.getElementById("logscale_geomap");
