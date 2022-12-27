@@ -53,7 +53,7 @@ function select_only_first_causes_geomap() {
 function draw_geo_map(data, list_cause, year, log_scale = false) {
   const margin = ({top: 0, right: 0, bottom: 0, left: 0})
 
-  const w = document.getElementById("geomapw").parentNode.offsetWidth;
+  const w = document.getElementById("geomapw").parentNode.offsetWidth * 0.8;
   const h = w * 0.5375;
 
   const min_deaths = Math.max(get_min_sum_deaths(data, list_cause), 1);
