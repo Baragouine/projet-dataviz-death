@@ -63,15 +63,16 @@
             <svg id="geomapw"></svg>
           </div>
           <div>
-            <input type="range" id="slider_geomap" min="1990" value="1990" max="2019">
-            <label for="logscale_geomap">
-              <input type="checkbox" id="logscale_geomap" name="logscale_geomap">
-              Échelle logarithmique
-            </label>
-            <label for="prop_geomap">
-              <input type="checkbox" id="prop_geomap" name="prop_geomap">
-              En pourcentage
-            </label>
+            <label for="slider_geomap" class="form-label">Years</label>
+            <input type="range" class="form-range" id="slider_geomap" min="1990" value="1990" max="2019" name="slider_geomap">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" role="switch" id="logscale_geomap" name="logscale_geomap">
+              <label class="form-check-label" for="logscale_geomap">Échelle logarithmique</label>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" role="switch" id="prop_geomap" name="prop_geomap">
+              <label class="form-check-label" for="prop_geomap">En pourcentage</label>
+            </div>
           </div>
         </div>
         <div class="col">
