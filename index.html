@@ -52,9 +52,6 @@
     </ul>
   </nav>
   <div class="container-md">
-    <div class="home">
-
-    </div>
 
     <div id="GeoMap" class="Visualization d-flex flex-row">
       <div class="row">
@@ -77,27 +74,25 @@
           </div>
         </div>
         <div class="col">
-          <div id="list_cause_parent" class="dropdown-check-list" tabindex="100">
-            <span class="anchor">Causes</span>
-            <ul id="list_cause" class="items">
-              <li><input type="checkbox" />Apple </li>
-              <li><input type="checkbox" />Orange</li>
-              <li><input type="checkbox" />Grapes </li>
-              <li><input type="checkbox" />Berry </li>
-              <li><input type="checkbox" />Mango </li>
-              <li><input type="checkbox" />Banana </li>
-              <li><input type="checkbox" />Tomato</li>
+        
+
+          <div class="btn-group" id="list_cause_parent">
+            <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              Causes
+            </button>
+            <ul class="dropdown-menu" id="list_cause">
             </ul>
           </div>
-        </div>
+        </div> 
+      </div>
     </div>
 
-    <div id="Scatter" class="Visualization d-flex flex-row justify-content-center mt-3">
-    </div>
 
-    <div id="BarPlot" class="Visualization">
 
-    </div>
+
+    <div id="Scatter" class="Visualization d-flex flex-row justify-content-center mt-3"></div>
+    <div id="BarPlot" class="Visualization"></div>
+
   </div>
 </body>
 </html>
