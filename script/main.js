@@ -160,6 +160,9 @@ async function load_data() {
               d[property] = 0;
             }
           }
+          if (isNaN(d[property])) {
+            d[property] = 0;
+          }
         }
       }
       d["Year"] = d3.utcParse("%Y")(d["Year"])

@@ -211,8 +211,8 @@ function draw_geo_map_prop(data, list_cause, year, log_scale = false, w = 800, h
   if (log_scale) {
     var last_x = 0;
     var i = 0;
-    for (let x = 1; Math.exp(x) < max_deaths; x = x * 1.02) {
-      sample.push(min_deaths + Math.exp(x));
+    for (let x = 1; Math.exp(x) < max_deaths*10e10; x = x * 1.02) {
+      sample.push(min_deaths + Math.exp(x) / 10e10);
       if (x - last_x > 1) {
         if (i % 2 == 1 && i != 1 && (sample.length - 1) - etapes[etapes.length - 1] >= 10)
           etapes.push(sample.length - 1);
