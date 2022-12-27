@@ -5,10 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Visualization of the number of deaths by cause around the world per year</title>
 
-  <!--  Icon  -->
+  <!--  Bootstrap  -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-  
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.1.slim.min.js" integrity="sha256-w8CvhFs7iHNVUtnSP0YKEg00p9Ih13rlL9zGqvLdePA=" crossorigin="anonymous"></script>
+
   <!--  Icon  -->
   <link rel="icon" href="images/icon.png">
 
@@ -18,14 +21,14 @@
   <!-- Personnal CSS. -->
   <link href="./style/style.css" rel="stylesheet" type="text/css">
 
-  <!-- Personnal JS -->
-  <script type="text/javascript" src="script/script.js"></script>
-
   <script>
-    (async function() {
-      await main();
-    })();
+    $( document ).ready(function() {
+      main();
+    });
   </script>
+  <!-- Personnal JS -->
+  <script type="text/javascript" src="script/main.js"></script>
+  <script type="text/javascript" src="script/geomap.js"></script>
 
 </head>
 <body>
@@ -48,30 +51,47 @@
       </li>
     </ul>
   </nav>
-
-  <div class="home">
-
-  </div>
-
-  <div id="GeoMap" class="Visualization d-flex flex-row">
-  </div>
-
-  <div id="Scatter" class="Visualization d-flex flex-row justify-content-center mt-3">
-    <div class="p-2 visu"id="scatterplot">
+  <div class="container-md">
+    <div class="home">
 
     </div>
-    <div class="p-2 settings ms-2">
-      <p>settings:</p>
-      <label for="customRange1" class="form-label">Years</label>
-      <input type="range" class="form-range" id="customRange1">
+
+    <div id="GeoMap" class="Visualization d-flex flex-row">
+      <div class="row">
+        <div class="col">
+          <div>
+            <svg id="geomapw"></svg>
+          </div>
+          <div>
+            <input type="range" id="slider_geomap" min="1990" value="1990" max="2019">
+            <label for="logscale_geomap">
+              <input type="checkbox" id="logscale_geomap" name="logscale_geomap">
+              logscale
+            </label>
+          </div>
+        </div>
+        <div class="col">
+          <div id="list_cause_parent" class="dropdown-check-list" tabindex="100">
+            <span class="anchor">Causes</span>
+            <ul id="list_cause" class="items">
+              <li><input type="checkbox" />Apple </li>
+              <li><input type="checkbox" />Orange</li>
+              <li><input type="checkbox" />Grapes </li>
+              <li><input type="checkbox" />Berry </li>
+              <li><input type="checkbox" />Mango </li>
+              <li><input type="checkbox" />Banana </li>
+              <li><input type="checkbox" />Tomato</li>
+            </ul>
+          </div>
+        </div>
+    </div>
+
+    <div id="Scatter" class="Visualization d-flex flex-row justify-content-center mt-3">
+    </div>
+
+    <div id="BarPlot" class="Visualization">
+
     </div>
   </div>
-
-  <div id="BarPlot" class="Visualization">
-
-  </div>
-  
-
-
 </body>
 </html>
