@@ -7,6 +7,9 @@ function update_geomap() {
   }
 }
 
+//  compute the width of the geomap
+
+
 //  return selected causes
 function get_list_of_selected_cause_geomap() {
   const list_all_cause = get_all_causes();
@@ -47,8 +50,11 @@ function select_only_first_causes_geomap() {
 }
 
 //  draw geomap by number of death
-function draw_geo_map(data, list_cause, year, log_scale = false, w = 800, h = 600) {
+function draw_geo_map(data, list_cause, year, log_scale = false) {
   const margin = ({top: 0, right: 0, bottom: 0, left: 0})
+
+  const w = document.getElementById("geomapw").parentNode.offsetWidth;
+  const h = w * 0.5375;
 
   const min_deaths = Math.max(get_min_sum_deaths(data, list_cause), 1);
   const max_deaths = get_max_sum_deaths(data, list_cause);
@@ -162,8 +168,11 @@ function draw_geo_map(data, list_cause, year, log_scale = false, w = 800, h = 60
 }
 
 //  draw geomap by proportion of death
-function draw_geo_map_prop(data, list_cause, year, log_scale = false, w = 800, h = 600) {
+function draw_geo_map_prop(data, list_cause, year, log_scale = false) {
   const margin = ({top: 0, right: 0, bottom: 0, left: 0})
+
+  const w = document.getElementById("geomapw").parentNode.offsetWidth;
+  const h = w * 0.5375;
 
   const min_deaths = Math.max(get_min_sum_deaths(data, list_cause), 1.0/10e8);
   const max_deaths = get_max_sum_deaths(data, list_cause);
@@ -300,8 +309,6 @@ function geomap_main() {
         update_geomap();
     })
   });
-  
-  
 
   //  logscale checkbox js
   var checkbox = document.getElementById("logscale_geomap");
@@ -322,5 +329,15 @@ function geomap_main() {
   d3.select("#slider_geomap").node().addEventListener(window.navigator.userAgent.indexOf("MSIE ") ? "change" : "input", (ev) => {
     update_geomap();  
   });
+
+  //  update geomap size automatically
+  window.addEventListener('resize', (ev) => {
+    document.getElementById("geomapw").parentNode.innerHTML =
+    `
+      <svg id="geomapw"></svg>
+      <svg id="geomap_legend"></svg>
+    `;
+    update_geomap();
+  }, true);
 }
 

@@ -54,36 +54,32 @@
   <div class="container-md">
 
     <div id="GeoMap" class="Visualization d-flex flex-row">
+      <div>
+        <div class="btn-group" id="list_cause_parent">
+          <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            Causes
+          </button>
+          <ul class="dropdown-menu" id="list_cause">
+          </ul>
+        </div>
+      </div>
       <div class="row">
-        <div class="col">
-          <div>
-            <svg id="geomapw"></svg>
-            <svg id="geomap_legend"></svg>
+        <div>
+          <svg id="geomapw"></svg>
+          <svg id="geomap_legend"></svg>
+        </div>
+        <div>
+          <label for="slider_geomap" class="form-label">Years</label>
+          <input type="range" class="form-range" id="slider_geomap" min="1990" value="1990" max="2019" name="slider_geomap">
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="logscale_geomap" name="logscale_geomap">
+            <label class="form-check-label" for="logscale_geomap">Échelle logarithmique</label>
           </div>
-          <div>
-            <label for="slider_geomap" class="form-label">Years</label>
-            <input type="range" class="form-range" id="slider_geomap" min="1990" value="1990" max="2019" name="slider_geomap">
-            <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" role="switch" id="logscale_geomap" name="logscale_geomap">
-              <label class="form-check-label" for="logscale_geomap">Échelle logarithmique</label>
-            </div>
-            <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" role="switch" id="prop_geomap" name="prop_geomap">
-              <label class="form-check-label" for="prop_geomap">En pourcentage</label>
-            </div>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="prop_geomap" name="prop_geomap">
+            <label class="form-check-label" for="prop_geomap">En pourcentage</label>
           </div>
         </div>
-        <div class="col">
-        
-
-          <div class="btn-group" id="list_cause_parent">
-            <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-              Causes
-            </button>
-            <ul class="dropdown-menu" id="list_cause">
-            </ul>
-          </div>
-        </div> 
       </div>
     </div>
 
