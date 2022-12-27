@@ -149,7 +149,7 @@ async function load_data() {
 //  main
 async function main() {
   await load_data();
-  
+
   //  run geomap main
   geomap_main();
 }
