@@ -7,9 +7,6 @@ function update_geomap() {
   }
 }
 
-//  compute the width of the geomap
-
-
 //  return selected causes
 function get_list_of_selected_cause_geomap() {
   const list_all_cause = get_all_causes();
@@ -58,7 +55,7 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
 
   const min_deaths = Math.max(get_min_sum_deaths(data, list_cause), 1);
   const max_deaths = get_max_sum_deaths(data, list_cause);
-  
+
   const dataForYear = data.filter(e => e.Year.getFullYear() == year);
 
   const logScale = d3.scaleLog().domain([min_deaths, max_deaths])
@@ -124,7 +121,6 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
   else
     etapes[etapes.length - 1] = sample.length - 1;
   sample.reverse();
-
   svgLegend.selectAll("line")
      .data(sample).enter()
      .append("line")
@@ -132,7 +128,11 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
      .attr("y2", (_, i) => 10 + i)
      .attr("x1", 10)
      .attr("x2", 10 + legend_w)
-     .attr("stroke", c => colorScale(c))
+     .attr("stroke", c => colorScale(c));
+
+  console.log();
+  console.log(etapes);
+  console.log(sample);
 
   etapes.forEach((v, i) => {
     var y = v * (sample.length - 1) / etapes[etapes.length - 1];
@@ -147,31 +147,33 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
     svgLegend.append("text")
        .attr("x", 10 + legend_w + 5 + 3)
        .attr("y", 10 + (sample.length - 1) - y + 4)
-       .text(Math.round(sample[Math.max(0, Math.min(sample.length - v, sample.length - 1))]).toString())
+       .text(Math.round(sample[sample.length - 1 - v]).toString())
        .style("font-size", "12px")
        .style("fill", get_text_color());
 
     svgLegend.append("rect")
        .attr("x", 10)
-       .attr("y", 10 + 150)
+       .attr("y", 10 + sample.length + 10)
        .attr("width", legend_w)
        .attr("height", legend_w)
        .attr("fill", "#ccc");
 
     svgLegend.append("text")
        .attr("x", 10 + legend_w + 5 + 3)
-       .attr("y", 10 + 150 + 10)
+       .attr("y", 10 + sample.length + 10 + 10)
        .text("0 ou données absentes")
        .style("font-size", "12px")
        .style("fill", get_text_color());
   })
+
+  svgLegend.attr("height", 10 + sample.length + 10 + 10 + 10);
 }
 
 //  draw geomap by proportion of death
 function draw_geo_map_prop(data, list_cause, year, log_scale = false) {
   const margin = ({top: 0, right: 0, bottom: 0, left: 0})
 
-  const w = document.getElementById("geomapw").parentNode.offsetWidth;
+  const w = document.getElementById("geomapw").parentNode.offsetWidth * 0.8;
   const h = w * 0.5375;
 
   const min_deaths = Math.max(get_min_sum_deaths(data, list_cause), 1.0/10e8);
@@ -265,24 +267,26 @@ function draw_geo_map_prop(data, list_cause, year, log_scale = false) {
     svgLegend.append("text")
        .attr("x", 10 + legend_w + 5 + 3)
        .attr("y", 10 + (sample.length - 1) - y + 4)
-       .text(sample[Math.max(0, Math.min(sample.length - v, sample.length - 1))].toFixed(10).toString())
+       .text(sample[sample.length - 1 - v].toFixed(10).toString())
        .style("font-size", "12px")
        .style("fill", get_text_color());
 
     svgLegend.append("rect")
        .attr("x", 10)
-       .attr("y", 10 + 150)
+       .attr("y", 10 + sample.length + 10)
        .attr("width", legend_w)
        .attr("height", legend_w)
        .attr("fill", "#ccc");
 
     svgLegend.append("text")
        .attr("x", 10 + legend_w + 5 + 3)
-       .attr("y", 10 + 150 + 10)
+       .attr("y", 10 + sample.length + 10 + 10)
        .text("0 ou données absentes")
        .style("font-size", "12px")
        .style("fill", get_text_color());
   })
+
+  svgLegend.attr("height", 10 + sample.length + 10 + 10 + 10);
 }
 
 //  main geomap
