@@ -1,3 +1,8 @@
+//  update geomap
+function update_geomap() {
+  draw_geo_map(get_data_raw(), get_list_of_selected_cause_geomap(), $("#slider_geomap").val(), document.getElementById("logscale_geomap").checked);
+}
+
 //  return selected causes
 function get_list_of_selected_cause_geomap() {
   const list_all_cause = get_all_causes();
@@ -9,6 +14,32 @@ function get_list_of_selected_cause_geomap() {
   });
 
   return list_cause;
+}
+
+//  select all causes for geomap
+function select_all_causes_geomap() {
+  //  List cause js
+  const list_all_cause = get_all_causes();
+
+  list_all_cause.forEach(cause => {
+    document.getElementById("geomap-" + cause).checked = true;
+  });
+
+  update_geomap();
+}
+
+//  keep only first causes selected
+function select_only_first_causes_geomap() {
+  //  List cause js
+  const list_all_cause = get_all_causes();
+
+  list_all_cause.forEach(cause => {
+    document.getElementById("geomap-" + cause).checked = false;
+  });
+
+  document.getElementById("geomap-" + list_all_cause[0]).checked = true;
+
+  update_geomap();
 }
 
 //  draw geomap by number of death
@@ -130,7 +161,9 @@ function geomap_main() {
   list_all_cause.sort();
   var l = document.getElementById("list_cause");
 
-  l.innerHTML = "";
+  l.innerHTML =
+    '<li><input type="button" value="Tout sélectionner" onclick="select_all_causes_geomap();"></li>' +
+    '<li><input type="button" value="Sélectionner seulement la première" onclick="select_only_first_causes_geomap();"</li>';
   
   for (let i = 0; i < list_all_cause.length; ++i) {
     l.innerHTML +=
@@ -158,13 +191,13 @@ function geomap_main() {
   var checkbox = document.getElementById("logscale_geomap");
 
   checkbox.addEventListener("change", (ev) => {
-    draw_geo_map(get_data_raw(), get_list_of_selected_cause_geomap(), $("#slider_geomap").val(), document.getElementById("logscale_geomap").checked)
+    update_geomap();
   });
 
-  draw_geo_map(get_data_raw(), get_list_of_selected_cause_geomap(), $("#slider_geomap").val(), document.getElementById("logscale_geomap").checked)
+  update_geomap();
 
   d3.select("#slider_geomap").node().addEventListener(window.navigator.userAgent.indexOf("MSIE ") ? "change" : "input", (ev) => {
-    draw_geo_map(get_data_raw(), get_list_of_selected_cause_geomap(), $("#slider_geomap").val(), document.getElementById("logscale_geomap").checked);
+    update_geomap();  
   });
 }
 
