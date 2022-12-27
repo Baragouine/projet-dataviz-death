@@ -6,6 +6,7 @@ var LIST_CODE = [];
 var LIST_YEAR = [];
 var MIN_YEAR = 0;
 var MAX_YEAR = 0;
+var TEXT_COLOR = "#fff";
 
 //  return dataset
 function get_data_raw() {
@@ -40,6 +41,11 @@ function get_min_year() {
 //  return max year
 function get_max_year() {
   return MAX_YEAR;
+}
+
+//  return text color
+function get_text_color() {
+  return TEXT_COLOR;
 }
 
 //  round by first digit (ex: 123456 => 100000)

@@ -127,7 +127,7 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
     var y = v * (sample.length - 1) / etapes[etapes.length - 1];
 
     svg.append('line')
-       .style("stroke", "black")
+       .style("stroke", get_text_color())
        .attr("x1", w - margin.right + 10 + legend_w)
        .attr("y1", 20 + (sample.length - 1) - y)
        .attr("x2", w - margin.right + 10 + legend_w + 5)
@@ -137,7 +137,8 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
        .attr("x", w - margin.right + 10 + legend_w + 5 + 3)
        .attr("y", 20 + (sample.length - 1) - y + 4)
        .text(round_by_first_digit(Math.round(sample[Math.max(0, Math.min(sample.length - v, sample.length - 1))])).toString())
-       .style("font-size", "12px");
+       .style("font-size", "12px")
+       .style("fill", get_text_color());
 
     svg.append("rect")
        .attr("x", w - margin.right + 10)
@@ -151,6 +152,7 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
        .attr("y", 20 + 150 + 10)
        .text("0 ou données absentes")
        .style("font-size", "12px")
+       .style("fill", get_text_color());
   })
 }
 
