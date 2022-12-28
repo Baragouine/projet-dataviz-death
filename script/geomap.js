@@ -24,7 +24,7 @@ function show_geomap_info_country(code, name, year, list_cause) {
   if (!get_list_code().find(c => c == code)) {
     $("#geomap_info_contry").html(
     `
-      <h6>${name}</h6>
+      <h6>${name} (${code})</h6>
       <p>Aucune donnée.</p>
     `);
     return;
@@ -273,7 +273,7 @@ function draw_geo_map_prop(data, list_cause, year, log_scale = false) {
      .attr("d", d3.geoPath().projection(projection))
      .style("stroke", "#fff")
      .attr("stroke-width", 1)
-     .on("mouseover", (e, d) => { geomap_mouseover_country(svg, e, d.id);})
+     .on("mouseover", (e, d) => { geomap_mouseover_country(svg, e, d.id, d.properties.name);})
      .on("mouseout", (e, d) => { geomap_mouseout_country(svg, e, d.id);})
 
   //  draw legend
