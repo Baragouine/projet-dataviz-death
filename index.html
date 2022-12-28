@@ -51,21 +51,10 @@
       </li>
     </ul>
   </nav>
-  <div class="container-md">
-
-    <div id="GeoMap" class="Visualization d-flex flex-row">
+  <div>
+    <div id="GeoMap" class="Visualization">
       <div>
-        <button type="button" class="btn btn-danger">
-          Causes
-        </button>
-        <div class="mt-2" id="list_cause" style="background-color: #58585890;height: 50%; overflow-y: scroll;">
-        </div>
-      </div>
-      <div>
-        <div>
-          <div><svg id="geomapw"></svg></div>
-          <div><svg id="geomap_legend"></svg></div>
-        </div>
+        <div ><svg id="geomapw"></svg></div>
         <div>
           <label for="slider_geomap" class="form-label">Years</label>
           <input type="range" class="form-range" id="slider_geomap" min="1990" value="1990" max="2019" step="1" name="slider_geomap">
@@ -79,14 +68,22 @@
           </div>
         </div>
       </div>
+      <div> 
+        <div><svg id="geomap_legend"></svg></div>
+        <div>
+          <button type="button" class="btn btn-danger">
+            Causes
+          </button>
+          <div id="list_cause" style="background-color: #58585890;height: 50%; overflow-y: scroll;">
+          </div>
+        </div>
+
+      </div>
+      
     </div>
-
-
-
-
+      
     <div id="Scatter" class="Visualization d-flex flex-row justify-content-center mt-3"></div>
     <div id="BarPlot" class="Visualization"></div>
-
   </div>
 </body>
 </html>
