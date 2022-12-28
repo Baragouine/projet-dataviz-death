@@ -1,3 +1,5 @@
+var COLOR_MISSING_DATA = "#888";
+
 //  update geomap
 function update_geomap() {
   if (document.getElementById("prop_geomap").checked) {
@@ -5,6 +7,16 @@ function update_geomap() {
   } else {
     draw_geo_map(get_data_raw(), get_list_of_selected_cause_geomap(), $("#slider_geomap").val(), document.getElementById("logscale_geomap").checked);
   }
+}
+
+//  on mouse over country
+function geomap_mouseover_country(node, code) {
+  console.log("geomap_mouseover_country(" + code + ")");
+}
+
+//  on mouseout country
+function geomap_mouseout_country(node, code) {
+  console.log("geomap_mouseout_country(" + code + ")");
 }
 
 //  return selected causes
@@ -79,19 +91,22 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
     .scale((w - margin.right - margin.left) / 5.5)
     .translate([w / 2 - margin.right + margin.left, h / 2])
 
+  var codePays = null;
   //  draw map
   svg.selectAll("path")
      .data(get_data_map().features).enter().append("path")
      .attr("fill", e => {
-       const codePays = e.id;
+       codePays = e.id;
        const nb_deaths = get_sum_deaths(dataForYear, year, codePays, list_cause);
        if (nb_deaths > 0) {
          return colorScale(nb_deaths);
        }
-       return "#ccc";
+       return COLOR_MISSING_DATA;
      })
      .attr("d", d3.geoPath().projection(projection))
-  .style("stroke", "#fff")
+     .style("stroke", "#fff")
+     .on("mouseover", function() { geomap_mouseover_country(this, codePays);})
+     .on("mouseout", function(){ geomap_mouseout_country(this, codePays);})
 
   //  draw legend
   var sample = [min_deaths == 0 ? 1 : min_deaths];
@@ -156,12 +171,12 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
        .attr("y", 10 + sample.length + 10)
        .attr("width", legend_w)
        .attr("height", legend_w)
-       .attr("fill", "#ccc");
+       .attr("fill", COLOR_MISSING_DATA);
 
     svgLegend.append("text")
        .attr("x", 10 + legend_w + 5 + 3)
        .attr("y", 10 + sample.length + 10 + 10)
-       .text("0 ou données absentes")
+       .text("0 or missing data")
        .style("font-size", "12px")
        .style("fill", get_text_color());
   })
@@ -211,7 +226,7 @@ function draw_geo_map_prop(data, list_cause, year, log_scale = false) {
        if (nb_deaths > 0) {
          return colorScale(nb_deaths);
        }
-       return "#ccc";
+       return COLOR_MISSING_DATA;
      })
      .attr("d", d3.geoPath().projection(projection))
   .style("stroke", "#fff")
@@ -276,12 +291,12 @@ function draw_geo_map_prop(data, list_cause, year, log_scale = false) {
        .attr("y", 10 + sample.length + 10)
        .attr("width", legend_w)
        .attr("height", legend_w)
-       .attr("fill", "#ccc");
+       .attr("fill", COLOR_MISSING_DATA);
 
     svgLegend.append("text")
        .attr("x", 10 + legend_w + 5 + 3)
        .attr("y", 10 + sample.length + 10 + 10)
-       .text("0 ou données absentes")
+       .text("0 or missing data")
        .style("font-size", "12px")
        .style("fill", get_text_color());
   })
