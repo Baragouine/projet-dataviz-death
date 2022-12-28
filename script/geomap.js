@@ -312,12 +312,14 @@ function geomap_main() {
   var l = document.getElementById("list_cause");
 
   l.innerHTML =
-    '<li><input class="btn btn-light" type="button" value="Select all" onclick="select_all_causes_geomap();"></li>' +
-    '<li><input class="btn btn-light" type="button" value="Sélect first" onclick="select_only_first_causes_geomap();"</li>';
+    '<div class="d-flex flex-row mb-3">'+
+    '<div class="col"><input class="btn btn-outline-light btn-sm" type="button" value="Select all" onclick="select_all_causes_geomap();"></div>' +
+    '<div class="col"><input class="btn btn-outline-light btn-sm" type="button" value="Sélect first" onclick="select_only_first_causes_geomap();"</div>'+
+    '</div>';
   
   for (let i = 0; i < list_all_cause.length; ++i) {
     l.innerHTML +=
-      '<li><input class="checkbox" type="checkbox" id="geomap-' + list_all_cause[i] + '" ' + (i == 0 ? 'checked' : '') + '>' + list_all_cause[i] + '</li>';
+      '<p><input class="checkbox" type="checkbox" id="geomap-' + list_all_cause[i] + '" ' + (i == 0 ? 'checked' : '') + '>' + list_all_cause[i]+'</p>';
   }
 
   list_all_cause.forEach(cause => {

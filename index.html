@@ -55,18 +55,16 @@
 
     <div id="GeoMap" class="Visualization d-flex flex-row">
       <div>
-        <div class="btn-group" id="list_cause_parent">
-          <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            Causes
-          </button>
-          <ul class="dropdown-menu" id="list_cause">
-          </ul>
+        <button type="button" class="btn btn-danger">
+          Causes
+        </button>
+        <div class="mt-2" id="list_cause" style="background-color: #58585890;height: 50%; overflow-y: scroll;">
         </div>
       </div>
       <div>
         <div>
-          <svg id="geomapw"></svg>
-          <svg id="geomap_legend"></svg>
+          <div><svg id="geomapw"></svg></div>
+          <div><svg id="geomap_legend"></svg></div>
         </div>
         <div>
           <label for="slider_geomap" class="form-label">Years</label>
