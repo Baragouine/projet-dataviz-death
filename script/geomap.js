@@ -10,14 +10,15 @@ function update_geomap() {
 }
 
 //  on mouse over country
-function geomap_mouseover_country(ev, data) {
-  console.log("geomap_mouseover_country(" + data + ")");
-  console.log(data);
+function geomap_mouseover_country(svg, ev, data) {
+  svg.selectAll("path")
+     .style("opacity", f => f.id == data.id ? 1 : 0.2);
 }
 
 //  on mouseout country
-function geomap_mouseout_country(ev, data) {
-  console.log("geomap_mouseout_country(" + data + ")");
+function geomap_mouseout_country(svg, ev, data) {
+  svg.selectAll("path")
+     .style("opacity", 1);
 }
 
 //  return selected causes
@@ -106,8 +107,9 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
      })
      .attr("d", d3.geoPath().projection(projection))
      .style("stroke", "#fff")
-     .on("mouseover", (e, d) => { geomap_mouseover_country(e, d);})
-     .on("mouseout", (e, d) => { geomap_mouseout_country(e, d);})
+     .attr("stroke-width", 1)
+     .on("mouseover", (e, d) => { geomap_mouseover_country(svg, e, d);})
+     .on("mouseout", (e, d) => { geomap_mouseout_country(svg, e, d);})
 
   //  draw legend
   var sample = [min_deaths == 0 ? 1 : min_deaths];
@@ -230,8 +232,9 @@ function draw_geo_map_prop(data, list_cause, year, log_scale = false) {
      })
      .attr("d", d3.geoPath().projection(projection))
      .style("stroke", "#fff")
-     .on("mouseover", (e, d) => { geomap_mouseover_country(e, d);})
-     .on("mouseout", (e, d) => { geomap_mouseout_country(e, d);})
+     .attr("stroke-width", 1)
+     .on("mouseover", (e, d) => { geomap_mouseover_country(svg, e, d);})
+     .on("mouseout", (e, d) => { geomap_mouseout_country(svg, e, d);})
 
   //  draw legend
   var sample = [min_deaths == 0 ? 1 : min_deaths];
