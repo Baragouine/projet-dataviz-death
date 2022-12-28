@@ -13,7 +13,7 @@ function draw_line_chart_country(code, list_cause, prop = false, logscale=false)
   const w = svg.node().getBoundingClientRect().width;
   const h = svg.node().getBoundingClientRect().height;
 
-  const data = get_data_grouped_by_code()[code]
+  const data = get_data_grouped_by_code()[code].sort((a, b) => a.Year - b.Year);
   const min_deaths =
     prop ? get_min_prop_deaths_for_country(data, code, list_cause) : Math.max(get_min_sum_deaths_for_country(data, code, list_cause), 1);
   const max_deaths =
