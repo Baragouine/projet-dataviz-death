@@ -1,6 +1,6 @@
 //  draw
 function draw_line_chart_country(code, list_cause, prop = false, logscale=false) {
-  const margin = ({top: 10, right: 2, bottom: 100, left: 90});
+  const margin = ({top: 20, right: 2, bottom: 50, left: 90});
 
   const svg = d3.select("#line_chart_country");
 
@@ -46,6 +46,20 @@ function draw_line_chart_country(code, list_cause, prop = false, logscale=false)
        .attr("d", d3.line()
                     .x(d => x(d.Year))
                     .y(d => y(prop ? get_prop_deaths_line(d, list_cause) : get_sum_deaths_line(d, list_cause))));
+
+  svg.append("text")
+     .attr("x", 25)
+     .attr("y", 10)
+     .style("font-size", "12px")
+     .text(prop ? "proportion de mort" : "nombre de décès")
+     .style("fill", get_text_color());
+
+  svg.append("text")
+     .attr("x", w - 100)
+     .attr("y", h - margin.bottom + 30)
+     .style("font-size", "12px")
+     .text("date")
+     .style("fill", get_text_color());
 }
 
 //  main
