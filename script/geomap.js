@@ -10,15 +10,29 @@ function update_geomap() {
 }
 
 //  update info for a country
-function show_geomap_info_country(code, year, list_cause) {
+function show_geomap_info_country(code, name, year, list_cause) {
+  if (code == null) {
+    $("#geomap_info_contry").html(
+      `
+        <h6>Aucun pays sélectionné</h6>
+        <p></p>
+      `
+    );
+    return;
+  }
+
   if (!get_list_code().find(c => c == code)) {
-    $("#geomap_info_contry").html('');
+    $("#geomap_info_contry").html(
+    `
+      <h6>${name}</h6>
+      <p>Aucune donnée.</p>
+    `);
     return;
   }
 
   $("#geomap_info_contry").html(
     `
-      <h6>${get_data_grouped_by_code()[code][0]["Country/Territory"]} (${get_data_grouped_by_code()[code][0]["Code"]})</h6>
+      <h6>${name} (${code})</h6>
       <p>
         <span class="fw-bold">
           ${get_sum_deaths(get_data_raw(), year, code, list_cause)}
@@ -30,17 +44,19 @@ function show_geomap_info_country(code, year, list_cause) {
 }
 
 //  on mouse over country
-function geomap_mouseover_country(svg, ev, code) {
+function geomap_mouseover_country(svg, ev, code, name) {
   svg.selectAll("path")
      .style("opacity", f => f.id == code ? 1 : 0.2);
 
-  show_geomap_info_country(code, $("#slider_geomap").val(), get_list_of_selected_cause_geomap());
+  show_geomap_info_country(code, name, $("#slider_geomap").val(), get_list_of_selected_cause_geomap());
 }
 
 //  on mouseout country
 function geomap_mouseout_country(svg, ev, code) {
   svg.selectAll("path")
      .style("opacity", 1);
+
+  show_geomap_info_country(null, null, $("#slider_geomap").val(), get_list_of_selected_cause_geomap());
 }
 
 //  return selected causes
@@ -130,7 +146,7 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
      .attr("d", d3.geoPath().projection(projection))
      .style("stroke", "#fff")
      .attr("stroke-width", 1)
-     .on("mouseover", (e, d) => { geomap_mouseover_country(svg, e, d.id);})
+     .on("mouseover", (e, d) => { geomap_mouseover_country(svg, e, d.id, d.properties.name);})
      .on("mouseout", (e, d) => { geomap_mouseout_country(svg, e, d.id);})
 
   //  draw legend
@@ -390,5 +406,8 @@ function geomap_main() {
     parent2.innerHTML += '<svg id="geomap_legend"></svg>';
     update_geomap();
   }, true);
+
+  //  show info country
+  show_geomap_info_country(null, $("#slider_geomap").val(), get_list_of_selected_cause_geomap());
 }
 
