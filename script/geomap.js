@@ -182,8 +182,8 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
   svgLegend.selectAll("line")
      .data(sample).enter()
      .append("line")
-     .attr("y1", (_, i) => 10 +i)
-     .attr("y2", (_, i) => 10 + i)
+     .attr("y1", (_, i) => 30 +i)
+     .attr("y2", (_, i) => 30 + i)
      .attr("x1", 10)
      .attr("x2", 10 + legend_w)
      .attr("stroke", c => colorScale(c));
@@ -194,33 +194,40 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
     svgLegend.append('line')
        .style("stroke", get_text_color())
        .attr("x1", 10 + legend_w)
-       .attr("y1", 10 + (sample.length - 1) - y)
+       .attr("y1", 30 + (sample.length - 1) - y)
        .attr("x2", 10 + legend_w + 5)
-       .attr("y2", 10 + (sample.length - 1) - y);
+       .attr("y2", 30 + (sample.length - 1) - y);
 
     svgLegend.append("text")
        .attr("x", 10 + legend_w + 5 + 3)
-       .attr("y", 10 + (sample.length - 1) - y + 4)
+       .attr("y", 30 + (sample.length - 1) - y + 4)
        .text(Math.round(sample[sample.length - 1 - v]).toString())
        .style("font-size", "12px")
        .style("fill", get_text_color());
 
     svgLegend.append("rect")
        .attr("x", 10)
-       .attr("y", 10 + sample.length + 10)
+       .attr("y", 30 + sample.length + 10)
        .attr("width", legend_w)
        .attr("height", legend_w)
        .attr("fill", COLOR_MISSING_DATA);
 
     svgLegend.append("text")
        .attr("x", 10 + legend_w + 5 + 3)
-       .attr("y", 10 + sample.length + 10 + 10)
+       .attr("y", 30 + sample.length + 10 + 10)
        .text("0 or missing data")
        .style("font-size", "12px")
        .style("fill", get_text_color());
+
+    svgLegend.append("text")
+       .attr("x", 20)
+       .attr("y", 10)
+       .style("font-size", "12px")
+       .text("nombre de décès")
+       .style("fill", get_text_color());
   })
 
-  svgLegend.attr("height", 10 + sample.length + 10 + 10 + 10);
+  svgLegend.attr("height", 40 + sample.length + 10 + 10 + 10);
 }
 
 //  draw geomap by proportion of death
@@ -308,8 +315,8 @@ function draw_geo_map_prop(data, list_cause, year, log_scale = false) {
   svgLegend.selectAll("line")
      .data(sample).enter()
      .append("line")
-     .attr("y1", (_, i) => 10 +i)
-     .attr("y2", (_, i) => 10 + i)
+     .attr("y1", (_, i) => 30 +i)
+     .attr("y2", (_, i) => 30 + i)
      .attr("x1", 10)
      .attr("x2", 10 + legend_w)
      .attr("stroke", c => colorScale(c))
@@ -320,33 +327,40 @@ function draw_geo_map_prop(data, list_cause, year, log_scale = false) {
     svgLegend.append('line')
        .style("stroke", get_text_color())
        .attr("x1", 10 + legend_w)
-       .attr("y1", 10 + (sample.length - 1) - y)
+       .attr("y1", 30 + (sample.length - 1) - y)
        .attr("x2", 10 + legend_w + 5)
-       .attr("y2", 10 + (sample.length - 1) - y);
+       .attr("y2", 30 + (sample.length - 1) - y);
 
     svgLegend.append("text")
        .attr("x", 10 + legend_w + 5 + 3)
-       .attr("y", 10 + (sample.length - 1) - y + 4)
+       .attr("y", 30 + (sample.length - 1) - y + 4)
        .text(sample[sample.length - 1 - v].toFixed(10).toString())
        .style("font-size", "12px")
        .style("fill", get_text_color());
 
     svgLegend.append("rect")
        .attr("x", 10)
-       .attr("y", 10 + sample.length + 10)
+       .attr("y", 30 + sample.length + 10)
        .attr("width", legend_w)
        .attr("height", legend_w)
        .attr("fill", COLOR_MISSING_DATA);
 
     svgLegend.append("text")
        .attr("x", 10 + legend_w + 5 + 3)
-       .attr("y", 10 + sample.length + 10 + 10)
+       .attr("y", 30 + sample.length + 10 + 10)
        .text("0 or missing data")
        .style("font-size", "12px")
        .style("fill", get_text_color());
   })
 
-  svgLegend.attr("height", 10 + sample.length + 10 + 10 + 10);
+  svgLegend.append("text")
+    .attr("x", 20)
+    .attr("y", 10)
+    .style("font-size", "12px")
+    .text("proportion de décès")
+    .style("fill", get_text_color());
+
+  svgLegend.attr("height", 30 + sample.length + 10 + 10 + 10);
 }
 
 //  main geomap
