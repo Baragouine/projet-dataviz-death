@@ -10,12 +10,17 @@ function update_geomap() {
 }
 
 //  update info for a country
-function show_geomap_info_country(code, year) {
+function show_geomap_info_country(code, year, list_cause) {
+  if (!get_list_code().find(c => c == code)) {
+    $("#geomap_info_contry").html('');
+    return;
+  }
+
   $("#geomap_info_contry").html(
     `
       <h6>${get_data_grouped_by_code()[code][0]["Country/Territory"]} (${get_data_grouped_by_code()[code][0]["Code"]})</h6>
       <p>
-        <span style="bold"></span>
+        <span class="fw-bold">${get_sum_deaths(get_data_raw(), year, code, list_cause)}</span>
       </p>
     `
   );
@@ -26,7 +31,7 @@ function geomap_mouseover_country(svg, ev, code) {
   svg.selectAll("path")
      .style("opacity", f => f.id == code ? 1 : 0.2);
 
-  show_geomap_info_country(code, $("#slider_geomap").val());
+  show_geomap_info_country(code, $("#slider_geomap").val(), get);
 }
 
 //  on mouseout country
@@ -372,10 +377,14 @@ function geomap_main() {
 
   //  update geomap size automatically
   window.addEventListener('resize', (ev) => {
-    document.getElementById("geomapw").parentNode.innerHTML = '';
-    document.getElementById("geomap_legend").parentNode.innerHTML = '';
-    document.getElementById("geomapw").parentNode.innerHTML += '<svg id="geomapw"></svg>';
-    document.getElementById("geomap_legend").parentNode.innerHTML += '<svg id="geomap_legend"></svg>';
+    const parent1 = document.getElementById("geomapw").parentNode;
+    const parent2 = document.getElementById("geomap_legend").parentNode;
+
+    parent1.innerHTML = '';
+    parent2.innerHTML = '';
+
+    parent1.innerHTML += '<svg id="geomapw"></svg>';
+    parent2.innerHTML += '<svg id="geomap_legend"></svg>';
     update_geomap();
   }, true);
 }
