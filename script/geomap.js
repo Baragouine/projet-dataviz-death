@@ -346,7 +346,7 @@ function geomap_main() {
   
   for (let i = 0; i < list_all_cause.length; ++i) {
     l.innerHTML +=
-      '<p><input class="checkbox" type="checkbox" id="geomap-' + list_all_cause[i] + '" ' + (i == 0 ? 'checked' : '') + '>' + list_all_cause[i]+'</p>';
+      '<p><input class="checkbox" type="checkbox" id="geomap-' + list_all_cause[i] + '" ' + (i == 0 ? 'checked' : '') + '>' + list_all_cause[i]+'</p> <hr>';
   }
 
   list_all_cause.forEach(cause => {

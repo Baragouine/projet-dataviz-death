@@ -56,12 +56,24 @@
   <div>
     <div id="GeoMap">
       <div class="settings" style="display: flex; justify-content: center;">
-        <div style="text-align: center;"><p>Choose causes of death <button type="button" class="btn btn-danger btn-sm dropdown-toggle" onclick="showCheckboxes()">
-          Causes
-        </button> </p>
+        <div style="text-align: center;">
+          <div style="display: flex; gap: 10px; padding: 10px;">
+            <p>Choose causes of death <button type="button" class="btn btn-danger btn-sm dropdown-toggle" onclick="showCheckboxes()">Causes </button></p> 
+            <label class="toggle">
+              <input class="toggle-checkbox" id="logscale_geomap" type="checkbox" checked>
+              <div class="toggle-switch"></div>
+              <span class="toggle-label">Log scale</span>
+            </label>
+            <label class="toggle">
+              <input class="toggle-checkbox" id="prop_geomap" type="checkbox" checked>
+              <div class="toggle-switch"></div>
+              <span class="toggle-label">% scale</span>
+            </label>
+          </div>
         
-        <div id="checkboxes" style="width: 350px; position: absolute; border-radius: 20px; background-color: #585858bf;height:300px;  text-align: center; overflow-y: scroll;" ><div id="list_cause" class="mt-2">
-        </div></div></div>
+          <div class="checkboxes" id="checkboxes"><div id="list_cause" class="mt-2">
+          </div></div>
+        </div>
         
       </div>
       <div class="Visualization container-fluid">
@@ -70,22 +82,15 @@
           <div>
             <label for="slider_geomap" class="form-label">Years</label>
             <input type="range" class="form-range" id="slider_geomap" min="1990" value="1990" max="2019" step="1" name="slider_geomap">
-            <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" role="switch" id="logscale_geomap" name="logscale_geomap">
-              <label class="form-check-label" for="logscale_geomap">Échelle logarithmique</label>
-            </div>
-            <div class="form-check form-switch">
-              <input class="form-check-input" type="checkbox" role="switch" id="prop_geomap" name="prop_geomap">
-              <label class="form-check-label" for="prop_geomap">En pourcentage</label>
-            </div>
           </div>
         </div>
         <div class="annexe">
           <div class="legends"> 
             <div><svg id="geomap_legend"></svg></div>
           </div>
-          <div id="geomap_info_contry" class="info"></div>
           <div class="chart"><svg id="line_chart_country"></svg></div>
+          <div id="geomap_info_contry" class="info"></div>
+          
         </div>
 
       </div>
