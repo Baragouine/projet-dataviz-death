@@ -49,6 +49,7 @@ function geomap_mouseover_country(svg, ev, code, name) {
      .style("opacity", f => f.id == code ? 1 : 0.2);
 
   show_geomap_info_country(code, name, $("#slider_geomap").val(), get_list_of_selected_cause_geomap());
+  draw_line_chart_country(code, get_list_of_selected_cause_geomap(), document.getElementById("prop_geomap").checked);
 }
 
 //  on mouseout country
@@ -57,6 +58,7 @@ function geomap_mouseout_country(svg, ev, code) {
      .style("opacity", 1);
 
   show_geomap_info_country(null, null, $("#slider_geomap").val(), get_list_of_selected_cause_geomap());
+  draw_line_chart_country(null, get_list_of_selected_cause_geomap(), document.getElementById("prop_geomap").checked);
 }
 
 //  return selected causes
