@@ -30,6 +30,7 @@
   <script type="text/javascript" src="script/main.js"></script>
   <script type="text/javascript" src="script/geomap.js"></script>
   <script type="text/javascript" src="script/line_shart_country.js"></script>
+  <script type="text/javascript" src="script/front.js"></script>
 
 </head>
 <body>
@@ -55,6 +56,22 @@
   <div>
     <div id="GeoMap">
       <div class="settings">
+        <div class="multiselect">
+          <div class="selectBox" onclick="showCheckboxes()">
+            <select>
+              <option>Select an option</option>
+            </select>
+            <div class="overSelect"></div>
+          </div>
+          <div id="checkboxes">
+            <label for="one">
+              <input type="checkbox" id="one" />First checkbox</label>
+            <label for="two">
+              <input type="checkbox" id="two" />Second checkbox</label>
+            <label for="three">
+              <input type="checkbox" id="three" />Third checkbox</label>
+          </div>
+        </div>
         <p>Choose causes of death <button type="button" class="btn btn-danger btn-sm dropdown-toggle">
           Causes
         </button> </p>
