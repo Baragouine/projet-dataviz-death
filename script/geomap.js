@@ -31,7 +31,7 @@ function geomap_mouseover_country(svg, ev, code) {
   svg.selectAll("path")
      .style("opacity", f => f.id == code ? 1 : 0.2);
 
-  show_geomap_info_country(code, $("#slider_geomap").val(), get);
+  show_geomap_info_country(code, $("#slider_geomap").val(), get_list_of_selected_cause_geomap());
 }
 
 //  on mouseout country
@@ -83,7 +83,7 @@ function select_only_first_causes_geomap() {
 function draw_geo_map(data, list_cause, year, log_scale = false) {
   const margin = ({top: 0, right: 0, bottom: 0, left: 0})
 
-  const w = document.getElementById("geomapw").parentNode.offsetWidth * 0.8;
+  const w = document.getElementById("geomapw").parentNode.offsetWidth * 0.95;
   const h = w * 0.5375;
 
   const min_deaths = Math.max(get_min_sum_deaths(data, list_cause), 1);
@@ -206,7 +206,7 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
 function draw_geo_map_prop(data, list_cause, year, log_scale = false) {
   const margin = ({top: 0, right: 0, bottom: 0, left: 0})
 
-  const w = document.getElementById("geomapw").parentNode.offsetWidth * 0.8;
+  const w = document.getElementById("geomapw").parentNode.offsetWidth * 0.95;
   const h = w * 0.5375;
 
   const min_deaths = Math.max(get_min_sum_deaths(data, list_cause), 1.0/10e8);
