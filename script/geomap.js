@@ -353,11 +353,8 @@ function geomap_main() {
 
   //  update geomap size automatically
   window.addEventListener('resize', (ev) => {
-    document.getElementById("geomapw").parentNode.innerHTML =
-    `
-      <svg id="geomapw"></svg>
-      <svg id="geomap_legend"></svg>
-    `;
+    document.getElementById("geomapw").parentNode.innerHTML = '<svg id="geomapw"></svg>';
+    document.getElementById("geomap_legend").parentNode.innerHTML = '<svg id="geomap_legend"></svg>';
     update_geomap();
   }, true);
 }
