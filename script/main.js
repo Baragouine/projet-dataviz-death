@@ -75,6 +75,18 @@ function get_sum_deaths_line(line, list_cause) {
   return sum;
 }
 
+//  return population size
+function get_population_size(year, code) {
+  const data = get_data_grouped_by_code();
+  const dataForCode = data[code];
+  const line = dataForCode.filter(l => l.Year.getFullYear() == year);
+
+  if (line.length == 0)
+    return NaN;
+
+  return line[0].Population;
+}
+
 //  proportion of a death for a line
 function get_prop_deaths_line(line, list_cause) {
   var sum = 0;

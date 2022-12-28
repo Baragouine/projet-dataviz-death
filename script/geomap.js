@@ -20,7 +20,10 @@ function show_geomap_info_country(code, year, list_cause) {
     `
       <h6>${get_data_grouped_by_code()[code][0]["Country/Territory"]} (${get_data_grouped_by_code()[code][0]["Code"]})</h6>
       <p>
-        <span class="fw-bold">${get_sum_deaths(get_data_raw(), year, code, list_cause)}</span>
+        <span class="fw-bold">
+          ${get_sum_deaths(get_data_raw(), year, code, list_cause)}
+         </span>
+        morts sur ${get_population_size(year, code)} (${(get_prop_deaths(get_data_raw(), year, code, list_cause) * 100).toFixed(7)}%) en ${year}.
       </p>
     `
   );
