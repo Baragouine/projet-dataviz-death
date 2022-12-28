@@ -1,6 +1,8 @@
 //  data
 var DATA_RAW = null;
 var DATA_PROP = null;
+var DATA_GROUPED_BY_CODE = new Object();
+var DATA_PROP_GROUPED_BY_CODE = new Object();
 var DATA_MAP = null;
 var ALL_CAUSES = [];
 var LIST_CODE = [];
@@ -14,9 +16,19 @@ function get_data_raw() {
   return DATA_RAW;
 }
 
+//  return data grouped by code
+function get_data_grouped_by_code() {
+  return DATA_GROUPED_BY_CODE;
+}
+
 //  return dataset (proportion of deaths)
 function get_data_prop() {
   return DATA_PROP;
+}
+
+//  return data (proportion) grouped by code
+function get_data_prop_grouped_by_code() {
+  return DATA_PROP_GROUPED_BY_CODE;
 }
 
 //  return data of geomap
@@ -196,6 +208,12 @@ async function load_data() {
   //  min and max year
   MIN_YEAR = Math.min(get_list_year());
   MAX_YEAR = Math.max(get_list_year());
+
+  //  data grouped by country code
+  get_list_code().forEach(c => {
+    DATA_GROUPED_BY_CODE[c] = get_data_raw().filter(line => line.Code == c);
+    DATA_PROP_GROUPED_BY_CODE[c] = get_data_prop().filter(line => line.Code == c);
+  });
 }
 
 //  main

@@ -10,13 +10,14 @@ function update_geomap() {
 }
 
 //  on mouse over country
-function geomap_mouseover_country(node, code) {
-  console.log("geomap_mouseover_country(" + code + ")");
+function geomap_mouseover_country(ev, data) {
+  console.log("geomap_mouseover_country(" + data + ")");
+  console.log(data);
 }
 
 //  on mouseout country
-function geomap_mouseout_country(node, code) {
-  console.log("geomap_mouseout_country(" + code + ")");
+function geomap_mouseout_country(ev, data) {
+  console.log("geomap_mouseout_country(" + data + ")");
 }
 
 //  return selected causes
@@ -91,12 +92,12 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
     .scale((w - margin.right - margin.left) / 5.5)
     .translate([w / 2 - margin.right + margin.left, h / 2])
 
-  var codePays = null;
   //  draw map
   svg.selectAll("path")
-     .data(get_data_map().features).enter().append("path")
+     .data(get_data_map().features).enter()
+     .append("path")
      .attr("fill", e => {
-       codePays = e.id;
+       const codePays = e.id;
        const nb_deaths = get_sum_deaths(dataForYear, year, codePays, list_cause);
        if (nb_deaths > 0) {
          return colorScale(nb_deaths);
@@ -105,8 +106,8 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
      })
      .attr("d", d3.geoPath().projection(projection))
      .style("stroke", "#fff")
-     .on("mouseover", function() { geomap_mouseover_country(this, codePays);})
-     .on("mouseout", function(){ geomap_mouseout_country(this, codePays);})
+     .on("mouseover", (e, d) => { geomap_mouseover_country(e, d);})
+     .on("mouseout", (e, d) => { geomap_mouseout_country(e, d);})
 
   //  draw legend
   var sample = [min_deaths == 0 ? 1 : min_deaths];
@@ -144,10 +145,6 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
      .attr("x1", 10)
      .attr("x2", 10 + legend_w)
      .attr("stroke", c => colorScale(c));
-
-  console.log();
-  console.log(etapes);
-  console.log(sample);
 
   etapes.forEach((v, i) => {
     var y = v * (sample.length - 1) / etapes[etapes.length - 1];
@@ -217,9 +214,12 @@ function draw_geo_map_prop(data, list_cause, year, log_scale = false) {
     .scale((w - margin.right - margin.left) / 5.5)
     .translate([w / 2 - margin.right + margin.left, h / 2])
 
+  var codePays = null;
+
   //  draw map
   svg.selectAll("path")
-     .data(get_data_map().features).enter().append("path")
+     .data(get_data_map().features).enter()
+     .append("path")
      .attr("fill", e => {
        const codePays = e.id;
        const nb_deaths = get_sum_deaths(dataForYear, year, codePays, list_cause);
@@ -229,7 +229,9 @@ function draw_geo_map_prop(data, list_cause, year, log_scale = false) {
        return COLOR_MISSING_DATA;
      })
      .attr("d", d3.geoPath().projection(projection))
-  .style("stroke", "#fff")
+     .style("stroke", "#fff")
+     .on("mouseover", (e, d) => { geomap_mouseover_country(e, d);})
+     .on("mouseout", (e, d) => { geomap_mouseout_country(e, d);})
 
   //  draw legend
   var sample = [min_deaths == 0 ? 1 : min_deaths];
