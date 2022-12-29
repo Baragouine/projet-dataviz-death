@@ -74,7 +74,7 @@ function geomap_mouseout_country(svg, ev, code) {
 
   show_geomap_info_country(null, null, $("#slider_geomap").val(), get_list_of_selected_cause_geomap());
   draw_line_chart_country(null, get_list_of_selected_cause_geomap(), document.getElementById("prop_geomap").checked);
-  $("#geomap_help").html("Survolé un pays avec la souris pour avoir plus de détails.");
+  $("#geomap_help").html("Survolé un pays avec la souris pour avoir plus de détails.")
 }
 
 //  on mouse over country
