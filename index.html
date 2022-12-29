@@ -76,7 +76,7 @@
         </div>
         
       </div>
-      <div class="Visualization container-fluid">
+      <div class="Visualization">
         <div class="map">
           <div ><svg id="geomapw" width="100%"></svg></div>
           <div>
@@ -85,13 +85,19 @@
           </div>
         </div>
         <div class="annexe">
-          <div class="legends"> 
-            <div><svg id="geomap_legend"></svg></div>
+          <div style="display: flex;">
+            <div class="legends"> 
+              <svg id="geomap_legend"></svg>
+            </div>
+            <div id="geomap_info_contry" class="info" style="margin-left: 10px;"></div>
           </div>
-          <div id="geomap_info_contry" class="info"></div>
+          
+          
           <div class="chart">
             <svg id="line_chart_country" width="350" height="250"></svg>
           </div>
+          
+          
         </div>
 
       </div>
