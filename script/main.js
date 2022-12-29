@@ -285,5 +285,16 @@ async function main() {
 
   //  run line chart main
   line_chart_country_main();
+
+  //  click
+  $(document).on('click', () => {
+    if (LOCK_COUNTRY) {
+      LOCK_COUNTRY = false;
+      LAST_ACTION_LOCK_COUNTRY = "unlock";
+      geomap_mouseout_country(d3.select("#geomapw"), null, null);
+    } else {
+      LAST_ACTION_LOCK_COUNTRY = "none";
+    }
+  });
 }
 

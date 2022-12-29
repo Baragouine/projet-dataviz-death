@@ -1,6 +1,6 @@
 var COLOR_MISSING_DATA = "#888";
 var LOCK_COUNTRY = false;
-var LOCKED_COUNTRY_CODE = null;
+var LAST_ACTION_LOCK_COUNTRY = "none";
 
 //  update geomap
 function update_geomap() {
@@ -79,21 +79,16 @@ function geomap_mouseout_country(svg, ev, code) {
 
 //  on mouse over country
 function geomap_mouseclick_country(svg, ev, code, name) {
-  if (LOCK_COUNTRY) {
-    LOCK_COUNTRY = false;
-    geomap_mouseover_country(svg, ev, code, name);
-    if (code != LOCKED_COUNTRY_CODE)
-    {
-      LOCK_COUNTRY = true;
-      LOCKED_COUNTRY_CODE = code;
-      $("#geomap_help").html("Cliquer une nouvelle fois sur le pays pour le déverouiller ou cliquer sur un autre pays.");
+  setTimeout(() => {
+    if (!LOCK_COUNTRY) {
+      if (LAST_ACTION_LOCK_COUNTRY == "none") {
+        geomap_mouseover_country(svg, ev, code, name);
+        LOCK_COUNTRY = true;
+        LAST_ACTION_LOCK_COUNTRY = "click";
+        $("#geomap_help").html("Cliquer quelque part pour déverouiller.");
+      }
     }
-  } else {
-    geomap_mouseover_country(svg, ev, code, name);
-    LOCK_COUNTRY = true;
-    LOCKED_COUNTRY_CODE = code;
-    $("#geomap_help").html("Cliquer une nouvelle fois sur le pays pour le déverouiller ou cliquer sur un autre pays.");
-  }
+  }, 30);
 }
 
 //  return selected causes
