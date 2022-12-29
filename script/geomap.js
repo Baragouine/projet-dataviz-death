@@ -1,7 +1,12 @@
 var COLOR_MISSING_DATA = "#888";
+var LOCK_COUNTRY = false;
+var LOCKED_COUNTRY_CODE = null;
 
 //  update geomap
 function update_geomap() {
+  if (LOCK_COUNTRY)
+    return;
+
   if (document.getElementById("prop_geomap").checked) {
     draw_geo_map_prop(get_data_prop(), get_list_of_selected_cause_geomap(), $("#slider_geomap").val(), document.getElementById("logscale_geomap").checked);
   } else {
@@ -11,6 +16,9 @@ function update_geomap() {
 
 //  update info for a country
 function show_geomap_info_country(code, name, year, list_cause) {
+  if (LOCK_COUNTRY)
+    return;
+
   if (code == null) {
     $("#geomap_info_contry").html(
       `
@@ -45,20 +53,47 @@ function show_geomap_info_country(code, name, year, list_cause) {
 
 //  on mouse over country
 function geomap_mouseover_country(svg, ev, code, name) {
+  if (LOCK_COUNTRY)
+    return;
+
   svg.selectAll("path")
      .style("opacity", f => f.id == code ? 1 : 0.2);
 
   show_geomap_info_country(code, name, $("#slider_geomap").val(), get_list_of_selected_cause_geomap());
   draw_line_chart_country(code, get_list_of_selected_cause_geomap(), document.getElementById("prop_geomap").checked);
+  $("#geomap_help").html("Cliquer sur un pays pour vérouiller l'affichage dessus.");
 }
 
 //  on mouseout country
 function geomap_mouseout_country(svg, ev, code) {
+  if (LOCK_COUNTRY)
+    return;
+
   svg.selectAll("path")
      .style("opacity", 1);
 
   show_geomap_info_country(null, null, $("#slider_geomap").val(), get_list_of_selected_cause_geomap());
   draw_line_chart_country(null, get_list_of_selected_cause_geomap(), document.getElementById("prop_geomap").checked);
+  $("#geomap_help").html("Survolé un pays avec la souris pour avoir plus de détails.");
+}
+
+//  on mouse over country
+function geomap_mouseclick_country(svg, ev, code, name) {
+  if (LOCK_COUNTRY) {
+    LOCK_COUNTRY = false;
+    geomap_mouseover_country(svg, ev, code, name);
+    if (code != LOCKED_COUNTRY_CODE)
+    {
+      LOCK_COUNTRY = true;
+      LOCKED_COUNTRY_CODE = code;
+      $("#geomap_help").html("Cliquer une nouvelle fois sur le pays pour le déverouiller ou cliquer sur un autre pays.");
+    }
+  } else {
+    geomap_mouseover_country(svg, ev, code, name);
+    LOCK_COUNTRY = true;
+    LOCKED_COUNTRY_CODE = code;
+    $("#geomap_help").html("Cliquer une nouvelle fois sur le pays pour le déverouiller ou cliquer sur un autre pays.");
+  }
 }
 
 //  return selected causes
@@ -148,6 +183,7 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
      .attr("d", d3.geoPath().projection(projection))
      .style("stroke", "#fff")
      .attr("stroke-width", 1)
+     .on("click", (e, d) => { geomap_mouseclick_country(svg, e, d.id, d.properties.name);})
      .on("mouseover", (e, d) => { geomap_mouseover_country(svg, e, d.id, d.properties.name);})
      .on("mouseout", (e, d) => { geomap_mouseout_country(svg, e, d.id);})
 
@@ -280,6 +316,7 @@ function draw_geo_map_prop(data, list_cause, year, log_scale = false) {
      .attr("d", d3.geoPath().projection(projection))
      .style("stroke", "#fff")
      .attr("stroke-width", 1)
+     .on("click", (e, d) => { geomap_mouseclick_country(svg, e, d.id, d.properties.name);})
      .on("mouseover", (e, d) => { geomap_mouseover_country(svg, e, d.id, d.properties.name);})
      .on("mouseout", (e, d) => { geomap_mouseout_country(svg, e, d.id);})
 

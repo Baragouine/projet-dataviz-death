@@ -1,5 +1,8 @@
 //  draw
 function draw_line_chart_country(code, list_cause, prop = false, logscale=false) {
+  if (LOCK_COUNTRY)
+    return;
+
   const margin = ({top: 20, right: 2, bottom: 50, left: 80});
 
   const svg = d3.select("#line_chart_country");
