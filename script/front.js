@@ -10,3 +10,7 @@ function showCheckboxes() {
     expanded = false;
   }
 }
+
+function rangeSlide(value) {
+  document.getElementById('rangeValue').innerHTML = value;
+}
