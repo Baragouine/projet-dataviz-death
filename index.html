@@ -82,23 +82,29 @@
             Survolé un pays avec la souris pour avoir plus de détails.
           </div>
           <div ><svg id="geomapw" width="100%"></svg></div>
-          <div>
-            <label for="slider_geomap" class="form-label">Years</label>
-            <input type="range" class="form-range" id="slider_geomap" min="1990" value="1990" max="2019" step="1" name="slider_geomap">
+          <div class="container">
+            <Input class="range" type="range" name="slider_geomap" id="slider_geomap" value="1990" min="1990" max="2019" onChange="rangeSlide(this.value)" onmousemove="rangeSlide(this.value)"></Input>
+            
+            <div class="box-minmax">
+              <span class="rangeValue">1990</span><span class="rangeValue" id="rangeValue">1990</span><span class="rangeValue" >2019</span>
+            </div>
           </div>
+          
         </div>
         <div class="annexe">
-          <div style="display: flex;">
-            <div class="legends"> 
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; ">
+            <div class="legends" style="margin-left: 18px;"> 
               <svg id="geomap_legend"></svg>
             </div>
-            <div id="geomap_info_contry" class="info" style="margin-left: 10px;"></div>
+            <div class="chart">
+              <svg id="line_chart_country" width="350" height="250"></svg>
+            </div>
+            <div id="geomap_info_contry" class="info" style="margin-left: 30px;"></div>
+            
           </div>
           
           
-          <div class="chart">
-            <svg id="line_chart_country" width="220" height="200"></svg>
-          </div>
+          
           
           
         </div>
