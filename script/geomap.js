@@ -372,13 +372,17 @@ function geomap_main() {
 
   l.innerHTML =
     '<div class="d-flex flex-row mb-3">'+
-    '<div class="col"><input class="btn btn-outline-light btn-sm" type="button" value="Select all" onclick="select_all_causes_geomap();"></div>' +
-    '<div class="col"><input class="btn btn-outline-light btn-sm" type="button" value="Sélect first" onclick="select_only_first_causes_geomap();"</div>'+
+      '<div class="col"><input class="btn btn-outline-light btn-sm" type="button" value="Select all" onclick="select_all_causes_geomap();"></div>' +
+      '<div class="col"><input class="btn btn-outline-light btn-sm" type="button" value="Sélect first" onclick="select_only_first_causes_geomap();"</div>'+
     '</div>';
   
   for (let i = 0; i < list_all_cause.length; ++i) {
     l.innerHTML +=
-      '<p><input class="checkbox" type="checkbox" id="geomap-' + list_all_cause[i] + '" ' + (i == 0 ? 'checked' : '') + '>' + list_all_cause[i]+'</p> <hr>';
+      '<p>'+
+        '<input class="checkbox" type="checkbox" id="geomap-' + list_all_cause[i] + '" ' + (i == 0 ? 'checked' : '') + '>' +
+        '<label for="geomap-' + list_all_cause[i] + '">' + list_all_cause[i] + '</label>' +
+      '</p>'+
+      '<hr>';
   }
 
   list_all_cause.forEach(cause => {
