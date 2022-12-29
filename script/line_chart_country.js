@@ -15,9 +15,9 @@ function draw_line_chart_country(code, list_cause, prop = false, logscale=false)
 
   const data = get_data_grouped_by_code()[code].sort((a, b) => a.Year - b.Year);
   const min_deaths =
-    prop ? get_min_prop_deaths_for_country(data, code, list_cause) : Math.max(get_min_sum_deaths_for_country(data, code, list_cause), 1);
+    prop ? get_min_prop_deaths_for_country(data, code, list_cause) : get_min_sum_deaths_for_country(data, code, list_cause);
   const max_deaths =
-    prop ? get_max_prop_deaths_for_country(data, code, list_cause) : Math.max(get_max_sum_deaths_for_country(data, code, list_cause), 1.0/10e8);
+    prop ? get_max_prop_deaths_for_country(data, code, list_cause) : get_max_sum_deaths_for_country(data, code, list_cause);
 
   const x = d3.scaleTime().domain([get_min_year_raw(), get_max_year_raw()]).range([margin.left, w - margin.right]);
   const yLinear = d3.scaleLinear().domain([min_deaths, max_deaths]).range([h - margin.bottom, margin.top]);
