@@ -14,7 +14,7 @@ function show_geomap_info_country(code, name, year, list_cause) {
   if (code == null) {
     $("#geomap_info_contry").html(
       `
-        <h6>Aucun pays sélectionné</h6>
+        <h6>Aucun pays selected</h6>
         <p></p>
       `
     );
@@ -25,7 +25,7 @@ function show_geomap_info_country(code, name, year, list_cause) {
     $("#geomap_info_contry").html(
     `
       <h6>${name} (${code})</h6>
-      <p>Aucune donnée.</p>
+      <p style="font-size: 12px;">Aucune donnée.</p>
     `);
     return;
   }
@@ -33,11 +33,11 @@ function show_geomap_info_country(code, name, year, list_cause) {
   $("#geomap_info_contry").html(
     `
       <h6>${name} (${code})</h6>
-      <p>
+      <p style="font-size: 12px;">
         <span class="fw-bold">
           ${get_sum_deaths(get_data_raw(), year, code, list_cause)}
          </span>
-        morts sur ${get_population_size(year, code)} (${(get_prop_deaths(get_data_raw(), year, code, list_cause) * 100).toFixed(7)}%) en ${year}.
+        morts sur ${get_population_size(year, code)} (${(get_prop_deaths(get_data_raw(), year, code, list_cause) * 100).toFixed(7)} %) en ${year}.
       </p>
     `
   );

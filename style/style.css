@@ -8,13 +8,12 @@ body {
 }
 
 .map{
-  width: 75%;
+  width: 73%;
   min-width: 390px;
 }
 
 .annexe{
-  width: 25%;
-
+  width: 27%;
 }
 
 
@@ -54,7 +53,7 @@ input[type='checkbox'] {
 }
 
 /* responsive */
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 850px) {
   .map {
     width: 100%;
   }
