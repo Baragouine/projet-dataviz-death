@@ -104,7 +104,7 @@ function select_only_first_causes_geomap() {
 function draw_geo_map(data, list_cause, year, log_scale = false) {
   const margin = ({top: 0, right: 0, bottom: 0, left: 0})
 
-  const w = document.getElementById("geomapw").parentNode.offsetWidth * 0.95;
+  const w = $("#geomapw").width();;
   const h = w * 0.5375;
 
   const min_deaths = Math.max(get_min_sum_deaths(data, list_cause), 1);
@@ -122,7 +122,7 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
   const legend_h = 7*20;
   const legend_w = 10;
 
-  const svg = d3.select("#geomapw").attr("height", h).attr("width", w)
+  const svg = d3.select("#geomapw").attr("height", h)//.attr("width", w)
   const svgLegend = d3.select("#geomap_legend").attr("height", Math.round(legend_h * 1.5)).attr("width",130);
 
   //  clear svg
@@ -234,7 +234,7 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
 function draw_geo_map_prop(data, list_cause, year, log_scale = false) {
   const margin = ({top: 0, right: 0, bottom: 0, left: 0})
 
-  const w = document.getElementById("geomapw").parentNode.offsetWidth * 0.95;
+  const w = $("#geomapw").width();
   const h = w * 0.5375;
 
   const min_deaths = Math.max(get_min_sum_deaths(data, list_cause), 1.0/10e8);
@@ -252,7 +252,7 @@ function draw_geo_map_prop(data, list_cause, year, log_scale = false) {
   const legend_h = 7*20;
   const legend_w = 10;
 
-  const svg = d3.select("#geomapw").attr("height", h).attr("width", w)
+  const svg = d3.select("#geomapw").attr("height", h)//.attr("width", w)
   const svgLegend = d3.select("#geomap_legend").attr("height", Math.round(legend_h * 1.5)).attr("width",130);
 
   //  clear svg
@@ -412,6 +412,7 @@ function geomap_main() {
 
   //  update geomap size automatically
   window.addEventListener('resize', (ev) => {
+    /*
     const parent1 = document.getElementById("geomapw").parentNode;
     const parent2 = document.getElementById("geomap_legend").parentNode;
 
@@ -420,6 +421,7 @@ function geomap_main() {
 
     parent1.innerHTML += '<svg id="geomapw"></svg>';
     parent2.innerHTML += '<svg id="geomap_legend"></svg>';
+    */
     update_geomap();
   }, true);
 
