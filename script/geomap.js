@@ -433,16 +433,30 @@ function geomap_main() {
     update_geomap();
   });
 
-  //  logscale checkbox js
+  //  proportion checkbox js
   checkbox = document.getElementById("prop_geomap");
 
+  if (checkbox.checked) {
+    $("#geomap_titre_mode").html("Proportion");
+  } else {
+    $("#geomap_titre_mode").html("Nombre");
+  }
+
   checkbox.addEventListener("change", (ev) => {
+    if (checkbox.checked) {
+      $("#geomap_titre_mode").html("Proportion");
+    } else {
+      $("#geomap_titre_mode").html("Nombre");
+    }
     update_geomap();
   });
 
   update_geomap();
 
+  //  date on title
+  $("#geomap_titre_date").html($("#slider_geomap").val());
   d3.select("#slider_geomap").node().addEventListener(window.navigator.userAgent.indexOf("MSIE ") ? "change" : "input", (ev) => {
+    $("#geomap_titre_date").html($("#slider_geomap").val());
     update_geomap();  
   });
 
