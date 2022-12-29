@@ -448,16 +448,7 @@ function geomap_main() {
 
   //  update geomap size automatically
   window.addEventListener('resize', (ev) => {
-    /*
-    const parent1 = document.getElementById("geomapw").parentNode;
-    const parent2 = document.getElementById("geomap_legend").parentNode;
-
-    parent1.innerHTML = '';
-    parent2.innerHTML = '';
-
-    parent1.innerHTML += '<svg id="geomapw"></svg>';
-    parent2.innerHTML += '<svg id="geomap_legend"></svg>';
-    */
+    LOCK_COUNTRY = false;
     update_geomap();
   }, true);
 
