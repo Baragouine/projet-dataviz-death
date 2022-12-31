@@ -36,12 +36,13 @@ input[type='checkbox'] {
 .checkboxes{
   width: 350px;
   position: absolute;
-  border-radius: 20px; 
-  background-color: #585858bf;
+  border-radius: 5px; 
+  background-color: #2f2f2fbf;
   height:300px;  
-  text-align: center; 
+   
   overflow-y: scroll;
 }
+
 
 #checkboxes {
   display: none;
@@ -53,7 +54,7 @@ input[type='checkbox'] {
 }
 
 #checkboxes label:hover {
-  background-color: #1e90ff;
+  background-color: #727272;
 }
 
 /* responsive */
@@ -211,4 +212,26 @@ input[type='checkbox'] {
 }
 .box-minmax span:first-child {
   margin-left: 10px;
+}
+
+/** Scrollbar **/
+
+/* width */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
