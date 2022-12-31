@@ -455,10 +455,6 @@ function geomap_main() {
 
   //  date on title
   $("#geomap_titre_date").html($("#slider_geomap").val());
-  d3.select("#slider_geomap").node().addEventListener(window.navigator.userAgent.indexOf("MSIE ") ? "change" : "input", (ev) => {
-    $("#geomap_titre_date").html($("#slider_geomap").val());
-    update_geomap();  
-  });
 
   //  update geomap size automatically
   window.addEventListener('resize', (ev) => {

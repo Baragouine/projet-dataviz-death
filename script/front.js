@@ -13,4 +13,7 @@ function showCheckboxes() {
 
 function rangeSlide(value) {
   document.getElementById('rangeValue').innerHTML = value;
+
+  $("#geomap_titre_date").html($("#slider_geomap").val());
+  update_geomap();  
 }
