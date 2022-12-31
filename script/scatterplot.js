@@ -1,5 +1,9 @@
 //  update scatterplot
 function update_scatterplot() {
+  const w = $("#geomapw").width();
+  const h = w;
+  const svg = d3.select("#geomapw").attr("height", h);
+
   console.log("Scatterplot");
 }
 
