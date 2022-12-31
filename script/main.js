@@ -286,6 +286,9 @@ async function main() {
   //  run line chart main
   line_chart_country_main();
 
+  //  scatterplot
+  scatterplot_main();
+
   //  click
   $(document).on('click', () => {
     if (LOCK_COUNTRY) {

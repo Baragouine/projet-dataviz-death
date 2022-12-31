@@ -30,6 +30,7 @@
   <script type="text/javascript" src="script/main.js"></script>
   <script type="text/javascript" src="script/geomap.js"></script>
   <script type="text/javascript" src="script/line_chart_country.js"></script>
+  <script type="text/javascript" src="script/scatterplot.js"></script>
   <script type="text/javascript" src="script/front.js"></script>
 
 </head>
@@ -60,12 +61,12 @@
           <div style="display: flex; gap: 10px; padding: 10px;">
             <p>Choose causes of death <button type="button" class="btn btn-danger btn-sm dropdown-toggle" onclick="showCheckboxes()">Causes </button></p> 
             <label class="toggle">
-              <input class="toggle-checkbox" id="logscale_geomap" type="checkbox" checked>
+              <input class="toggle-checkbox" id="logscale_geomap" type="checkbox">
               <div class="toggle-switch"></div>
               <span class="toggle-label">Log scale</span>
             </label>
             <label class="toggle">
-              <input class="toggle-checkbox" id="prop_geomap" type="checkbox" checked>
+              <input class="toggle-checkbox" id="prop_geomap" type="checkbox">
               <div class="toggle-switch"></div>
               <span class="toggle-label">% scale</span>
             </label>
@@ -119,8 +120,40 @@
       
     </div>
       
-    <div id="Scatter" class="Visualization"></div>
-    <div id="BarPlot" class="Visualization"></div>
+    <div id="Scatter" class="Visualization">
+      <svg id="scatterplot" width="100%" style="max-width: 512px;"></svg>
+
+      List Years:
+      <div id="scatterplot_list_year"></div>
+
+      List Country:
+      <div id="scatterplot_list_country"></div>
+
+      <label for="scatterplot_list_cause_x">Cause 1 (X):</label>
+      <select id="scatterplot_list_cause_x" onchange="onScatterPlotListCauseXChange()">
+        <option value="Dog">Dog</option>
+      </select>
+
+      <label for="scatterplot_list_cause_y">Cause 2 (Y):</label>
+      <select id="scatterplot_list_cause_y" onchange="onScatterPlotListCauseYChange()">
+        <option value="Cat">Cat</option>
+      </select>
+
+      <label class="toggle">
+        <input class="toggle-checkbox" id="scatterplot_log_x" type="checkbox">
+        <div class="toggle-switch"></div>
+        <span class="toggle-label">Log X</span>
+      </label>
+
+      <label class="toggle">
+        <input class="toggle-checkbox" id="scatterplot_log_y" type="checkbox">
+        <div class="toggle-switch"></div>
+        <span class="toggle-label">Log Y</span>
+      </label>
+    </div>
+
+    <div id="BarPlot" class="Visualization">
+    </div>
   </div>
 </body>
 </html>
