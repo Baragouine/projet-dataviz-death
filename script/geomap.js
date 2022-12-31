@@ -410,10 +410,10 @@ function geomap_main() {
   
   for (let i = 0; i < list_all_cause.length; ++i) {
     l.innerHTML +=
-      '<p style="margin:0; display="flex" >'+
+      '<p class="pList">'+
         '<label for="geomap-' + list_all_cause[i] + '">' + '<input class="checkbox" type="checkbox" id="geomap-' + list_all_cause[i] + '" ' + (i == 0 ? 'checked' : '') + '>'+ list_all_cause[i] + '</label>' +
       '</p>'+
-      '<hr style="margin:0">';
+      '<hr class="hrList">';
   }
 
   list_all_cause.forEach(cause => {

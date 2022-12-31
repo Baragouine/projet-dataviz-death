@@ -1,7 +1,7 @@
 var expanded = false;
 
-function showCheckboxes() {
-  var checkboxes = document.getElementById("checkboxes");
+function showCheckboxes(id) {
+  var checkboxes = document.getElementById(id);
   if (!expanded) {
     checkboxes.style.display = "block";
     expanded = true;
@@ -16,4 +16,15 @@ function rangeSlide(value) {
 
   $("#geomap_titre_date").html($("#slider_geomap").val());
   update_geomap();  
+}
+
+function setContent(content) {
+  document.getElementById("GeoMap").style.display = 'none';
+  document.getElementById("Scatter").style.display = 'none'
+  document.getElementById("BarPlot").style.display = 'none'
+  document.getElementById(content).style.display = 'block';
+}
+
+function frontMain() {
+  setContent("GeoMap")
 }

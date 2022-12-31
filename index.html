@@ -24,6 +24,7 @@
   <script>
     $( document ).ready(function() {
       main();
+      frontMain();
     });
   </script>
   <!-- Personnal JS -->
@@ -44,13 +45,13 @@
     </a>
     <ul class="nav nav-pills">
       <li class="nav-item">
-        <a class="nav-link" href="#">GeoMap</a>
+        <a class="nav-link" href="#" onclick="setContent('GeoMap');">GeoMap</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">ScatterPlot</a>
+        <a class="nav-link" href="#" onclick="setContent('Scatter');">ScatterPlot</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">BarPlot</a>
+        <a class="nav-link" href="#" onclick="setContent('BarPlot');">BarPlot</a>
       </li>
     </ul>
   </nav>
@@ -59,7 +60,7 @@
       <div class="settings" style="display: flex; justify-content: center;">
         <div>
           <div style="display: flex; gap: 10px; padding: 10px;">
-            <p>Choose causes of death <button type="button" class="btn btn-danger btn-sm dropdown-toggle" onclick="showCheckboxes()">Causes </button></p> 
+            <p>Choose causes of death <button type="button" class="btn btn-danger btn-sm dropdown-toggle" onclick="showCheckboxes('checkboxesCauses')">Causes </button></p> 
             <label class="toggle">
               <input class="toggle-checkbox" id="logscale_geomap" type="checkbox">
               <div class="toggle-switch"></div>
@@ -72,7 +73,7 @@
             </label>
           </div>
         
-          <div class="checkboxes" id="checkboxes"><div id="list_cause" class="mt-2">
+          <div class="checkboxes" id="checkboxesCauses"><div id="list_cause" class="mt-2">
           </div></div>
         </div>
         
@@ -121,13 +122,15 @@
     </div>
       
     <div id="Scatter" class="Visualization">
-      <svg id="scatterplot" width="100%" style="max-width: 512px;"></svg>
+      
 
-      List Years:
-      <div id="scatterplot_list_year"></div>
+      <button type="button" class="btn btn-danger btn-sm dropdown-toggle" onclick="showCheckboxes('checkboxesYears')">years</button>
+      <div><div class="checkboxes" id="checkboxesYears"> <div id="scatterplot_list_year"></div> </div></div>
+      
 
-      List Country:
-      <div id="scatterplot_list_country"></div>
+      <button type="button" class="btn btn-danger btn-sm dropdown-toggle" onclick="showCheckboxes('checkboxesCountries')">Countries</button>
+      <div><div class="checkboxes" id="checkboxesCountries"><div id="scatterplot_list_country"></div></div></div>
+      
 
       <label for="scatterplot_list_cause_x">Cause 1 (X):</label>
       <select id="scatterplot_list_cause_x" onchange="onScatterPlotListCauseXChange()">
@@ -150,6 +153,8 @@
         <div class="toggle-switch"></div>
         <span class="toggle-label">Log Y</span>
       </label>
+
+      <svg id="scatterplot" width="100%" style="max-width: 512px;"></svg>
     </div>
 
     <div id="BarPlot" class="Visualization">

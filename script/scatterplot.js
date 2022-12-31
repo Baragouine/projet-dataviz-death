@@ -17,11 +17,13 @@ function init_scatterplot_list_year() {
   
   for (let i = 0; i < list_all_years.length; ++i) {
     l.innerHTML +=
-      '<p>'+
-        '<input class="checkbox" type="checkbox" id="scatterplot_list_year-' + list_all_years[i] + '" ' + (i == 0 ? 'checked' : '') + '>' +
-        '<label for="scatterplot_list_year-' + list_all_years[i] + '">' + list_all_years[i] + '</label>' +
+      '<p style="margin:0; display="flex">'+
+        '<label for="scatterplot_list_year-' + list_all_years[i] + '">'+
+          '<input class="checkbox" type="checkbox" id="scatterplot_list_year-' + list_all_years[i] + '" ' + (i == 0 ? 'checked' : '') + '>' +
+           list_all_years[i] + 
+        '</label>' +
       '</p>'+
-      '<hr>';
+      '<hr class="hrList">';
   }
 
   list_all_years.forEach(cause => {
@@ -53,13 +55,13 @@ function init_scatterplot_list_country() {
   
   for (let i = 0; i < list_all_code.length; ++i) {
     l.innerHTML +=
-      '<p>'+
-        '<input class="checkbox" type="checkbox" id="scatterplot_list_country-' + list_all_code[i] + '" ' + (i == 0 ? 'checked' : '') + '>' +
+      '<p class="pList">'+
         '<label for="scatterplot_list_country-' + list_all_code[i] + '">' +
+          '<input class="checkbox" type="checkbox" id="scatterplot_list_country-' + list_all_code[i] + '" ' + (i == 0 ? 'checked' : '') + '>' +
           get_data_grouped_by_code()[list_all_code[i]][0]["Country/Territory"]; +
         '</label>' +
       '</p>'+
-      '<hr>';
+      '<hr class="hrList">';
   }
 
   list_all_code.forEach(cause => {

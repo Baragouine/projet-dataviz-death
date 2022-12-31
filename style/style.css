@@ -20,6 +20,14 @@ body {
   width: 27%;
 }
 
+.hrList {
+  margin:0
+}
+
+.pList {
+  margin: 0;
+  display: flex;
+}
 
 /*  liste des causes    */
 
@@ -44,16 +52,16 @@ input[type='checkbox'] {
 }
 
 
-#checkboxes {
+.checkboxes {
   display: none;
   border: 1px #dadada solid;
 }
 
-#checkboxes label {
+.checkboxes label {
   display: block;
 }
 
-#checkboxes label:hover {
+.checkboxes label:hover {
   background-color: #727272;
 }
 
@@ -235,3 +243,4 @@ input[type='checkbox'] {
 ::-webkit-scrollbar-thumb:hover {
   background: #555; 
 }
+
