@@ -45,13 +45,13 @@
     </a>
     <ul class="nav nav-pills">
       <li class="nav-item">
-        <a class="nav-link" href="#" onclick="setContent('GeoMap');">GeoMap</a>
+        <a class="nav-link" href="#_GeoMap" onclick="setContent('GeoMap');">GeoMap</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" onclick="setContent('Scatter');">ScatterPlot</a>
+        <a class="nav-link" href="#_Scatter" onclick="setContent('Scatter');">ScatterPlot</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" onclick="setContent('BarPlot');">BarPlot</a>
+        <a class="nav-link" href="#_BarPlot" onclick="setContent('BarPlot');">BarPlot</a>
       </li>
     </ul>
   </nav>
@@ -122,39 +122,38 @@
     </div>
       
     <div id="Scatter" class="Visualization">
-      
+      <div>
+        <button type="button" class="btn btn-danger btn-sm dropdown-toggle" onclick="showCheckboxes('checkboxesYears')">years</button>
+        <div><div class="checkboxes" id="checkboxesYears"> <div id="scatterplot_list_year"></div> </div></div>
+        
+        <button type="button" class="btn btn-danger btn-sm dropdown-toggle" onclick="showCheckboxes('checkboxesCountries')">Countries</button>
+        <div><div class="checkboxes" id="checkboxesCountries"><div id="scatterplot_list_country"></div></div></div>
+        
+        <label for="scatterplot_list_cause_x">Cause 1 (X):</label>
+        <select id="scatterplot_list_cause_x" onchange="onScatterPlotListCauseXChange()">
+          <option value="Dog">Dog</option>
+        </select>
 
-      <button type="button" class="btn btn-danger btn-sm dropdown-toggle" onclick="showCheckboxes('checkboxesYears')">years</button>
-      <div><div class="checkboxes" id="checkboxesYears"> <div id="scatterplot_list_year"></div> </div></div>
-      
+        <label for="scatterplot_list_cause_y">Cause 2 (Y):</label>
+        <select id="scatterplot_list_cause_y" onchange="onScatterPlotListCauseYChange()">
+          <option value="Cat">Cat</option>
+        </select>
 
-      <button type="button" class="btn btn-danger btn-sm dropdown-toggle" onclick="showCheckboxes('checkboxesCountries')">Countries</button>
-      <div><div class="checkboxes" id="checkboxesCountries"><div id="scatterplot_list_country"></div></div></div>
-      
+        <label class="toggle">
+          <input class="toggle-checkbox" id="scatterplot_log_x" type="checkbox">
+          <div class="toggle-switch"></div>
+          <span class="toggle-label">Log X</span>
+        </label>
 
-      <label for="scatterplot_list_cause_x">Cause 1 (X):</label>
-      <select id="scatterplot_list_cause_x" onchange="onScatterPlotListCauseXChange()">
-        <option value="Dog">Dog</option>
-      </select>
-
-      <label for="scatterplot_list_cause_y">Cause 2 (Y):</label>
-      <select id="scatterplot_list_cause_y" onchange="onScatterPlotListCauseYChange()">
-        <option value="Cat">Cat</option>
-      </select>
-
-      <label class="toggle">
-        <input class="toggle-checkbox" id="scatterplot_log_x" type="checkbox">
-        <div class="toggle-switch"></div>
-        <span class="toggle-label">Log X</span>
-      </label>
-
-      <label class="toggle">
-        <input class="toggle-checkbox" id="scatterplot_log_y" type="checkbox">
-        <div class="toggle-switch"></div>
-        <span class="toggle-label">Log Y</span>
-      </label>
-
-      <svg id="scatterplot" width="100%" style="max-width: 512px;"></svg>
+        <label class="toggle">
+          <input class="toggle-checkbox" id="scatterplot_log_y" type="checkbox">
+          <div class="toggle-switch"></div>
+          <span class="toggle-label">Log Y</span>
+        </label>
+      </div>
+      <div>
+        <svg id="scatterplot" width="100%" style="max-width: 512px;"></svg>
+      </div>
     </div>
 
     <div id="BarPlot" class="Visualization">

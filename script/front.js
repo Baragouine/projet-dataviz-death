@@ -26,5 +26,15 @@ function setContent(content) {
 }
 
 function frontMain() {
-  setContent("GeoMap")
+  //  select the good page automatically
+  var page = window.location.hash;
+
+  if (!!page) {
+    id = '';
+    for (let i = 2; i < page.length; ++i)
+      id += page[i];
+    setContent(id);
+  } else {
+    setContent("GeoMap")
+  }
 }

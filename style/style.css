@@ -8,7 +8,6 @@ body {
   max-width: 80%;
   margin-left: auto;
   margin-right: auto;
-
 }
 
 .map{
@@ -27,6 +26,18 @@ body {
 .pList {
   margin: 0;
   display: flex;
+}
+
+#GeoMap {
+  display: none;
+}
+
+#Scatter {
+  display: none;
+}
+
+#BarPlot {
+  display: none;
 }
 
 /*  liste des causes    */
