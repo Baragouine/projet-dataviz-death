@@ -107,18 +107,9 @@
               <svg id="line_chart_country" width="350" height="250"></svg>
             </div>
             <div id="geomap_info_contry" class="info" style="margin-left: 30px;"></div>
-            
           </div>
-          
-          
-          
-          
-          
         </div>
-
       </div>
-      
-      
     </div>
       
     <div id="Scatter" class="Visualization">
@@ -138,6 +129,12 @@
         <select id="scatterplot_list_cause_y" onchange="onScatterPlotListCauseYChange()">
           <option value="Cat">Cat</option>
         </select>
+
+        <label class="toggle">
+          <input class="toggle-checkbox" id="scatterplot_proportion" type="checkbox">
+          <div class="toggle-switch"></div>
+          <span class="toggle-label">% Scale</span>
+        </label>
 
         <label class="toggle">
           <input class="toggle-checkbox" id="scatterplot_log_x" type="checkbox">

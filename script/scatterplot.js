@@ -1,3 +1,8 @@
+//  draw scatterplot
+function draw_scatterplot(years, countries, cause_x, cause_y, is_proportion, is_log_x, is_log_y) {
+
+}
+
 //  update scatterplot
 function update_scatterplot() {
   const w = $("#geomapw").width();
@@ -108,8 +113,15 @@ function init_scatterplot_input() {
   init_scatterplot_list_year();
   init_scatterplot_list_country();
 
+  //  % proportion
+  var checkbox = document.getElementById("scatterplot_proportion");
+  checkbox.addEventListener("change", (ev) => {
+    update_scatterplot();
+  });
+
+
   //  log x event handler
-  var checkbox = document.getElementById("scatterplot_log_x");
+  checkbox = document.getElementById("scatterplot_log_x");
 
   checkbox.addEventListener("change", (ev) => {
     update_scatterplot();
