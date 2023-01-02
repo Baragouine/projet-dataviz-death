@@ -22,7 +22,9 @@ function setContent(content) {
   document.getElementById("GeoMap").style.display = 'none';
   document.getElementById("Scatter").style.display = 'none'
   document.getElementById("BarPlot").style.display = 'none'
-  document.getElementById(content).style.display = 'block';
+
+  if (content == "GeoMap" || content == "Scatter" || content == "BarPlot")
+    document.getElementById(content).style.display = 'block';
 }
 
 function frontMain() {

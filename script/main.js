@@ -276,6 +276,29 @@ async function load_data() {
   });
 }
 
+//  update the good visualization
+function update_good_visualization() {
+  LOCK_COUNTRY = false;
+  //  select the good page automatically
+  var page = window.location.hash;
+
+  if (!!page) {
+    id = '';
+
+    for (let i = 2; i < page.length; ++i)
+      id += page[i];
+
+    if (id == "Scatter")
+      update_scatterplot();
+    else if (id == "BarPlot")
+      update_barplot();
+    else if (id == "GeoMap")
+      update_geomap();
+  } else {
+    update_geomap();
+  }
+}
+
 //  main
 async function main() {
   await load_data();
@@ -299,5 +322,10 @@ async function main() {
       LAST_ACTION_LOCK_COUNTRY = "none";
     }
   });
+
+  //  update visualisation size automatically
+  window.addEventListener('resize', (ev) => {
+    update_good_visualization();
+  }, true);
 }
 

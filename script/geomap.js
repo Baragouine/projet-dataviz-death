@@ -455,12 +455,6 @@ function geomap_main() {
   //  date on title
   $("#geomap_titre_date").html($("#slider_geomap").val());
 
-  //  update geomap size automatically
-  window.addEventListener('resize', (ev) => {
-    LOCK_COUNTRY = false;
-    update_geomap();
-  }, true);
-
   //  show info country
   show_geomap_info_country(null, $("#slider_geomap").val(), get_list_of_selected_cause_geomap());
 }
