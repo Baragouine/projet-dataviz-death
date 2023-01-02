@@ -114,6 +114,11 @@ function get_prop_deaths_line(line, list_cause) {
   return sum / line.Population;
 }
 
+//  max deaths
+function get_max_deaths(data = get_data_raw(), list_cause) {
+  return data.reduce((a, line) => Math.max(get_sum_deaths_line(line, list_cause), a), get_sum_deaths_line(data[0], list_cause));
+}
+
 //  max sum deaths
 function get_max_sum_deaths(data = get_data_raw(), list_cause) {
   return data.reduce((a, line) => Math.max(get_sum_deaths_line(line, list_cause), a), get_sum_deaths_line(data[0], list_cause));
@@ -122,6 +127,11 @@ function get_max_sum_deaths(data = get_data_raw(), list_cause) {
 //  max proportion deaths
 function get_max_prop_deaths(data = get_data_prop(), list_cause) {
   return data.reduce((a, line) => Math.max(get_prop_deaths_line(line, list_cause), a), get_prop_deaths_line(data[0], list_cause));
+}
+
+//  min deaths
+function get_min_deaths(data = get_data_raw(), list_cause) {
+  return data.reduce((a, line) => Math.min(get_sum_deaths_line(line, list_cause), a), get_sum_deaths_line(data[0], list_cause));
 }
 
 //  min sum deaths
@@ -297,6 +307,27 @@ function update_good_visualization() {
   } else {
     update_geomap();
   }
+}
+
+//  filter data for years and for countries
+function filter_data_for_years_for_countries(data, years, countries) {
+  const dataFileredYears = data.filter((l) => {
+    for (let i = 0; i < years.length; ++i) {
+      if (l.Year.getFullYear() == years[i])
+        return true;
+    }
+
+    return false;
+  });
+
+  return dataFileredYears.filter((l) => {
+    for (let i = 0; i < countries.length; ++i) {
+      if (l.Code == countries[i])
+        return true;
+    }
+
+    return false;
+  });
 }
 
 //  main

@@ -1,15 +1,103 @@
 //  draw scatterplot
 function draw_scatterplot(years, countries, cause_x, cause_y, is_proportion, is_log_x, is_log_y) {
+  const margin = ({top: 50, right: 50, bottom: 50, left: 50});
 
+  const data = filter_data_for_years_for_countries(is_proportion ? get_data_prop() : get_data_raw(), years, countries);
+
+  const min_deaths_x = (is_log_x ? 1.0 / 10e8 : 0) + get_min_deaths(data, [cause_x]);
+  var max_deaths_x = (is_log_x ? 1.0 / 10e8 : 0) + get_max_deaths(data, [cause_x]);
+  const min_deaths_y = (is_log_y ? 1.0 / 10e8 : 0) + get_min_deaths(data, [cause_y]);
+  var max_deaths_y = (is_log_y ? 1.0 / 10e8 : 0) + get_max_deaths(data, [cause_y]);
+
+if (min_deaths_x == max_deaths_x)
+  max_deaths_x += is_log_x ? 1.0 / 10e8 : 1;
+
+if (min_deaths_y == max_deaths_y)
+  max_deaths_y += is_log_y ? 1.0 / 10e8 : 1;
+
+  console.log(years);
+  console.log(countries);
+  console.log(cause_x);
+  console.log(cause_y);
+  console.log(is_proportion);
+  console.log(is_log_x);
+  console.log(is_log_y);
+  console.log(min_deaths_x);
+  console.log(max_deaths_x);
+  console.log(min_deaths_y);
+  console.log(max_deaths_y);
+
+  const preScaleX  = (is_log_x ? d3.scaleLog() : d3.scaleLinear()).domain([min_deaths_x, max_deaths_x]);
+  const preScaleY  = (is_log_y ? d3.scaleLog() : d3.scaleLinear()).domain([min_deaths_y, max_deaths_y]);
+  const x = d3.scaleSequential((d) => d3.interpolateReds(preScaleX(d)));
+  const y = d3.scaleSequential((d) => d3.interpolateReds(preScaleY(d)));
+
+  const w = $("#scatterplot").width();
+  const h = w;
+  const svg = d3.select("#scatterplot").attr("height", h);
+
+  //  clear svg
+  svg.selectAll('*').remove();
+
+  const xAxis = g => g
+    .attr("transform", `translate(0,${h - margin.bottom})`)
+    .call(d3.axisBottom(x));
+
+  const yAxis = g => g
+    .attr("transform", `translate(${margin.left},0)`)
+    .call(d3.axisLeft(y));
+
+  svg.append("g")
+     .style("font-size", "12px")
+     .call(xAxis);
+
+  svg.append("g")
+      .style("font-size", "12px")
+      .call(yAxis);
+
+  svg.append("path")
+     .attr("d", d3.symbol().type(d3.symbolCross))
+     .attr("transform", "translate(256,256)")
+     .attr("fill", "white");
+
+  console.log("scatterplot");
+}
+
+//  get list of selected year
+function get_list_of_selected_year_scatterplot() {
+  const list_all_year = get_list_year();
+  var list_year = [];
+
+  list_all_year.forEach(year => {
+    if (document.getElementById("scatterplot_list_year-" + year).checked)
+      list_year.push(year);
+  });
+
+  return list_year;
+}
+
+//  get list of selected year
+function get_list_of_selected_countries_scatterplot() {
+  const list_all_code = get_list_code();
+  var list_code = [];
+
+  list_all_code.forEach(code => {
+    if (document.getElementById("scatterplot_list_country-" + code).checked)
+      list_code.push(code);
+  });
+
+  return list_code;
 }
 
 //  update scatterplot
 function update_scatterplot() {
-  const w = $("#geomapw").width();
-  const h = w;
-  const svg = d3.select("#geomapw").attr("height", h);
-
-  console.log("Scatterplot");
+  draw_scatterplot(get_list_of_selected_year_scatterplot(),
+                  get_list_of_selected_countries_scatterplot(),
+                  $("#scatterplot_list_cause_x").val(),
+                  $("#scatterplot_list_cause_y").val(),
+                  document.getElementById("scatterplot_proportion").checked,
+                  document.getElementById("scatterplot_log_x").checked,
+                  document.getElementById("scatterplot_log_y").checked);
 }
 
 //  init list year
@@ -119,7 +207,6 @@ function init_scatterplot_input() {
     update_scatterplot();
   });
 
-
   //  log x event handler
   checkbox = document.getElementById("scatterplot_log_x");
 
@@ -138,16 +225,16 @@ function init_scatterplot_input() {
 //  scatterplot
 function scatterplot_main() {
   init_scatterplot_input();
+  update_scatterplot();
 }
 
 //  on list x change
 function onScatterPlotListCauseXChange() {
-
+  update_scatterplot();
 }
 
 //  on list y change
 function onScatterPlotListCauseYChange() {
-
+  update_scatterplot();
 }
-
 
