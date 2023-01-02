@@ -1,47 +1,38 @@
+var SCATTERPLOT_SYM_SCALE = new Object();
+
 //  draw scatterplot
 function draw_scatterplot(years, countries, cause_x, cause_y, is_proportion, is_log_x, is_log_y) {
-  const margin = ({top: 50, right: 50, bottom: 50, left: 50});
-
-  const data = filter_data_for_years_for_countries(is_proportion ? get_data_prop() : get_data_raw(), years, countries);
-
-  const min_deaths_x = (is_log_x ? 1.0 / 10e8 : 0) + get_min_deaths(data, [cause_x]);
-  var max_deaths_x = (is_log_x ? 1.0 / 10e8 : 0) + get_max_deaths(data, [cause_x]);
-  const min_deaths_y = (is_log_y ? 1.0 / 10e8 : 0) + get_min_deaths(data, [cause_y]);
-  var max_deaths_y = (is_log_y ? 1.0 / 10e8 : 0) + get_max_deaths(data, [cause_y]);
-
-if (min_deaths_x == max_deaths_x)
-  max_deaths_x += is_log_x ? 1.0 / 10e8 : 1;
-
-if (min_deaths_y == max_deaths_y)
-  max_deaths_y += is_log_y ? 1.0 / 10e8 : 1;
-
-  console.log(years);
-  console.log(countries);
-  console.log(cause_x);
-  console.log(cause_y);
-  console.log(is_proportion);
-  console.log(is_log_x);
-  console.log(is_log_y);
-  console.log(min_deaths_x);
-  console.log(max_deaths_x);
-  console.log(min_deaths_y);
-  console.log(max_deaths_y);
-
-  const preScaleX  = (is_log_x ? d3.scaleLog() : d3.scaleLinear()).domain([min_deaths_x, max_deaths_x]);
-  const preScaleY  = (is_log_y ? d3.scaleLog() : d3.scaleLinear()).domain([min_deaths_y, max_deaths_y]);
-  const x = d3.scaleSequential((d) => d3.interpolateReds(preScaleX(d)));
-  const y = d3.scaleSequential((d) => d3.interpolateReds(preScaleY(d)));
+  const margin = ({top: 100, right: 50, bottom: 50, left: 100});
 
   const w = $("#scatterplot").width();
   const h = w;
   const svg = d3.select("#scatterplot").attr("height", h);
+
+  const data = filter_data_for_years_for_countries(is_proportion ? get_data_prop() : get_data_raw(), years, countries);
+
+  const eps_x = is_log_x ? 1.0 / 10e8 : 0;
+  const eps_y = is_log_y ? 1.0 / 10e8 : 0;
+
+  const min_deaths_x = eps_x + get_min_deaths(data, [cause_x]);
+  var max_deaths_x = eps_x + get_max_deaths(data, [cause_x]);
+  const min_deaths_y = eps_y + get_min_deaths(data, [cause_y]);
+  var max_deaths_y = eps_y + get_max_deaths(data, [cause_y]);
+
+  if (min_deaths_x == max_deaths_x)
+    max_deaths_x += is_proportion ? 1.0 / 10e8 : 1;
+
+  if (min_deaths_y == max_deaths_y)
+    max_deaths_y += is_proportion ? 1.0 / 10e8 : 1;
+
+  const x  = (is_log_x ? d3.scaleLog() : d3.scaleLinear()).domain([min_deaths_x, max_deaths_x]).range([margin.left, w - margin.right]);
+  const y  = (is_log_y ? d3.scaleLog() : d3.scaleLinear()).domain([min_deaths_y, max_deaths_y]).range([h-margin.bottom, margin.top]);
 
   //  clear svg
   svg.selectAll('*').remove();
 
   const xAxis = g => g
     .attr("transform", `translate(0,${h - margin.bottom})`)
-    .call(d3.axisBottom(x));
+    .call(d3.axisBottom(x).ticks(5));
 
   const yAxis = g => g
     .attr("transform", `translate(${margin.left},0)`)
@@ -55,12 +46,12 @@ if (min_deaths_y == max_deaths_y)
       .style("font-size", "12px")
       .call(yAxis);
 
-  svg.append("path")
-     .attr("d", d3.symbol().type(d3.symbolCross))
-     .attr("transform", "translate(256,256)")
-     .attr("fill", "white");
-
-  console.log("scatterplot");
+  data.forEach((line) => {
+    svg.append("path")
+       .attr("d", d3.symbol().type(SCATTERPLOT_SYM_SCALE[line.Year.getFullYear()][0]))
+       .attr("transform", "translate(" + x(eps_x + get_sum_deaths_line(line, [cause_x])) + "," + y(eps_y + get_sum_deaths_line(line, [cause_y])) + ")")
+       .attr("fill", SCATTERPLOT_SYM_SCALE[line.Year.getFullYear()][1]);
+  });
 }
 
 //  get list of selected year
@@ -225,6 +216,25 @@ function init_scatterplot_input() {
 //  scatterplot
 function scatterplot_main() {
   init_scatterplot_input();
+
+  //  init SCATTERPLOT_SYM_SCALE
+  const list_year = get_list_year();
+  const list_sym = [d3.symbolCircle, d3.symbolCross, d3.symbolDiamond, d3.symbolSquare, d3.symbolStar, d3.symbolTriangle, d3.symbolWye];
+  const list_color = ["#D00", "#0D0", "#00D", "#DD0", "#0DD"];
+
+  var sym = 0;
+  var color = 0;
+
+  list_year.forEach((year) => {
+    SCATTERPLOT_SYM_SCALE[year] = [list_sym[sym], list_color[color]];
+    ++sym;
+    if (sym >= list_sym.length)
+    {
+      sym = 0;
+      ++color;
+    }
+  });
+
   update_scatterplot();
 }
 
