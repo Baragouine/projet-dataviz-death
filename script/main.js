@@ -290,19 +290,12 @@ async function load_data() {
 function update_good_visualization() {
   LOCK_COUNTRY = false;
   //  select the good page automatically
-  var page = window.location.hash;
-
-  if (!!page) {
-    id = '';
-
-    for (let i = 2; i < page.length; ++i)
-      id += page[i];
-
-    if (id == "Scatter")
+  if (VISUALIZATION == "GeoMap" || VISUALIZATION == "Scatter" || VISUALIZATION == "BarPlot") {
+    if (VISUALIZATION == "Scatter")
       update_scatterplot();
-    else if (id == "BarPlot")
+    else if (VISUALIZATION == "BarPlot")
       update_barplot();
-    else if (id == "GeoMap")
+    else if (VISUALIZATION == "GeoMap")
       update_geomap();
   } else {
     update_geomap();

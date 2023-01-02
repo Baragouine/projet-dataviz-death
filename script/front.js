@@ -1,3 +1,5 @@
+var VISUALIZATION = "GeoMap"
+
 var expanded = false;
 
 function showCheckboxes(id) {
@@ -25,6 +27,9 @@ function setContent(content) {
 
   if (content == "GeoMap" || content == "Scatter" || content == "BarPlot")
     document.getElementById(content).style.display = 'block';
+
+    VISUALIZATION = content;
+    update_good_visualization();
 }
 
 function frontMain() {
