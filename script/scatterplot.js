@@ -1,4 +1,21 @@
-var SCATTERPLOT_SYM_SCALE = new Object();
+//  generate color scale from selected year
+function gen_color_scale(list_year) {
+  const list_color = [
+    "#943126", "#633974", "#21618c", "#0e6655", "#1d8348", "#9a7d0a", "#873600", "#979a9a", "#5f6a6a", "#212f3c",
+    "#e74c3c", "#9b59b6", "#3498db", "#16a085", "#2ecc71", "#f1c40f", "#d35400", "#ecf0f1", "#95a5a6", "#34495e",
+    "#f5b7b1", "#d7bde2", "#aed6f1", "#a2d9ce", "#abebc6", "#f9e79f", "#edbb99", "#f7f9f9", "#d5dbdb", "#aeb6bf"
+  ];
+  var res = new Object();
+
+  var color = 0;
+
+  list_year.forEach((year) => {
+    res[year] = list_color[color];
+    ++color;
+  });
+
+  return res;
+}
 
 //  draw scatterplot
 function draw_scatterplot(years, countries, cause_x, cause_y, is_proportion, is_log_x, is_log_y) {
@@ -39,18 +56,20 @@ function draw_scatterplot(years, countries, cause_x, cause_y, is_proportion, is_
     .call(d3.axisLeft(y));
 
   svg.append("g")
-     .style("font-size", "12px")
+     .style("font-size", "10px")
      .call(xAxis);
 
   svg.append("g")
-      .style("font-size", "12px")
+      .style("font-size", "10px")
       .call(yAxis);
+
+  const color_scale = gen_color_scale(years);
 
   data.forEach((line) => {
     svg.append("path")
-       .attr("d", d3.symbol().type(SCATTERPLOT_SYM_SCALE[line.Year.getFullYear()][0]))
+       .attr("d", d3.symbol().type(d3.symbolCircle).size(30))
        .attr("transform", "translate(" + x(eps_x + get_sum_deaths_line(line, [cause_x])) + "," + y(eps_y + get_sum_deaths_line(line, [cause_y])) + ")")
-       .attr("fill", SCATTERPLOT_SYM_SCALE[line.Year.getFullYear()][1]);
+       .attr("fill", color_scale[line.Year.getFullYear()]);
   });
 }
 
@@ -216,25 +235,6 @@ function init_scatterplot_input() {
 //  scatterplot
 function scatterplot_main() {
   init_scatterplot_input();
-
-  //  init SCATTERPLOT_SYM_SCALE
-  const list_year = get_list_year();
-  const list_sym = [d3.symbolCircle, d3.symbolCross, d3.symbolDiamond, d3.symbolSquare, d3.symbolStar, d3.symbolTriangle, d3.symbolWye];
-  const list_color = ["#D00", "#0D0", "#00D", "#DD0", "#0DD"];
-
-  var sym = 0;
-  var color = 0;
-
-  list_year.forEach((year) => {
-    SCATTERPLOT_SYM_SCALE[year] = [list_sym[sym], list_color[color]];
-    ++sym;
-    if (sym >= list_sym.length)
-    {
-      sym = 0;
-      ++color;
-    }
-  });
-
   update_scatterplot();
 }
 
