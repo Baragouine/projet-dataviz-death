@@ -24,6 +24,7 @@ function draw_scatterplot(years, countries, cause_x, cause_y, is_proportion, is_
   const w = $("#scatterplot").width();
   const h = w;
   const svg = d3.select("#scatterplot").attr("height", h);
+  const svgLegend = d3.select("#scatterplot_legend").attr("width", 100);
 
   const data = filter_data_for_years_for_countries(is_proportion ? get_data_prop() : get_data_raw(), years, countries);
 
@@ -44,8 +45,9 @@ function draw_scatterplot(years, countries, cause_x, cause_y, is_proportion, is_
   const x  = (is_log_x ? d3.scaleLog() : d3.scaleLinear()).domain([min_deaths_x, max_deaths_x]).range([margin.left, w - margin.right]);
   const y  = (is_log_y ? d3.scaleLog() : d3.scaleLinear()).domain([min_deaths_y, max_deaths_y]).range([h-margin.bottom, margin.top]);
 
-  //  clear svg
+  //  clear svgs
   svg.selectAll('*').remove();
+  svgLegend.selectAll('*').remove();
 
   const xAxis = g => g
     .attr("transform", `translate(0,${h - margin.bottom})`)
@@ -71,6 +73,33 @@ function draw_scatterplot(years, countries, cause_x, cause_y, is_proportion, is_
        .attr("transform", "translate(" + x(eps_x + get_sum_deaths_line(line, [cause_x])) + "," + y(eps_y + get_sum_deaths_line(line, [cause_y])) + ")")
        .attr("fill", color_scale[line.Year.getFullYear()]);
   });
+
+  const limit_hl = 10;
+  var xl = 0;
+  var yl = 0;
+
+  years.forEach((year) => {
+    svgLegend.append("text")
+      .attr("x", 20 * (xl + 1) + xl * 60)
+      .attr("y", 20 + yl * 20)
+      .text(year.toString())
+      .style("font-size", "12px")
+      .style("fill", get_text_color());
+
+    svgLegend.append("path")
+      .attr("d", d3.symbol().type(d3.symbolCircle).size(30))
+      .attr("transform", "translate(" + (10 * (xl + 1) + xl * 70) + "," +  (16 + yl * 20) + ")")
+      .attr("fill", color_scale[year]);
+
+    ++yl;
+
+    if (yl >= limit_hl) {
+      ++xl;
+      yl = 0;
+    }
+  });
+
+  svgLegend.attr("width", (xl + 1) * 70 - (yl == 0 ? 70 : 0)).attr("height", limit_hl * 20 + 10)
 }
 
 //  get list of selected year
