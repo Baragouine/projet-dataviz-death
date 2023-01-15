@@ -57,7 +57,16 @@
     </ul> -->
   </nav>
   <div>
-    <div id="GeoMap">
+    <div class="section">
+      <p>Bienvenue sur notre site web de visualisation de données sur les causes de mortalité dans le monde. La mortalité est un problème majeur dans le monde entier, et il est important de comprendre les causes de décès pour pouvoir mettre en place des stratégies de prévention efficaces. Ce site vous offre des visualisations claires et informatives pour vous aider à comprendre les causes de mortalité dans différents pays et à différentes périodes de temps. Vous pourrez visualiser les tendances générales, les différences entre les pays, et les relations entre les causes de décès.</p>
+    </div>
+
+    <div class="section">
+      <p>Notre carte interactive du monde vous permet de sélectionner une ou plusieurs causes de décès, une période d'années et une méthode d'affichage pour visualiser les taux de mortalité dans les différents pays. Utilisez les couleurs pour identifier les pays les plus touchés par les causes de mortalité sélectionnées. Avec cette visualisation, vous pourrez identifier les tendances générales et les différences entre les pays pour les causes de mortalité sélectionnées.</p>
+    </div>
+
+    <div class="section">
+      <div id="GeoMap">
       <div class="settings d-flex" style="justify-content: center;">
         <div>
           <div style="display: flex; gap: 10px; padding: 10px;">
@@ -115,93 +124,102 @@
           </div>
         </div>
       </div>
-    </div>
-      
-    <div id="Scatter" class="Visualization">
-      <div class="checkboxes position-relative d-block" id="checkboxesCountries">
-        <input class="btn btn-outline-light btn-sm" type="button" value="All" onclick="selectContinent('All')">
-        <input class="btn btn-outline-light btn-sm" type="button" value="Europe" onclick="selectContinent('Europe')">
-        <input class="btn btn-outline-light btn-sm" type="button" value="Asia" onclick="selectContinent('Asia')">
-        <input class="btn btn-outline-light btn-sm" type="button" value="Americas" onclick="selectContinent('Americas')">
-        <input class="btn btn-outline-light btn-sm" type="button" value="Oceania" onclick="selectContinent('Oceania')">
-        <input class="btn btn-outline-light btn-sm" type="button" value="Africa" onclick="selectContinent('Africa')">
-        <div id="scatterplot_list_country"></div>
-      </div>
-      <div class="flex-column w-100 ms-3">
-        <div>
-          <!-- <button type="button" class="btn btn-danger btn-sm dropdown-toggle" onclick="showCheckboxes('checkboxesYears')">years</button> -->
-          <div><div class="checkboxes" id="checkboxesYears"> <div id="scatterplot_list_year"></div> </div></div>
-          
-          <label for="scatterplot_list_cause_x">Cause 1 (X):</label>
-          <select id="scatterplot_list_cause_x" onchange="onScatterPlotListCauseXChange()">
-            <option value="Dog">Dog</option>
-          </select>
-
-          <label for="scatterplot_list_cause_y">Cause 2 (Y):</label>
-          <select id="scatterplot_list_cause_y" onchange="onScatterPlotListCauseYChange()">
-            <option value="Cat">Cat</option>
-          </select>
-
-          <label class="toggle">
-            <input class="toggle-checkbox" id="scatterplot_proportion" type="checkbox">
-            <div class="toggle-switch"></div>
-            <span class="toggle-label">% Scale</span>
-          </label>
-
-          <label class="toggle">
-            <input class="toggle-checkbox" id="scatterplot_log_x" type="checkbox">
-            <!-- <div class="toggle-switch"></div>
-            <span class="toggle-label">Log X</span> -->
-          </label>
-
-          <label class="toggle">
-            <input class="toggle-checkbox" id="scatterplot_log_y" type="checkbox">
-            <!-- <div class="toggle-switch"></div>
-            <span class="toggle-label">Log Y</span> -->
-          </label>
-        </div>
-        <div>
-          <svg id="scatterplot" width="100%" style="max-width: 65vh;"></svg>
-          <svg id="scatterplot_legend"></svg>
-        </div>
-        <Input class="range" type="range" name="slider_scatter_start" id="slider_scatter_start" value="1999" min="1990" max="2019" onChange="rangeSlideScatter(0, this.value)"></Input>
-        <Input class="range" type="range" name="slider_scatter_end" id="slider_scatter_end" value="2010" min="1990" max="2019" onChange="rangeSlideScatter(1, this.value)"></Input>
-        <div class="box-minmax pt-5 mt-1" style="
-            width: 40vw;
-        ">
-          <span class="rangeValue">1990</span><span class="rangeValue" id="rangeScatterValue">1999,2010</span><span class="rangeValue" >2019</span>
-        </div>
       </div>
     </div>
 
-    <div id="CountryDetails" class="Visualization">
-      <div class="checkboxes position-relative d-block" id="checkboxesCountriesCountryDetails">
-        <input class="btn btn-outline-light btn-sm" type="button" value="All" onclick="selectContinentCountryDetails('All')">
-        <input class="btn btn-outline-light btn-sm" type="button" value="Europe" onclick="selectContinentCountryDetails('Europe')">
-        <input class="btn btn-outline-light btn-sm" type="button" value="Asia" onclick="selectContinentCountryDetails('Asia')">
-        <input class="btn btn-outline-light btn-sm" type="button" value="Americas" onclick="selectContinentCountryDetails('Americas')">
-        <input class="btn btn-outline-light btn-sm" type="button" value="Oceania" onclick="selectContinentCountryDetails('Oceania')">
-        <input class="btn btn-outline-light btn-sm" type="button" value="Africa" onclick="selectContinentCountryDetails('Africa')">
-        <div id="CountryDetails_list_country"></div>
-      </div>
+    <div class="section">
+      <p>Notre graphique interactif vous permet de sélectionner un ou plusieurs pays ou continents pour visualiser les corrélations entre différentes causes de décès. Utilisez les points pour identifier les relations les plus évidentes entre les causes de mortalité sélectionnées. Aussi, vous aurez la possibilité d'afficher les données en part de population.</p>
+    </div>
 
-      <div class="flex-column w-100 ms-3">
-        <div>
-          <label class="toggle">
-            <input class="toggle-checkbox" id="CountryDetails_proportion" type="checkbox">
-            <div class="toggle-switch"></div>
-            <span class="toggle-label">% Scale</span>
-          </label>
+    <div class="section">
+      <div id="Scatter" class="Visualization">
+    <div class="checkboxes position-relative d-block" id="checkboxesCountries">
+      <input class="btn btn-outline-light btn-sm" type="button" value="All" onclick="selectContinent('All')">
+      <input class="btn btn-outline-light btn-sm" type="button" value="Europe" onclick="selectContinent('Europe')">
+      <input class="btn btn-outline-light btn-sm" type="button" value="Asia" onclick="selectContinent('Asia')">
+      <input class="btn btn-outline-light btn-sm" type="button" value="Americas" onclick="selectContinent('Americas')">
+      <input class="btn btn-outline-light btn-sm" type="button" value="Oceania" onclick="selectContinent('Oceania')">
+      <input class="btn btn-outline-light btn-sm" type="button" value="Africa" onclick="selectContinent('Africa')">
+      <div id="scatterplot_list_country"></div>
+    </div>
+    <div class="flex-column w-100 ms-3">
+      <div>
+        <!-- <button type="button" class="btn btn-danger btn-sm dropdown-toggle" onclick="showCheckboxes('checkboxesYears')">years</button> -->
+        <div><div class="checkboxes" id="checkboxesYears"> <div id="scatterplot_list_year"></div> </div></div>
+        
+        <label for="scatterplot_list_cause_x">Cause 1 (X):</label>
+        <select id="scatterplot_list_cause_x" onchange="onScatterPlotListCauseXChange()">
+          <option value="Dog">Dog</option>
+        </select>
+
+        <label for="scatterplot_list_cause_y">Cause 2 (Y):</label>
+        <select id="scatterplot_list_cause_y" onchange="onScatterPlotListCauseYChange()">
+          <option value="Cat">Cat</option>
+        </select>
+
+        <label class="toggle">
+          <input class="toggle-checkbox" id="scatterplot_proportion" type="checkbox">
+          <div class="toggle-switch"></div>
+          <span class="toggle-label">% Scale</span>
+        </label>
+      </div>
+      <div>
+        <svg id="scatterplot" width="100%" style="max-width: 65vh;"></svg>
+        <svg id="scatterplot_legend"></svg>
+      </div>
+      <Input class="range" type="range" name="slider_scatter_start" id="slider_scatter_start" value="1999" min="1990" max="2019" onChange="rangeSlideScatter(0, this.value)"></Input>
+      <Input class="range" type="range" name="slider_scatter_end" id="slider_scatter_end" value="2010" min="1990" max="2019" onChange="rangeSlideScatter(1, this.value)"></Input>
+      <div class="box-minmax pt-5 mt-1" style="
+          width: 40vw;
+      ">
+        <span class="rangeValue">1990</span><span class="rangeValue" id="rangeScatterValue">1999,2010</span><span class="rangeValue" >2019</span>
+      </div>
+    </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div id="CountryDetails" class="Visualization">
+        <div class="checkboxes position-relative d-block" id="checkboxesCountriesCountryDetails">
+          <input class="btn btn-outline-light btn-sm" type="button" value="All" onclick="selectContinentCountryDetails('All')">
+          <input class="btn btn-outline-light btn-sm" type="button" value="Europe" onclick="selectContinentCountryDetails('Europe')">
+          <input class="btn btn-outline-light btn-sm" type="button" value="Asia" onclick="selectContinentCountryDetails('Asia')">
+          <input class="btn btn-outline-light btn-sm" type="button" value="Americas" onclick="selectContinentCountryDetails('Americas')">
+          <input class="btn btn-outline-light btn-sm" type="button" value="Oceania" onclick="selectContinentCountryDetails('Oceania')">
+          <input class="btn btn-outline-light btn-sm" type="button" value="Africa" onclick="selectContinentCountryDetails('Africa')">
+          <div id="CountryDetails_list_country"></div>
         </div>
-        <div>
-          <svg id="CountryDetailsByYear" width="100%" style="max-width: 65vh;"></svg>
-          <svg id="CountryDetailsByYear_legend"></svg>
-        </div>
-        <div>
-          <svg id="CountryDetailsTopCauses" width="100%" style="max-width: 65vh;"></svg>
-          <svg id="CountryDetailsTopCauses_legend"></svg>
+
+        <div class="flex-column w-100 ms-3">
+          <div class="d-flex">
+            <div class="d-flex flex-column" style="
+                min-width: 55%;
+            ">
+              <label class="toggle d-flex justify-content-center">
+                <input class="toggle-checkbox" id="CountryDetails_proportion" type="checkbox">
+                <div class="toggle-switch"></div>
+                <span class="toggle-label">% Scale</span>
+              </label>
+              <svg id="CountryDetailsByYear" width="100%" style="max-width: 65vh;"></svg>
+            </div>
+            <p style="
+                max-width: 30%;
+            ">Notre graphique en barres vous permet de visualiser la mortalité annuelle pour un ou plusieurs pays ou continents sélectionnés. Avec cette visualisation, vous pourrez comprendre les tendances générales et les différences entre les pays pour la mortalité annuelle. Vous aurez, ici aussi, la possibilité d'afficher les données en part de population. On remarque souvent que les morts augmentent au fur et à mesuredes années mais que le taux de mortalité baisse, il faut donc faire attention aux interpretaions hatives et privilégier les données par part de population.</p>
+          </div>
+          <div class="d-flex">
+            <svg id="CountryDetailsTopCauses" width="100%" style="max-width: 65vh;"></svg>
+            <p style="
+                max-width: 30%;
+            ">Notre classement des causes de mortalité les plus fréquentes toutes années confondues vous permet de comprendre les causes de mortalité les plus importantes dans le monde. Avec cette visualisation, vous pourrez comprendre les tendances générales et les différences entre les pays pour les causes de mortalité les plus importantes.</p>
+          </div>
         </div>
       </div>
+    </div>
+
+    <div class="section">
+      <p>Notre site vous offre des visualisations claires et informatives pour vous aider à comprendre les causes de mortalité dans le monde. Les visualisations vous permettent de visualiser les tendances générales, les différences entre les pays, et les relations entre les causes de décès. En utilisant les informations présentées sur notre site, vous pourrez mieux comprendre les problèmes de santé les plus urgents et cibler les efforts de prévention.
+        
+        En résumé, nous avons utilisé des données provenant de sources fiables pour créer des visualisations claires et informatives sur les causes de mortalité dans le monde. Nous espérons que ce site vous permettra de mieux comprendre les problèmes de santé les plus urgents et de cibler les efforts de prévention pour améliorer la santé publique à l'échelle mondiale. Si vous avez des questions ou des commentaires sur les informations présentées sur notre site, n'hésitez pas à nous contacter.</p>
     </div>
   </div>
 </body>

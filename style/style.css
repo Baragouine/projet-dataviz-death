@@ -28,9 +28,16 @@ body {
   display: flex;
 }
 
-#Scatter {
+.section:nth-child(odd) {
   background-color: #202020;
+}
+
+#Scatter {
   padding: 2em;
+}
+
+#CountryDetails {
+  height: 150vh;
 }
 
 /*  liste des causes    */

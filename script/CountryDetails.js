@@ -5,7 +5,6 @@ function draw_CountryDetails(countries, is_proportion) {
   const w = $("#CountryDetailsTopCauses").width();
   const h = w;
   const svg = d3.select("#CountryDetailsTopCauses").attr("height", h);
-  const svgLegend = d3.select("#CountryDetailsTopCauses_legend").attr("width", 100);
 
   const data = getTopCausesByCountries(get_data_raw(), countries);
 
@@ -20,7 +19,6 @@ function draw_CountryDetails(countries, is_proportion) {
 
   //  clear svgs
   svg.selectAll('*').remove();
-  svgLegend.selectAll('*').remove();
 
   const xAxis = g => g
     .attr("transform", `translate(0,${h - margin.bottom})`)
@@ -73,10 +71,8 @@ function draw_CountryDetailsYears(countries, is_proportion) {
   const w = $("#CountryDetailsByYear").width();
   const h = w;
   const svg = d3.select("#CountryDetailsByYear").attr("height", h);
-  const svgLegend = d3.select("#CountryDetailsByYear_legend").attr("width", 100);
 
   const data = getDeathsOfYearsByCountries(is_proportion ? get_data_prop() : get_data_raw(), countries);
-  console.log(data)
 
   let min_deaths = Math.min(...(Object.keys(data).map(k=>data[k])));
   let max_deaths = Math.max(...(Object.keys(data).map(k=>data[k])));
@@ -89,7 +85,6 @@ function draw_CountryDetailsYears(countries, is_proportion) {
 
   //  clear svgs
   svg.selectAll('*').remove();
-  svgLegend.selectAll('*').remove();
 
   const xAxis = g => g
     .attr("transform", `translate(0,${h - margin.bottom})`)

@@ -151,8 +151,8 @@ function update_scatterplot() {
                   $("#scatterplot_list_cause_x").val(),
                   $("#scatterplot_list_cause_y").val(),
                   document.getElementById("scatterplot_proportion").checked,
-                  document.getElementById("scatterplot_log_x").checked,
-                  document.getElementById("scatterplot_log_y").checked);
+                  false,
+                  false);
 }
 
 //  init list year
@@ -258,20 +258,6 @@ function init_scatterplot_input() {
 
   //  % proportion
   var checkbox = document.getElementById("scatterplot_proportion");
-  checkbox.addEventListener("change", (ev) => {
-    update_scatterplot();
-  });
-
-  //  log x event handler
-  checkbox = document.getElementById("scatterplot_log_x");
-
-  checkbox.addEventListener("change", (ev) => {
-    update_scatterplot();
-  });
-
-  //  log y event handler
-  checkbox = document.getElementById("scatterplot_log_y");
-
   checkbox.addEventListener("change", (ev) => {
     update_scatterplot();
   });
