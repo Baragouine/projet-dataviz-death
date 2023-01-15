@@ -43,7 +43,7 @@
       <img src="./img/skull.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
       Causes of Deaths
     </a>
-    <ul class="nav nav-pills">
+    <!-- <ul class="nav nav-pills">
       <li class="nav-item">
         <a class="nav-link" href="#_GeoMap" onclick="setContent('GeoMap');">GeoMap</a>
       </li>
@@ -53,104 +53,123 @@
       <li class="nav-item">
         <a class="nav-link" href="#_BarPlot" onclick="setContent('BarPlot');">BarPlot</a>
       </li>
-    </ul>
+    </ul> -->
   </nav>
   <div>
     <div id="GeoMap">
-      <div class="settings" style="display: flex; justify-content: center;">
+      <div class="settings d-flex" style="justify-content: center;">
         <div>
           <div style="display: flex; gap: 10px; padding: 10px;">
-            <p>Choose causes of death <button type="button" class="btn btn-danger btn-sm dropdown-toggle" onclick="showCheckboxes('checkboxesCauses')">Causes </button></p> 
-            <label class="toggle">
-              <input class="toggle-checkbox" id="logscale_geomap" type="checkbox">
-              <div class="toggle-switch"></div>
-              <span class="toggle-label">Log scale</span>
-            </label>
-            <label class="toggle">
-              <input class="toggle-checkbox" id="prop_geomap" type="checkbox">
-              <div class="toggle-switch"></div>
-              <span class="toggle-label">% scale</span>
-            </label>
+            <p>display value using </p>
+            <input type="radio" id="normalScaleGeoMap" name="scaleChoices" value="1" checked>
+            <label for="normalScaleGeoMap">number</label>
+
+            <input type="radio" id="yearAdaptive" name="scaleChoices" value="2">
+            <label for="yearAdaptive">number adaptive scale</label>
+            
+            <input type="radio" id="prop_geomap" name="scaleChoices" value="3">
+            <label for="prop_geomap">% of population</label>
+            
+            <input type="radio" id="logscale_geomap" name="scaleChoices" value="4">
+            <label for="logscale_geomap">Log scale</label>
           </div>
-        
-          <div class="checkboxes" id="checkboxesCauses"><div id="list_cause" class="mt-2">
-          </div></div>
         </div>
         
       </div>
-      <div class="Visualization" style="display: flex; flex-wrap: wrap;">
+      <div class="Visualization d-flex">
+        <div class="checkboxes position-relative d-block" id="checkboxesCauses">
+          <h4 class="text-center">Choose causes of death:</h4> 
+          <div id="list_cause" class="mt-2">
+          </div>
+        </div>
         <div class="map">
           <div class="text-center">
             <h3>
               <span id="geomap_titre_mode">Nombre</span> de morts par pays pour les causes sélectionnés en <span id="geomap_titre_date"></span>
             </h3>
           </div>
-          <div id="geomap_help" class="text-danger text-center" style="font-size: 12px;">
+          <!-- <div id="geomap_help" class="text-danger text-center" style="font-size: 12px;">
             Survolé un pays avec la souris pour avoir plus de détails.
-          </div>
+          </div> -->
           <div ><svg id="geomapw" width="100%"></svg></div>
           <div class="container">
-            <Input class="range" type="range" name="slider_geomap" id="slider_geomap" value="1990" min="1990" max="2019" onChange="rangeSlide(this.value)" onmousemove="rangeSlide(this.value)"></Input>
+            <Input class="range" type="range" name="slider_geomap_start" id="slider_geomap_start" value="1999" min="1990" max="2019" onChange="rangeSlide(0, this.value)"></Input>
+            <Input class="range" type="range" name="slider_geomap_end" id="slider_geomap_end" value="2010" min="1990" max="2019" onChange="rangeSlide(1, this.value)"></Input>
             
-            <div class="box-minmax">
-              <span class="rangeValue">1990</span><span class="rangeValue" id="rangeValue">1990</span><span class="rangeValue" >2019</span>
+            <div class="box-minmax pt-5 mt-1">
+              <span class="rangeValue">1990</span><span class="rangeValue" id="rangeValue">1999,2010</span><span class="rangeValue" >2019</span>
             </div>
           </div>
           
         </div>
         <div class="annexe">
           <div style="display: flex; flex-wrap: wrap; justify-content: space-between; ">
-            <div class="legends" style="margin-left: 18px;"> 
+            <div class="legends" style="margin-left: 1em;"> 
               <svg id="geomap_legend"></svg>
             </div>
+            <div id="geomap_info_contry" class="info" style="margin-left: 30px; height: 5em;"></div>
             <div class="chart">
               <svg id="line_chart_country" width="350" height="250"></svg>
             </div>
-            <div id="geomap_info_contry" class="info" style="margin-left: 30px;"></div>
           </div>
         </div>
       </div>
     </div>
       
     <div id="Scatter" class="Visualization">
-      <div>
-        <button type="button" class="btn btn-danger btn-sm dropdown-toggle" onclick="showCheckboxes('checkboxesYears')">years</button>
-        <div><div class="checkboxes" id="checkboxesYears"> <div id="scatterplot_list_year"></div> </div></div>
-        
-        <button type="button" class="btn btn-danger btn-sm dropdown-toggle" onclick="showCheckboxes('checkboxesCountries')">Countries</button>
-        <div><div class="checkboxes" id="checkboxesCountries"><div id="scatterplot_list_country"></div></div></div>
-        
-        <label for="scatterplot_list_cause_x">Cause 1 (X):</label>
-        <select id="scatterplot_list_cause_x" onchange="onScatterPlotListCauseXChange()">
-          <option value="Dog">Dog</option>
-        </select>
-
-        <label for="scatterplot_list_cause_y">Cause 2 (Y):</label>
-        <select id="scatterplot_list_cause_y" onchange="onScatterPlotListCauseYChange()">
-          <option value="Cat">Cat</option>
-        </select>
-
-        <label class="toggle">
-          <input class="toggle-checkbox" id="scatterplot_proportion" type="checkbox">
-          <div class="toggle-switch"></div>
-          <span class="toggle-label">% Scale</span>
-        </label>
-
-        <label class="toggle">
-          <input class="toggle-checkbox" id="scatterplot_log_x" type="checkbox">
-          <div class="toggle-switch"></div>
-          <span class="toggle-label">Log X</span>
-        </label>
-
-        <label class="toggle">
-          <input class="toggle-checkbox" id="scatterplot_log_y" type="checkbox">
-          <div class="toggle-switch"></div>
-          <span class="toggle-label">Log Y</span>
-        </label>
+      <div class="checkboxes position-relative d-block" id="checkboxesCountries">
+        <input class="btn btn-outline-light btn-sm" type="button" value="All" onclick="selectContinent('All')">
+        <input class="btn btn-outline-light btn-sm" type="button" value="Europe" onclick="selectContinent('Europe')">
+        <input class="btn btn-outline-light btn-sm" type="button" value="Asia" onclick="selectContinent('Asia')">
+        <input class="btn btn-outline-light btn-sm" type="button" value="Americas" onclick="selectContinent('Americas')">
+        <input class="btn btn-outline-light btn-sm" type="button" value="Oceania" onclick="selectContinent('Oceania')">
+        <input class="btn btn-outline-light btn-sm" type="button" value="Africa" onclick="selectContinent('Africa')">
+        <div id="scatterplot_list_country"></div>
       </div>
-      <div>
-        <svg id="scatterplot" width="100%" style="max-width: 700px;"></svg>
-        <svg id="scatterplot_legend"></svg>
+      <div class="flex-column w-100 ms-3">
+        <div>
+          <!-- <button type="button" class="btn btn-danger btn-sm dropdown-toggle" onclick="showCheckboxes('checkboxesYears')">years</button> -->
+          <div><div class="checkboxes" id="checkboxesYears"> <div id="scatterplot_list_year"></div> </div></div>
+          
+          <label for="scatterplot_list_cause_x">Cause 1 (X):</label>
+          <select id="scatterplot_list_cause_x" onchange="onScatterPlotListCauseXChange()">
+            <option value="Dog">Dog</option>
+          </select>
+
+          <label for="scatterplot_list_cause_y">Cause 2 (Y):</label>
+          <select id="scatterplot_list_cause_y" onchange="onScatterPlotListCauseYChange()">
+            <option value="Cat">Cat</option>
+          </select>
+
+          <label class="toggle">
+            <input class="toggle-checkbox" id="scatterplot_proportion" type="checkbox">
+            <div class="toggle-switch"></div>
+            <span class="toggle-label">% Scale</span>
+          </label>
+
+          <label class="toggle">
+            <input class="toggle-checkbox" id="scatterplot_log_x" type="checkbox">
+            <div class="toggle-switch"></div>
+            <span class="toggle-label">Log X</span>
+          </label>
+
+          <label class="toggle">
+            <input class="toggle-checkbox" id="scatterplot_log_y" type="checkbox">
+            <div class="toggle-switch"></div>
+            <span class="toggle-label">Log Y</span>
+          </label>
+        </div>
+        <div>
+          <svg id="scatterplot" width="100%" style="max-width: 65vh;"></svg>
+          <svg id="scatterplot_legend"></svg>
+        </div>
+        <Input class="range" type="range" name="slider_scatter_start" id="slider_scatter_start" value="1999" min="1990" max="2019" onChange="rangeSlideScatter(0, this.value)"></Input>
+        <Input class="range" type="range" name="slider_scatter_end" id="slider_scatter_end" value="2010" min="1990" max="2019" onChange="rangeSlideScatter(1, this.value)"></Input>
+        <div class="box-minmax pt-5 mt-1" style="
+            width: 40vw;
+        ">
+          <span class="rangeValue">1990</span><span class="rangeValue" id="rangeScatterValue">1999,2010</span><span class="rangeValue" >2019</span>
+        </div>
       </div>
     </div>
 

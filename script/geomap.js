@@ -8,21 +8,23 @@ function update_geomap() {
     return;
 
   if (document.getElementById("prop_geomap").checked) {
-    draw_geo_map_prop(get_data_prop(), get_list_of_selected_cause_geomap(), $("#slider_geomap").val(), document.getElementById("logscale_geomap").checked);
+    $("#geomap_titre_mode").html("Proportion");
+    draw_geo_map_prop(get_data_prop(), get_list_of_selected_cause_geomap(), getRange(), document.getElementById("logscale_geomap").checked);
   } else {
-    draw_geo_map(get_data_raw(), get_list_of_selected_cause_geomap(), $("#slider_geomap").val(), document.getElementById("logscale_geomap").checked);
+    $("#geomap_titre_mode").html("Nombre");
+    draw_geo_map(get_data_raw(), get_list_of_selected_cause_geomap(), getRange(), document.getElementById("logscale_geomap").checked);
   }
 }
 
 //  update info for a country
-function show_geomap_info_country(code, name, year, list_cause) {
+function show_geomap_info_country(code, name, yearRange, list_cause) {
   if (LOCK_COUNTRY)
     return;
 
   if (code == null) {
     $("#geomap_info_contry").html(
       `
-        <h6>Aucun pays selected</h6>
+        <h6></h6>
         <p></p>
       `
     );
@@ -33,7 +35,7 @@ function show_geomap_info_country(code, name, year, list_cause) {
     $("#geomap_info_contry").html(
     `
       <h6>${name} (${code})</h6>
-      <p style="font-size: 12px;">Aucune donnée.</p>
+      <p style="font-size: 12px;">No data.</p>
     `);
     return;
   }
@@ -43,9 +45,9 @@ function show_geomap_info_country(code, name, year, list_cause) {
       <h6>${name} (${code})</h6>
       <p style="font-size: 12px;">
         <span class="fw-bold">
-          ${get_sum_deaths(get_data_raw(), year, code, list_cause)}
+          ${get_sum_deaths(get_data_raw(), yearRange, code, list_cause)}
          </span>
-        morts sur ${get_population_size(year, code)} (${(get_prop_deaths(get_data_raw(), year, code, list_cause) * 100).toFixed(7)} %) en ${year}.
+        morts sur ${get_population_size(yearRange, code)} (${(get_prop_deaths(get_data_raw(), yearRange, code, list_cause) * 100).toFixed(7)} %) en ${yearRange.toString()}.
       </p>
     `
   );
@@ -59,9 +61,9 @@ function geomap_mouseover_country(svg, ev, code, name) {
   svg.selectAll("path")
      .style("opacity", f => f.id == code ? 1 : 0.2);
 
-  show_geomap_info_country(code, name, $("#slider_geomap").val(), get_list_of_selected_cause_geomap());
+  show_geomap_info_country(code, name, getRange(), get_list_of_selected_cause_geomap());
   draw_line_chart_country(code, get_list_of_selected_cause_geomap(), document.getElementById("prop_geomap").checked);
-  $("#geomap_help").html("Cliquer sur un pays pour vérouiller l'affichage dessus.");
+  // $("#geomap_help").html("Cliquer sur un pays pour vérouiller l'affichage dessus.");
 }
 
 //  on mouseout country
@@ -72,9 +74,9 @@ function geomap_mouseout_country(svg, ev, code) {
   svg.selectAll("path")
      .style("opacity", 1);
 
-  show_geomap_info_country(null, null, $("#slider_geomap").val(), get_list_of_selected_cause_geomap());
+  show_geomap_info_country(null, null, getRange(), get_list_of_selected_cause_geomap());
   draw_line_chart_country(null, get_list_of_selected_cause_geomap(), document.getElementById("prop_geomap").checked);
-  $("#geomap_help").html("Survolé un pays avec la souris pour avoir plus de détails.")
+  // $("#geomap_help").html("Survolé un pays avec la souris pour avoir plus de détails.")
 }
 
 //  on mouse over country
@@ -85,7 +87,7 @@ function geomap_mouseclick_country(svg, ev, code, name) {
         geomap_mouseover_country(svg, ev, code, name);
         LOCK_COUNTRY = true;
         LAST_ACTION_LOCK_COUNTRY = "click";
-        $("#geomap_help").html("Cliquer quelque part pour déverouiller.");
+        // $("#geomap_help").html("Cliquer quelque part pour déverouiller.");
       }
     }
   }, 30);
@@ -131,16 +133,16 @@ function select_only_first_causes_geomap() {
 }
 
 //  draw geomap by number of death
-function draw_geo_map(data, list_cause, year, log_scale = false) {
+function draw_geo_map(data, list_cause, yearRange, log_scale = false) {
   const margin = ({top: 0, right: 0, bottom: 0, left: 0})
 
   const w = $("#geomapw").width();;
   const h = w * 0.5375;
 
   const min_deaths = Math.max(get_min_sum_deaths(data, list_cause), 1);
-  const max_deaths = get_max_sum_deaths(data, list_cause);
+  const max_deaths = get_max_sum_deaths(data, list_cause) * (document.getElementById("yearAdaptive").checked ? (yearRange[1]-yearRange[0]+1) : 30);
 
-  const dataForYear = data.filter(e => e.Year.getFullYear() == year);
+  const dataForYear = data.filter(e => [...Array(yearRange[1]-yearRange[0]+1).keys()].map(i => i + yearRange[0]).includes(e.Year.getFullYear()));
 
   const logScale = d3.scaleLog().domain([min_deaths, max_deaths])
   const colorScaleLog = d3.scaleSequential((d) => d3.interpolateReds(logScale(d)))
@@ -169,7 +171,7 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
      .append("path")
      .attr("fill", e => {
        const codePays = e.id;
-       const nb_deaths = get_sum_deaths(dataForYear, year, codePays, list_cause);
+       const nb_deaths = get_sum_deaths(dataForYear, yearRange, codePays, list_cause);
        if (nb_deaths > 0) {
          return colorScale(nb_deaths);
        }
@@ -262,7 +264,8 @@ function draw_geo_map(data, list_cause, year, log_scale = false) {
 }
 
 //  draw geomap by proportion of death
-function draw_geo_map_prop(data, list_cause, year, log_scale = false) {
+function draw_geo_map_prop(data, list_cause, yearRange, log_scale = false) {
+  console.log(yearRange)
   const margin = ({top: 0, right: 0, bottom: 0, left: 0})
 
   const w = $("#geomapw").width();
@@ -271,7 +274,9 @@ function draw_geo_map_prop(data, list_cause, year, log_scale = false) {
   const min_deaths = Math.max(get_min_sum_deaths(data, list_cause), 1.0/10e8);
   const max_deaths = get_max_sum_deaths(data, list_cause);
 
-  const dataForYear = data.filter(e => e.Year.getFullYear() == year);
+  start()
+  const dataForYear = data.filter(e => [...Array(yearRange[1]-yearRange[0]+1).keys()].map(i => i + yearRange[0]).includes(e.Year.getFullYear()));
+  end()
 
   const logScale = d3.scaleLog().domain([min_deaths, max_deaths])
   const colorScaleLog = d3.scaleSequential((d) => d3.interpolateReds(logScale(d)))
@@ -302,7 +307,7 @@ function draw_geo_map_prop(data, list_cause, year, log_scale = false) {
      .append("path")
      .attr("fill", e => {
        const codePays = e.id;
-       const nb_deaths = get_sum_deaths(dataForYear, year, codePays, list_cause);
+       const nb_deaths = get_sum_deaths(dataForYear, yearRange, codePays, list_cause)/(yearRange[1]-yearRange[0]+1);
        if (nb_deaths > 0) {
          return colorScale(nb_deaths);
        }
@@ -426,7 +431,14 @@ function geomap_main() {
   });
 
   //  logscale checkbox js
-  var checkbox = document.getElementById("logscale_geomap");
+  let checkbox = document.getElementById("logscale_geomap");
+
+  checkbox.addEventListener("change", (ev) => {
+    update_geomap();
+  });
+
+  //  normalScale checkbox js
+  checkbox = document.getElementById("normalScaleGeoMap");
 
   checkbox.addEventListener("change", (ev) => {
     update_geomap();
@@ -435,27 +447,20 @@ function geomap_main() {
   //  proportion checkbox js
   checkbox = document.getElementById("prop_geomap");
 
-  if (checkbox.checked) {
-    $("#geomap_titre_mode").html("Proportion");
-  } else {
-    $("#geomap_titre_mode").html("Nombre");
-  }
-
   checkbox.addEventListener("change", (ev) => {
-    if (checkbox.checked) {
-      $("#geomap_titre_mode").html("Proportion");
-    } else {
-      $("#geomap_titre_mode").html("Nombre");
-    }
+    update_geomap();
+  });
+
+  $("#yearAdaptive").change(e => {
     update_geomap();
   });
 
   update_geomap();
 
   //  date on title
-  $("#geomap_titre_date").html($("#slider_geomap").val());
+  $("#geomap_titre_date").html(getRange().toString());
 
   //  show info country
-  show_geomap_info_country(null, $("#slider_geomap").val(), get_list_of_selected_cause_geomap());
+  show_geomap_info_country(null, getRange(), get_list_of_selected_cause_geomap());
 }
 

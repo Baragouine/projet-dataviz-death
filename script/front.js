@@ -13,35 +13,32 @@ function showCheckboxes(id) {
   }
 }
 
-function rangeSlide(value) {
-  document.getElementById('rangeValue').innerHTML = value;
+var range = [1999,2010]
 
-  $("#geomap_titre_date").html($("#slider_geomap").val());
+function getRange() {
+  return [...range].sort();
+}
+
+function rangeSlide(index, value) {
+  range[index] = parseInt(value);
+
+  document.getElementById('rangeValue').innerHTML = getRange().toString();
+  $("#geomap_titre_date").html(getRange().toString());
   update_geomap();  
 }
 
-function setContent(content) {
-  document.getElementById("GeoMap").style.display = 'none';
-  document.getElementById("Scatter").style.display = 'none'
-  document.getElementById("BarPlot").style.display = 'none'
+var rangeScatter = [1999,2010]
 
-  if (content == "GeoMap" || content == "Scatter" || content == "BarPlot")
-    document.getElementById(content).style.display = 'block';
+function getRangeScatter() {
+  return [...rangeScatter].sort();
+}
 
-    VISUALIZATION = content;
-    update_good_visualization();
+function rangeSlideScatter(index, value) {
+  rangeScatter[index] = parseInt(value);
+
+  document.getElementById('rangeScatterValue').innerHTML = getRange().toString();
+  update_scatterplot();
 }
 
 function frontMain() {
-  //  select the good page automatically
-  var page = window.location.hash;
-
-  if (!!page) {
-    id = '';
-    for (let i = 2; i < page.length; ++i)
-      id += page[i];
-    setContent(id);
-  } else {
-    setContent("GeoMap")
-  }
 }

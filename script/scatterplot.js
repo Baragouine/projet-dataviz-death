@@ -19,7 +19,7 @@ function gen_color_scale(list_year) {
 
 //  draw scatterplot
 function draw_scatterplot(years, countries, cause_x, cause_y, is_proportion, is_log_x, is_log_y) {
-  const margin = ({top: 100, right: 50, bottom: 50, left: 100});
+  const margin = ({top: 40, right: 50, bottom: 50, left: 100});
 
   const w = $("#scatterplot").width();
   const h = w;
@@ -104,13 +104,7 @@ function draw_scatterplot(years, countries, cause_x, cause_y, is_proportion, is_
 
 //  get list of selected year
 function get_list_of_selected_year_scatterplot() {
-  const list_all_year = get_list_year();
-  var list_year = [];
-
-  list_all_year.forEach(year => {
-    if (document.getElementById("scatterplot_list_year-" + year).checked)
-      list_year.push(year);
-  });
+  list_year = [...Array(getRangeScatter()[1]-getRangeScatter()[0]+1).keys()].map(i => i + getRangeScatter()[0])
 
   return list_year;
 }
@@ -125,7 +119,24 @@ function get_list_of_selected_countries_scatterplot() {
       list_code.push(code);
   });
 
+  if (list_code.length===0) {
+    document.getElementById("scatterplot_list_country-AFG").checked = true;
+    list_code.push("AFG");
+  }
+
   return list_code;
+}
+
+function selectContinent(continent) {
+  let newState = !(CONTINENT_SELECTED[continent]);
+  CONTINENT_SELECTED[continent] = newState;
+  DATA_CONTINENT.forEach(c => {
+    if (c.region==continent || continent=="All") {
+      box = document.getElementById("scatterplot_list_country-" + c["alpha-3"])
+      if (box) box.checked = newState;
+    }
+  })
+  update_scatterplot();
 }
 
 //  update scatterplot

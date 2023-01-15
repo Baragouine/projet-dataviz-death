@@ -4,6 +4,8 @@ var DATA_PROP = null;
 var DATA_GROUPED_BY_CODE = new Object();
 var DATA_PROP_GROUPED_BY_CODE = new Object();
 var DATA_MAP = null;
+var DATA_CONTINENT = null;
+var CONTINENT_SELECTED = {}
 var ALL_CAUSES = [];
 var LIST_CODE = [];
 var LIST_YEAR = [];
@@ -13,6 +15,23 @@ var MAX_YEAR = 0;
 var MIN_YEAR_RAW = 0;
 var MAX_YEAR_RAW = 0;
 var TEXT_COLOR = "#fff";
+
+var startTime, endTime;
+
+function start() {
+  startTime = new Date();
+};
+
+function end() {
+  endTime = new Date();
+  var timeDiff = endTime - startTime; //in ms
+  console.log(timeDiff + " ms");
+  // strip the ms
+  timeDiff /= 1000;
+
+  // get seconds 
+  var seconds = Math.round(timeDiff);
+}
 
 //  return dataset
 function get_data_raw() {
@@ -94,10 +113,10 @@ function get_sum_deaths_line(line, list_cause) {
 }
 
 //  return population size
-function get_population_size(year, code) {
+function get_population_size(yearRange, code) {
   const data = get_data_grouped_by_code();
   const dataForCode = data[code];
-  const line = dataForCode.filter(l => l.Year.getFullYear() == year);
+  const line = dataForCode.filter(l => [...Array(yearRange[1]-yearRange[0]+1).keys()].map(i => i + yearRange[0]).includes(l.Year.getFullYear()));
 
   if (line.length == 0)
     return NaN;
@@ -169,27 +188,24 @@ function get_max_prop_deaths_for_country(data = get_data_prop(), code, list_caus
 }
 
 //  sum deaths by year and country code
-function get_sum_deaths(data = get_data_raw(), year, code, list_cause) {
-  var dataForYear = data.filter(e => e.Year.getFullYear() == year);
+function get_sum_deaths(data = get_data_raw(), yearRange, code, list_cause) {
+  var dataForYear = data.filter(e => [...Array(yearRange[1]-yearRange[0]+1).keys()].map(i => i + yearRange[0]).includes(e.Year.getFullYear()));
   var infoPays = dataForYear.filter(e => e.Code == code);
-
-  if (infoPays.length == 0)
-    infoPays = {};
-  else
-    infoPays = infoPays[0];
 
   var sum = 0;
 
   for (let i = 0; i < list_cause.length; ++i) {
-    sum += infoPays[list_cause[i]];
+    for (let p = 0; p < infoPays.length; ++p) {
+      sum += infoPays[p][list_cause[i]];
+    }
   }
 
   return sum;
 }
 
 //  Proportion of deaths by year and country code
-function get_prop_deaths(data, year, code, list_cause) {
-  var dataForYear = data.filter(e => e.Year.getFullYear() == year);
+function get_prop_deaths(data, yearRange, code, list_cause) {
+  var dataForYear = data.filter(e => [...Array(yearRange[1]-yearRange[0]+1).keys()].map(i => i + yearRange[0]).includes(e.Year.getFullYear()));
   var infoPays = dataForYear.filter(e => e.Code == code);
 
   if (infoPays.length == 0)
@@ -248,6 +264,13 @@ async function load_data() {
 
   //  geomap data
   DATA_MAP = await d3.json("https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson");
+
+  // continent data
+  DATA_CONTINENT = await d3.json("https://raw.githubusercontent.com/lukes/ISO-3166-Countries-with-Regional-Codes/master/all/all.json");
+  CONTINENT_SELECTED = DATA_CONTINENT.map(c => c.region)
+                        .filter((item, index) => DATA_CONTINENT.map(c => c.region).indexOf(item) === index)
+                        .map(c=>{c:false});
+  CONTINENT_SELECTED.All = false;
 
   //  list of all causes
   for (const property in DATA_RAW[0]) {

@@ -5,13 +5,13 @@ body {
 
 .Visualization{
   display: flex;
-  max-width: 80%;
-  margin-left: auto;
-  margin-right: auto;
+  /* padding-left: 10%;
+  padding-right: 10%; */
 }
 
 .map{
   width: 73%;
+  max-width: 40vw;
   min-width: 390px;
 }
 
@@ -28,16 +28,9 @@ body {
   display: flex;
 }
 
-#GeoMap {
-  display: none;
-}
-
 #Scatter {
-  display: none;
-}
-
-#BarPlot {
-  display: none;
+  background-color: #202020;
+  padding: 2em;
 }
 
 /*  liste des causes    */
@@ -53,18 +46,18 @@ input[type='checkbox'] {
 }
 
 .checkboxes{
-  width: 350px;
+  width: 25em;
+  display: none;
   position: absolute;
   border-radius: 5px; 
   background-color: #2f2f2fbf;
-  height:300px;  
+  height:95%;  
    
   overflow-y: scroll;
 }
 
 
 .checkboxes {
-  display: none;
   border: 1px #dadada solid;
 }
 
@@ -77,7 +70,7 @@ input[type='checkbox'] {
 }
 
 /* responsive */
-@media screen and (max-width: 1110px) {
+/* @media screen and (max-width: 1110px) {
   .map {
     width: 100%;
   }
@@ -102,60 +95,47 @@ input[type='checkbox'] {
     margin-right: auto;
   }
 
+} */
+
+/* radio buttons*/
+
+/* Style for radio buttons when selected */
+input[type="radio"]:checked + label {
+  color: white;
 }
 
-/* switch buttons*/
-
-.toggle {
-  cursor: pointer;
-  display: inline-block;
+/* Style for radio buttons when not selected */
+input[type="radio"] + label {
+  color: #aaa;
 }
 
-.toggle-switch {
-  display: inline-block;
-  background: #ccc;
-  border-radius: 16px;
-  width: 35px;
-  height: 18px;
-  position: relative;
-  vertical-align: middle;
-  transition: background 0.25s;
-}
-.toggle-switch:before, .toggle-switch:after {
-  content: "";
-}
-.toggle-switch:before {
-  display: block;
-  background: linear-gradient(to bottom, #fff 0%, #eee 100%);
+/* Add a circle around the radio button */
+input[type="radio"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
-  width: 10;
-  height: 10px;
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  transition: left 0.25s;
-}
-.toggle:hover .toggle-switch:before {
-  background: linear-gradient(to bottom, #fff 0%, #fff 100%);
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
-}
-.toggle-checkbox:checked + .toggle-switch {
-  background: #db3f3f;
-}
-.toggle-checkbox:checked + .toggle-switch:before {
-  left: 20px;
-}
-
-.toggle-checkbox {
-  position: absolute;
-  visibility: hidden;
-}
-
-.toggle-label {
-  margin-left: 1px;
+  background-color: #555;
   position: relative;
-  
+}
+
+/* Add a dot in the center of the circle when selected */
+input[type="radio"]:checked::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: white;
+  position: absolute;
+  top: 6px;
+  left: 6px;
+}
+
+/* Dark background color */
+body {
+  background-color: #333;
 }
 
 .rangeValue {
@@ -168,8 +148,10 @@ input[type='checkbox'] {
 }
 
 .range {
+  position: absolute;
   margin-top: 29px;
-  width: 100%;
+  width: 73%;
+  max-width: 40vw;
   -webkit-appearance: none;
 }
 .range:focus {
@@ -221,8 +203,24 @@ input[type='checkbox'] {
   border: 0;
 }
 
+input[type=range]{
+  pointer-events: none;
+}
+input[type=range]::-webkit-slider-thumb{/*Webkit Browsers like Chrome and Safari*/
+  pointer-events: auto;
+}
+input[type=range]::-moz-range-thumb{/*Firefox*/
+  pointer-events: auto;
+}
+input[type=range]::-ms-thumb{/*Internet Explorer*/
+  pointer-events: auto;
+}
+
+select {
+  width: 20%;
+}
+
 .box-minmax {
-  margin-top: 30px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -255,3 +253,16 @@ input[type='checkbox'] {
   background: #555; 
 }
 
+#geomapw path {
+  cursor: pointer;
+}
+
+#GeoMap {
+  height: 80vh;
+  margin-left: 2em;
+  margin-right: 2em;
+}
+
+.Visualization {
+  height: 90%;
+}
