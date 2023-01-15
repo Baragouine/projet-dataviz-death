@@ -32,6 +32,7 @@
   <script type="text/javascript" src="script/geomap.js"></script>
   <script type="text/javascript" src="script/line_chart_country.js"></script>
   <script type="text/javascript" src="script/scatterplot.js"></script>
+  <script type="text/javascript" src="script/CountryDetails.js"></script>
   <script type="text/javascript" src="script/front.js"></script>
 
 </head>
@@ -149,14 +150,14 @@
 
           <label class="toggle">
             <input class="toggle-checkbox" id="scatterplot_log_x" type="checkbox">
-            <div class="toggle-switch"></div>
-            <span class="toggle-label">Log X</span>
+            <!-- <div class="toggle-switch"></div>
+            <span class="toggle-label">Log X</span> -->
           </label>
 
           <label class="toggle">
             <input class="toggle-checkbox" id="scatterplot_log_y" type="checkbox">
-            <div class="toggle-switch"></div>
-            <span class="toggle-label">Log Y</span>
+            <!-- <div class="toggle-switch"></div>
+            <span class="toggle-label">Log Y</span> -->
           </label>
         </div>
         <div>
@@ -173,7 +174,34 @@
       </div>
     </div>
 
-    <div id="BarPlot" class="Visualization">
+    <div id="CountryDetails" class="Visualization">
+      <div class="checkboxes position-relative d-block" id="checkboxesCountriesCountryDetails">
+        <input class="btn btn-outline-light btn-sm" type="button" value="All" onclick="selectContinentCountryDetails('All')">
+        <input class="btn btn-outline-light btn-sm" type="button" value="Europe" onclick="selectContinentCountryDetails('Europe')">
+        <input class="btn btn-outline-light btn-sm" type="button" value="Asia" onclick="selectContinentCountryDetails('Asia')">
+        <input class="btn btn-outline-light btn-sm" type="button" value="Americas" onclick="selectContinentCountryDetails('Americas')">
+        <input class="btn btn-outline-light btn-sm" type="button" value="Oceania" onclick="selectContinentCountryDetails('Oceania')">
+        <input class="btn btn-outline-light btn-sm" type="button" value="Africa" onclick="selectContinentCountryDetails('Africa')">
+        <div id="CountryDetails_list_country"></div>
+      </div>
+
+      <div class="flex-column w-100 ms-3">
+        <div>
+          <label class="toggle">
+            <input class="toggle-checkbox" id="CountryDetails_proportion" type="checkbox">
+            <div class="toggle-switch"></div>
+            <span class="toggle-label">% Scale</span>
+          </label>
+        </div>
+        <div>
+          <svg id="CountryDetailsByYear" width="100%" style="max-width: 65vh;"></svg>
+          <svg id="CountryDetailsByYear_legend"></svg>
+        </div>
+        <div>
+          <svg id="CountryDetailsTopCauses" width="100%" style="max-width: 65vh;"></svg>
+          <svg id="CountryDetailsTopCauses_legend"></svg>
+        </div>
+      </div>
     </div>
   </div>
 </body>

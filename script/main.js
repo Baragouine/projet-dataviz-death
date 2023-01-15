@@ -312,17 +312,32 @@ async function load_data() {
 //  update the good visualization
 function update_good_visualization() {
   LOCK_COUNTRY = false;
-  //  select the good page automatically
-  if (VISUALIZATION == "GeoMap" || VISUALIZATION == "Scatter" || VISUALIZATION == "BarPlot") {
-    if (VISUALIZATION == "Scatter")
-      update_scatterplot();
-    else if (VISUALIZATION == "BarPlot")
-      update_barplot();
-    else if (VISUALIZATION == "GeoMap")
-      update_geomap();
-  } else {
-    update_geomap();
-  }
+  update_scatterplot();
+  update_CountryDetails();
+  update_geomap();
+}
+
+// 
+function getTopCausesByCountries(data, countries) {
+  let dataFiltered = {}
+
+  data.filter((l) => {
+    for (let i = 0; i < countries.length; ++i) {
+      if (l.Code == countries[i])
+        return true;
+    }
+    return false;
+  }).forEach(e => {
+    Object.keys(e).forEach(k => {
+      if (k!="Code" && k!="Year" && k!="Country/Territory" && k!="Population") {
+        dataFiltered[k] = (dataFiltered[k] ? dataFiltered[k] : 0) + e[k]
+      }
+    })
+  });
+
+  dataFiltered["top"] = Object.keys(dataFiltered).sort((a, b) =>  dataFiltered[b] - dataFiltered[a]);
+
+  return dataFiltered;
 }
 
 //  filter data for years and for countries
@@ -358,6 +373,9 @@ async function main() {
 
   //  scatterplot
   scatterplot_main();
+
+  //  CountryDetails
+  CountryDetails_main();
 
   //  click
   $(document).on('click', () => {

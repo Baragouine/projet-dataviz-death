@@ -65,30 +65,35 @@ function draw_scatterplot(years, countries, cause_x, cause_y, is_proportion, is_
       .style("font-size", "10px")
       .call(yAxis);
 
-  const color_scale = gen_color_scale(years);
+  let yearRanges = years.filter(e=> e%5==0 || years.indexOf(e)==0 || years.indexOf(e)==years.length-1)
+
+  const color_scale = gen_color_scale(yearRanges);
 
   data.forEach((line) => {
+    yearIndex = yearRanges.findIndex(y=>y>line.Year.getFullYear())-1;
+    if (yearIndex===-2) yearIndex=0;
     svg.append("path")
        .attr("d", d3.symbol().type(d3.symbolCircle).size(30))
        .attr("transform", "translate(" + x(eps_x + get_sum_deaths_line(line, [cause_x])) + "," + y(eps_y + get_sum_deaths_line(line, [cause_y])) + ")")
-       .attr("fill", color_scale[line.Year.getFullYear()]);
+       .attr("fill", color_scale[yearRanges[yearIndex]]);
   });
 
   const limit_hl = 10;
   var xl = 0;
   var yl = 0;
 
-  years.forEach((year) => {
+  yearRanges.forEach((year, index) => {
+    if (index==yearRanges.length-1) return;
     svgLegend.append("text")
       .attr("x", 20 * (xl + 1) + xl * 60)
       .attr("y", 20 + yl * 20)
-      .text(year.toString())
+      .text(year.toString() + "-" + yearRanges[index+1].toString())
       .style("font-size", "12px")
       .style("fill", get_text_color());
 
     svgLegend.append("path")
       .attr("d", d3.symbol().type(d3.symbolCircle).size(30))
-      .attr("transform", "translate(" + (10 * (xl + 1) + xl * 70) + "," +  (16 + yl * 20) + ")")
+      .attr("transform", "translate(" + (10 * (xl + 1) + xl * 90) + "," +  (16 + yl * 20) + ")")
       .attr("fill", color_scale[year]);
 
     ++yl;
@@ -99,7 +104,7 @@ function draw_scatterplot(years, countries, cause_x, cause_y, is_proportion, is_
     }
   });
 
-  svgLegend.attr("width", (xl + 1) * 70 - (yl == 0 ? 70 : 0)).attr("height", limit_hl * 20 + 10)
+  svgLegend.attr("width", (xl + 1) * 90 - (yl == 0 ? 90 : 0)).attr("height", limit_hl * 20 + 10)
 }
 
 //  get list of selected year
