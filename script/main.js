@@ -340,6 +340,25 @@ function getTopCausesByCountries(data, countries) {
   return dataFiltered;
 }
 
+// 
+function getDeathsOfYearsByCountries(data, countries) {
+  let dataFiltered = {}
+
+  data.filter((l) => {
+    for (let i = 0; i < countries.length; ++i) {
+      if (l.Code == countries[i])
+        return true;
+    }
+    return false;
+  }).forEach(e => {
+    get_all_causes().forEach(c => {
+      dataFiltered[e.Year.getFullYear()] = (dataFiltered[e.Year.getFullYear()] ? dataFiltered[e.Year.getFullYear()] : 0) + e[c]
+    })
+  });
+
+  return dataFiltered;
+}
+
 //  filter data for years and for countries
 function filter_data_for_years_for_countries(data, years, countries) {
   const dataFileredYears = data.filter((l) => {

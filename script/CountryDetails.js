@@ -68,24 +68,24 @@ function draw_CountryDetails(countries, is_proportion) {
 }
 
 function draw_CountryDetailsYears(countries, is_proportion) {
-  return;
   const margin = ({top: 40, right: 50, bottom: 50, left: 100});
 
-  const w = $("#CountryDetailsTopCauses").width();
+  const w = $("#CountryDetailsByYear").width();
   const h = w;
-  const svg = d3.select("#CountryDetailsTopCauses").attr("height", h);
-  const svgLegend = d3.select("#CountryDetailsTopCauses_legend").attr("width", 100);
+  const svg = d3.select("#CountryDetailsByYear").attr("height", h);
+  const svgLegend = d3.select("#CountryDetailsByYear_legend").attr("width", 100);
 
-  const data = getTopCausesByCountries(get_data_raw(), countries);
+  const data = getDeathsOfYearsByCountries(is_proportion ? get_data_prop() : get_data_raw(), countries);
+  console.log(data)
 
-  const min_deaths_x = data[data.top[data.top.length-1]];
-  var max_deaths_x = data[data.top[0]];
+  let min_deaths = Math.min(...(Object.keys(data).map(k=>data[k])));
+  let max_deaths = Math.max(...(Object.keys(data).map(k=>data[k])));
 
-  if (min_deaths_x == max_deaths_x)
-    max_deaths_x += 1;
+  if (min_deaths == max_deaths)
+    max_deaths += 1;
 
-  const x  = d3.scaleLinear().domain([min_deaths_x, max_deaths_x]).range([margin.left, w - margin.right]);
-  const y  = d3.scaleLinear().domain([1, 10]).range([h-margin.bottom, margin.top]);
+  const x  = d3.scaleLinear().domain([1990, 2019]).range([margin.left, w - margin.right]);
+  const y  = d3.scaleLinear().domain([min_deaths, max_deaths]).range([h-margin.bottom, margin.top]);
 
   //  clear svgs
   svg.selectAll('*').remove();
@@ -102,35 +102,21 @@ function draw_CountryDetailsYears(countries, is_proportion) {
   svg.append("g")
      .style("font-size", "10px")
      .call(xAxis);
-
-  svg.append('line')
-    .style("stroke", get_text_color())
-    .style("stroke-width", 1)
-    .attr("x1", x(0))
-    .attr("y1", y(1))
-    .attr("x2", x(0))
-    .attr("y2", y(10.6));
-  // svg.append("g")
-  //     .style("font-size", "10px")
-  //     .call(yAxis);
+     
+  svg.append("g")
+      .style("font-size", "10px")
+      .call(yAxis);
 
   // const color_scale = gen_color_scale(years);
 
-  data.top.slice(0, 10).forEach((k, index) => {
-    let line = data[k]
+  Object.keys(data).forEach((year) => {
     svg.append("rect")
-      .attr("x", x(0))
-      .attr("y", y(10-index)+((y(1)-y(0))/2))
-      .attr("width", x(line)-x(0))
-      .attr("height", (y(0)-y(1))/2)
+      .attr("x", x(year))
+      .attr("y", y(data[year]))
+      .attr("width", x(1)-x(0))
+      .attr("height", y(min_deaths)-y(data[year]))
       .attr("fill", "#606060")
       .attr("stroke", "#606060")
-    svg.append("text")
-      .attr("x", x((max_deaths_x-min_deaths_x)/4))
-      .attr("y", y(10-index) + ((y(1)-y(0))/8))
-      .text(k)
-      .style("font-size", "12px")
-      .style("fill", get_text_color());
   });
 }
 
