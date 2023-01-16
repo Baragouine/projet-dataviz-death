@@ -18,11 +18,16 @@ body {
   min-width: 390px;
 }
 
-.home p{
+.home div {
   font-size: 20px;
-  padding: 3%;
   width: 40%;
-
+  /*
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  */
+  padding: 3%;
 }
 
 .geo-text{
@@ -32,8 +37,7 @@ body {
   margin-right: auto;
   width: 60%;
   text-align: center;
-  
-
+  padding-top: 15px;
 }
 
 .scatter-text{
@@ -44,8 +48,6 @@ body {
   width: 60%;
   text-align: center;
   padding-top: 15px;
-  
-
 }
 
 
