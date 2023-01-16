@@ -36,6 +36,18 @@ body {
 
 }
 
+.scatter-text{
+  font-size: 20px;
+
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
+  text-align: center;
+  padding-top: 15px;
+  
+
+}
+
 
 .annexe{
   width: 27%;
@@ -55,9 +67,14 @@ body {
 }
 
 #Scatter {
-  height: 47em;
   margin-left: 2em;
   margin-right: 2em;
+}
+
+hr.solid {
+  border-top: 3px solid #bbb;
+  width: 30%;
+  
 }
 
 #CountryDetails {
@@ -82,7 +99,7 @@ input[type='checkbox'] {
   position: absolute;
   border-radius: 5px; 
   background-color: #2f2f2fbf;
-  height:95%;  
+  height:85%;  
    
   overflow-y: scroll;
 }
@@ -289,7 +306,7 @@ select {
 }
 
 #GeoMap {
-  height: 80vh;
+  
   margin-left: 2em;
   margin-right: 2em;
 }

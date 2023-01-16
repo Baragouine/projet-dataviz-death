@@ -62,9 +62,17 @@
       
     </div>
 
+
     <div class="section geo">    
-        <p class="geo-text">Notre carte interactive du monde vous permet de sélectionner une ou plusieurs causes de décès, une période d'années et une méthode d'affichage pour visualiser les taux de mortalité dans les différents pays. Utilisez les couleurs pour identifier les pays les plus touchés par les causes de mortalité sélectionnées. Avec cette visualisation, vous pourrez identifier les tendances générales et les différences entre les pays pour les causes de mortalité sélectionnées.</p>
+      <p class="geo-text">Notre carte interactive du monde vous permet de sélectionner une ou plusieurs causes de décès, une période d'années et une méthode d'affichage pour visualiser les taux de mortalité dans les différents pays. Utilisez les couleurs pour identifier les pays les plus touchés par les causes de mortalité sélectionnées. Avec cette visualisation, vous pourrez identifier les tendances générales et les différences entre les pays pour les causes de mortalité sélectionnées.</p>
+      <hr class="solid" style="margin-left: auto; margin-right: auto;">
+     
       <div id="GeoMap">
+        <div class="text-center" style="margin-bottom: 30px;">
+        <h3>
+          <span id="geomap_titre_mode">Nombre</span> de morts par pays pour les causes sélectionnés de <span id="geomap_titre_date"></span>
+        </h3>
+      </div>
       <div class="settings d-flex" style="justify-content: center;">
         <div>
           <div style="display: flex; gap: 10px; padding: 10px;">
@@ -84,18 +92,16 @@
         </div>
         
       </div>
-      <div class="Visualization d-flex" style="justify-content: space-between;">
+      
+      <div class="Visualization d-flex" style="justify-content: space-between; height: 60%;">
         <div class="checkboxes position-relative d-block" id="checkboxesCauses">
           <h4 class="text-center">Choose causes of death:</h4> 
           <div id="list_cause" class="mt-2">
           </div>
         </div>
+        
         <div class="map">
-          <div class="text-center">
-            <h3>
-              <span id="geomap_titre_mode">Nombre</span> de morts par pays pour les causes sélectionnés de <span id="geomap_titre_date"></span>
-            </h3>
-          </div>
+          
           <!-- <div id="geomap_help" class="text-danger text-center" style="font-size: 12px;">
             Survolé un pays avec la souris pour avoir plus de détails.
           </div> -->
@@ -126,14 +132,13 @@
       </div>
     </div>
 
-    <div class="section">
-      <center>
-      <p>Notre graphique interactif vous permet de sélectionner un ou plusieurs pays ou continents pour visualiser les corrélations entre différentes causes de décès. Utilisez les points pour identifier les relations les plus évidentes entre les causes de mortalité sélectionnées. Aussi, vous aurez la possibilité d'afficher les données en part de population.</p>
-      </center>
-    </div>
+
 
     <div class="section" >
-      <div id="Scatter" class="Visualization">
+      <p class="scatter-text">Notre graphique interactif vous permet de sélectionner un ou plusieurs pays ou continents pour visualiser les corrélations entre différentes causes de décès. Utilisez les points pour identifier les relations les plus évidentes entre les causes de mortalité sélectionnées. Aussi, vous aurez la possibilité d'afficher les données en part de population.</p>
+      <hr class="solid" style="margin-left: auto; margin-right: auto;">
+      <h3 style="text-align: center; "> Corrélation entre deux causes en fonction des pays</h3>
+      <div id="Scatter" class="Visualization" style="justify-content: center;">
     <div class="checkboxes position-relative d-block" id="checkboxesCountries">
       <input class="btn btn-outline-light btn-sm" type="button" value="All" onclick="selectContinent('All')">
       <input class="btn btn-outline-light btn-sm" type="button" value="Europe" onclick="selectContinent('Europe')">
@@ -143,7 +148,7 @@
       <input class="btn btn-outline-light btn-sm" type="button" value="Africa" onclick="selectContinent('Africa')">
       <div id="scatterplot_list_country"></div>
     </div>
-    <div class="flex-column w-100 ms-3">
+    <div class="flex-column  ms-3" >
       <div>
         <!-- <button type="button" class="btn btn-danger btn-sm dropdown-toggle" onclick="showCheckboxes('checkboxesYears')">years</button> -->
         <div><div class="checkboxes" id="checkboxesYears"> <div id="scatterplot_list_year"></div> </div></div>
@@ -160,8 +165,7 @@
 
         <label class="toggle">
           <input class="toggle-checkbox" id="scatterplot_proportion" type="checkbox">
-          <div class="toggle-switch"></div>
-          <span class="toggle-label">% Scale</span>
+          <span class="toggle-label">% scale</span>
         </label>
       </div>
       <div>
