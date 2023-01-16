@@ -341,7 +341,7 @@ function getTopCausesByCountries(data, countries) {
 }
 
 // 
-function getDeathsOfYearsByCountries(data, countries) {
+function getDeathsOfYearsByCountries(data, countries, is_proportion = false) {
   let dataFiltered = {}
 
   data.filter((l) => {
@@ -352,7 +352,7 @@ function getDeathsOfYearsByCountries(data, countries) {
     return false;
   }).forEach(e => {
     get_all_causes().forEach(c => {
-      dataFiltered[e.Year.getFullYear()] = (dataFiltered[e.Year.getFullYear()] ? dataFiltered[e.Year.getFullYear()] : 0) + e[c]
+      dataFiltered[e.Year.getFullYear()] = ((dataFiltered[e.Year.getFullYear()] ? dataFiltered[e.Year.getFullYear()] : 0) + e[c]) / (is_proportion ? countries.length : 1)
     })
   });
 
