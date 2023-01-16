@@ -38,7 +38,7 @@ function getRangeScatter() {
 function rangeSlideScatter(index, value) {
   rangeScatter[index] = parseInt(value);
 
-  document.getElementById('rangeScatterValue').innerHTML = getRange().toString();
+  document.getElementById('rangeScatterValue').innerHTML = '[' + getRangeScatter().toString() + ']';
   update_scatterplot();
 }
 
