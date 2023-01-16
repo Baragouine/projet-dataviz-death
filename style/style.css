@@ -1,6 +1,9 @@
+@import url('https://fonts.cdnfonts.com/css/montserrat');
+
 body {
     background-color: #222426;
     color: rgb(255, 255, 255);
+    font-family: 'Montserrat', sans-serif;
 }
 
 .Visualization{
