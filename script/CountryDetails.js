@@ -72,7 +72,19 @@ function draw_CountryDetailsYears(countries, is_proportion) {
   const h = w;
   const svg = d3.select("#CountryDetailsByYear").attr("height", h);
 
-  const data = getDeathsOfYearsByCountries(is_proportion ? get_data_prop() : get_data_raw(), countries);
+  const data = getDeathsOfYearsByCountries(get_data_raw(), countries);
+  if (is_proportion) {
+    let totalPop = {};
+    let dataCountries = get_data_grouped_by_code();
+    countries.forEach(c => {
+      dataCountries[c].forEach(dC=>{
+        totalPop[dC.Year.getFullYear()] = (totalPop[dC.Year.getFullYear()] ? totalPop[dC.Year.getFullYear()] : 0) + dC.Population;
+      })
+    })
+    Object.keys(data).forEach(year=>{
+      data[year] /= totalPop[year];
+    })
+  }
 
   let min_deaths = Math.min(...(Object.keys(data).map(k=>data[k])));
   let max_deaths = Math.max(...(Object.keys(data).map(k=>data[k])));
