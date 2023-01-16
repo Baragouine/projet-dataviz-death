@@ -56,7 +56,7 @@ function draw_line_chart_country(code, list_cause, prop = false, logscale=false)
      .attr("x", 25)
      .attr("y", 10)
      .style("font-size", "12px")
-     .text(prop ? "proportion de mort" : "nombre de décès")
+     .text(prop ? "proportion of death" : "number of deaths")
      .style("fill", get_text_color());
 
   svg.append("text")
