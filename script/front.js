@@ -22,8 +22,10 @@ function getRange() {
 function rangeSlide(index, value) {
   range[index] = parseInt(value);
 
-  document.getElementById('rangeValue').innerHTML = getRange().toString();
-  $("#geomap_titre_date").html(getRange().toString());
+  document.getElementById('rangeValue').innerHTML = '[' + getRange().toString() + ']';
+  let text = getRange().toString()
+  text = text.replace(',',' à ');
+  $("#geomap_titre_date").html(text);
   update_geomap();  
 }
 

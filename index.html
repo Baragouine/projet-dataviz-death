@@ -57,19 +57,13 @@
     </ul> -->
   </nav>
   <div>
-    <div class="section">
-      <center>
-      <p>Bienvenue sur notre site web de visualisation de données sur les causes de mortalité dans le monde. La mortalité est un problème majeur dans le monde entier, et il est important de comprendre les causes de décès pour pouvoir mettre en place des stratégies de prévention efficaces. Ce site vous offre des visualisations claires et informatives pour vous aider à comprendre les causes de mortalité dans différents pays et à différentes périodes de temps. Vous pourrez visualiser les tendances générales, les différences entre les pays, et les relations entre les causes de décès.</p>
-      </center>
+    <div class="section home">
+      <p>Bienvenue sur notre site web de visualisation de données sur les causes de mortalité dans le monde. La mortalité est un problème majeur dans le monde entier, et il est important de comprendre les causes de décès pour pouvoir mettre en place des stratégies de prévention efficaces. Ce site vous offre des visualisations claires et informatives pour vous aider à comprendre les causes de mortalité dans différents pays et à différentes périodes de temps. Vous pourrez visualiser les tendances générales, les différences entre les pays, et les relations entre les causes de décès.</p> 
+      
     </div>
 
-    <div class="section">
-      <center>
-      <p>Notre carte interactive du monde vous permet de sélectionner une ou plusieurs causes de décès, une période d'années et une méthode d'affichage pour visualiser les taux de mortalité dans les différents pays. Utilisez les couleurs pour identifier les pays les plus touchés par les causes de mortalité sélectionnées. Avec cette visualisation, vous pourrez identifier les tendances générales et les différences entre les pays pour les causes de mortalité sélectionnées.</p>
-      </center>
-    </div>
-
-    <div class="section">
+    <div class="section geo">    
+        <p class="geo-text">Notre carte interactive du monde vous permet de sélectionner une ou plusieurs causes de décès, une période d'années et une méthode d'affichage pour visualiser les taux de mortalité dans les différents pays. Utilisez les couleurs pour identifier les pays les plus touchés par les causes de mortalité sélectionnées. Avec cette visualisation, vous pourrez identifier les tendances générales et les différences entre les pays pour les causes de mortalité sélectionnées.</p>
       <div id="GeoMap">
       <div class="settings d-flex" style="justify-content: center;">
         <div>
@@ -90,7 +84,7 @@
         </div>
         
       </div>
-      <div class="Visualization d-flex">
+      <div class="Visualization d-flex" style="justify-content: space-between;">
         <div class="checkboxes position-relative d-block" id="checkboxesCauses">
           <h4 class="text-center">Choose causes of death:</h4> 
           <div id="list_cause" class="mt-2">
@@ -99,7 +93,7 @@
         <div class="map">
           <div class="text-center">
             <h3>
-              <span id="geomap_titre_mode">Nombre</span> de morts par pays pour les causes sélectionnés en <span id="geomap_titre_date"></span>
+              <span id="geomap_titre_mode">Nombre</span> de morts par pays pour les causes sélectionnés de <span id="geomap_titre_date"></span>
             </h3>
           </div>
           <!-- <div id="geomap_help" class="text-danger text-center" style="font-size: 12px;">
@@ -111,17 +105,18 @@
             <Input class="range" type="range" name="slider_geomap_end" id="slider_geomap_end" value="2010" min="1990" max="2019" onChange="rangeSlide(1, this.value)"></Input>
             
             <div class="box-minmax pt-5 mt-1">
-              <span class="rangeValue">1990</span><span class="rangeValue" id="rangeValue">1999,2010</span><span class="rangeValue" >2019</span>
+              <span class="rangeValue">1990</span><span class="rangeValue" id="rangeValue">[1999,2010]</span><span class="rangeValue" >2019</span>
             </div>
           </div>
           
         </div>
         <div class="annexe">
+          <div id="geomap_info_contry" class="info" style="margin-left: 30px; height: 5em;"></div>
           <div style="display: flex; flex-wrap: wrap; justify-content: space-between; ">
             <div class="legends" style="margin-left: 1em;"> 
               <svg id="geomap_legend"></svg>
             </div>
-            <div id="geomap_info_contry" class="info" style="margin-left: 30px; height: 5em;"></div>
+            
             <div class="chart">
               <svg id="line_chart_country" width="350" height="250"></svg>
             </div>

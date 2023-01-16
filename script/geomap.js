@@ -458,7 +458,9 @@ function geomap_main() {
   update_geomap();
 
   //  date on title
-  $("#geomap_titre_date").html(getRange().toString());
+  let text = getRange().toString()
+  text = text.replace(',',' à ');
+  $("#geomap_titre_date").html(text);
 
   //  show info country
   show_geomap_info_country(null, getRange(), get_list_of_selected_cause_geomap());

@@ -18,6 +18,25 @@ body {
   min-width: 390px;
 }
 
+.home p{
+  font-size: 20px;
+  padding: 3%;
+  width: 40%;
+
+}
+
+.geo-text{
+  font-size: 20px;
+
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
+  text-align: center;
+  
+
+}
+
+
 .annexe{
   width: 27%;
 }
