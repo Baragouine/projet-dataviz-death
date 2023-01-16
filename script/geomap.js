@@ -394,7 +394,7 @@ function draw_geo_map_prop(data, list_cause, yearRange, log_scale = false) {
     .attr("x", 20)
     .attr("y", 10)
     .style("font-size", "12px")
-    .text("proportion de décès")
+    .text("% of death ")
     .style("fill", get_text_color());
 
   svgLegend.attr("height", 30 + sample.length + 10 + 10 + 10);
