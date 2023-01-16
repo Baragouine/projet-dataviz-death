@@ -47,7 +47,7 @@ function show_geomap_info_country(code, name, yearRange, list_cause) {
         <span class="fw-bold">
           ${get_sum_deaths(get_data_raw(), yearRange, code, list_cause)}
          </span>
-        morts sur ${get_population_size(yearRange, code)} (${(get_prop_deaths(get_data_raw(), yearRange, code, list_cause) * 100).toFixed(7)} %) en ${yearRange.toString()}.
+        deaths out of ${get_population_size(yearRange, code)} (${(get_prop_deaths(get_data_raw(), yearRange, code, list_cause) * 100).toFixed(7)} %) from ${yearRange.toString().replace(',',' to ')}.
       </p>
     `
   );
@@ -256,7 +256,7 @@ function draw_geo_map(data, list_cause, yearRange, log_scale = false) {
        .attr("x", 20)
        .attr("y", 10)
        .style("font-size", "12px")
-       .text("nombre de décès")
+       .text("number of deaths")
        .style("fill", get_text_color());
   })
 
