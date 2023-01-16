@@ -37,24 +37,13 @@
 
 </head>
 <body>
-  <!--Scatterplot:
-  <div id="scatterplot"></div>-->
+
   <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 ">
     <a class="navbar-brand" href="#">
       <img src="./img/skull.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
       Causes of Deaths
     </a>
-    <!-- <ul class="nav nav-pills">
-      <li class="nav-item">
-        <a class="nav-link" href="#_GeoMap" onclick="setContent('GeoMap');">GeoMap</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#_Scatter" onclick="setContent('Scatter');">ScatterPlot</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#_BarPlot" onclick="setContent('BarPlot');">BarPlot</a>
-      </li>
-    </ul> -->
+
   </nav>
   <div>
     <div class="section home">
@@ -102,9 +91,7 @@
         
         <div class="map">
           
-          <!-- <div id="geomap_help" class="text-danger text-center" style="font-size: 12px;">
-            Survolé un pays avec la souris pour avoir plus de détails.
-          </div> -->
+       
           <div ><svg id="geomapw" width="100%"></svg></div>
           <div class="container">
             <Input class="range" type="range" name="slider_geomap_start" id="slider_geomap_start" value="1999" min="1990" max="2019" onChange="rangeSlide(0, this.value)"></Input>
@@ -150,7 +137,7 @@
     </div>
     <div class="flex-column  ms-3" >
       <div>
-        <!-- <button type="button" class="btn btn-danger btn-sm dropdown-toggle" onclick="showCheckboxes('checkboxesYears')">years</button> -->
+        
         <div><div class="checkboxes" id="checkboxesYears"> <div id="scatterplot_list_year"></div> </div></div>
         
         <label for="scatterplot_list_cause_x">Cause 1 (X):</label>
