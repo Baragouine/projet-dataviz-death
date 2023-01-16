@@ -155,7 +155,7 @@ function draw_geo_map(data, list_cause, yearRange, log_scale = false) {
   const legend_w = 10;
 
   const svg = d3.select("#geomapw").attr("height", h)//.attr("width", w)
-  const svgLegend = d3.select("#geomap_legend").attr("height", Math.round(legend_h * 1.5)).attr("width",130);
+  const svgLegend = d3.select("#geomap_legend").attr("height", Math.round(legend_h * 1.5)).attr("width",160);
 
   //  clear svg
   svg.selectAll('*').remove();
@@ -289,7 +289,7 @@ function draw_geo_map_prop(data, list_cause, yearRange, log_scale = false) {
   const legend_w = 10;
 
   const svg = d3.select("#geomapw").attr("height", h)//.attr("width", w)
-  const svgLegend = d3.select("#geomap_legend").attr("height", Math.round(legend_h * 1.5)).attr("width",130);
+  const svgLegend = d3.select("#geomap_legend").attr("height", Math.round(legend_h * 1.5)).attr("width",160);
 
   //  clear svg
   svg.selectAll('*').remove();
