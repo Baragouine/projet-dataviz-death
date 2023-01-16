@@ -82,7 +82,7 @@ function draw_CountryDetailsYears(countries, is_proportion) {
       })
     })
     Object.keys(data).forEach(year=>{
-      data[year] /= totalPop[year];
+      data[year] = 100*data[year]/totalPop[year];
     })
   }
 

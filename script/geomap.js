@@ -371,7 +371,7 @@ function draw_geo_map_prop(data, list_cause, yearRange, log_scale = false) {
     svgLegend.append("text")
        .attr("x", 10 + legend_w + 5 + 3)
        .attr("y", 30 + (sample.length - 1) - y + 4)
-       .text(sample[sample.length - 1 - v].toFixed(10).toString())
+       .text((sample[sample.length - 1 - v]*100).toFixed(10).toString())
        .style("font-size", "12px")
        .style("fill", get_text_color());
 
