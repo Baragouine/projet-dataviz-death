@@ -117,33 +117,7 @@ input[type='checkbox'] {
   background-color: #727272;
 }
 
-/* responsive */
-/* @media screen and (max-width: 1110px) {
-  .map {
-    width: 100%;
-  }
 
-  .annexe {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .Visualization{
-    display: block;
-  }
-
-  .chart{
-    width: 70%;
-   
-  }
-  .checkboxes{
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-} */
 
 /* radio buttons*/
 
