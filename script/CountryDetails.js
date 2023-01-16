@@ -80,7 +80,7 @@ function draw_CountryDetailsYears(countries, is_proportion) {
   if (min_deaths == max_deaths)
     max_deaths += 1;
 
-  const x  = d3.scaleLinear().domain([1990, 2019]).range([margin.left, w - margin.right]);
+  const x  = d3.scaleTime().domain([new Date(1990, 0), new Date(2020, 0)]).range([margin.left, w - margin.right]);
   const y  = d3.scaleLinear().domain([min_deaths, max_deaths]).range([h-margin.bottom, margin.top]);
 
   //  clear svgs
@@ -106,9 +106,9 @@ function draw_CountryDetailsYears(countries, is_proportion) {
 
   Object.keys(data).forEach((year) => {
     svg.append("rect")
-      .attr("x", x(year))
+      .attr("x", x(new Date(year, 0)))
       .attr("y", y(data[year]))
-      .attr("width", x(1)-x(0))
+      .attr("width", x(new Date(2, 0))-x(new Date(1, 0)))
       .attr("height", y(min_deaths)-y(data[year]))
       .attr("fill", "#606060")
       .attr("stroke", "#606060")
