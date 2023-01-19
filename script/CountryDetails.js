@@ -44,19 +44,35 @@ function draw_CountryDetails(countries, is_proportion) {
   //     .call(yAxis);
 
   // const color_scale = gen_color_scale(years);
+  let firstK = "";
 
   data.top.slice(0, 10).forEach((k, index) => {
-    let line = data[k]
+    let line = data[k];
+
+    if (firstK == "")
+      firstK = k;
+
     svg.append("rect")
       .attr("x", x(0))
       .attr("y", y(10-index)+((y(1)-y(0))/2))
       .attr("width", x(line)-x(0))
       .attr("height", (y(0)-y(1))/2)
       .attr("fill", "#606060")
-      .attr("stroke", "#606060")
+      .attr("stroke", "#606060");
+
+    firstLine = data[firstK];
+
+    svg.append("rect")
+      .attr("x", x(0))
+      .attr("y", y(10-index)+((y(1)-y(0))/2))
+      .attr("width", x(firstLine)-x(0))
+      .attr("height", (y(0)-y(1))/2)
+      .attr("fill", "none")
+      .attr("stroke", "#DDDDDD");
+
     svg.append("text")
       .attr("x", x((max_deaths_x-min_deaths_x)/4))
-      .attr("y", y(10-index) + ((y(1)-y(0))/8))
+      .attr("y", y(10-index) + ((y(1)-y(0))/8) - 4)
       .text(k)
       .style("font-size", "12px")
       .style("fill", get_text_color());
@@ -123,7 +139,7 @@ function draw_CountryDetailsYears(countries, is_proportion) {
       .attr("width", x(new Date(2, 0))-x(new Date(1, 0)))
       .attr("height", y(min_deaths)-y(data[year]))
       .attr("fill", "#606060")
-      .attr("stroke", "#606060")
+      .attr("stroke", "#DDDDDD")
   });
 }
 
