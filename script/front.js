@@ -1,5 +1,3 @@
-var VISUALIZATION = "GeoMap"
-
 var expanded = false;
 
 function showCheckboxes(id) {

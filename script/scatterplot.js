@@ -82,7 +82,7 @@ function draw_scatterplot(years, countries, cause_x, cause_y, is_proportion) {
   const color_scale = gen_color_scale(yearRanges);
 
   data.forEach((line) => {
-    yearIndex = yearRanges.findIndex(y=>y>line.Year.getFullYear())-1;
+    let yearIndex = yearRanges.findIndex(y=>y>line.Year.getFullYear())-1;
     if (yearIndex===-2) yearIndex=0;
 
     const nb_deaths_cause_x = get_sum_deaths_line(line, [cause_x]);
@@ -127,7 +127,7 @@ function draw_scatterplot(years, countries, cause_x, cause_y, is_proportion) {
 
 //  get list of selected year
 function get_list_of_selected_year_scatterplot() {
-  list_year = [...Array(getRangeScatter()[1]-getRangeScatter()[0]+1).keys()].map(i => i + getRangeScatter()[0])
+  const list_year = [...Array(getRangeScatter()[1]-getRangeScatter()[0]+1).keys()].map(i => i + getRangeScatter()[0])
 
   return list_year;
 }
@@ -141,11 +141,6 @@ function get_list_of_selected_countries_scatterplot() {
     if (document.getElementById("scatterplot_list_country-" + code).checked)
       list_code.push(code);
   });
-
-  if (list_code.length===0) {
-    document.getElementById("scatterplot_list_country-AFG").checked = true;
-    list_code.push("AFG");
-  }
 
   return list_code;
 }
@@ -203,8 +198,8 @@ function init_scatterplot_list_country() {
     document.getElementById("scatterplot_list_country-" + code).addEventListener("change",  (ev) => {
       //  garder aux moins une cause coché
       if (get_list_of_selected_countries_scatterplot().length == 0)
-        document.getElementById("scatterplot_list_country-" + cause).checked = true;
-        update_scatterplot();
+        document.getElementById("scatterplot_list_country-" + code).checked = true;
+      update_scatterplot();
     })
   });
 }

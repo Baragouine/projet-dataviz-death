@@ -60,7 +60,7 @@ function draw_CountryDetails(countries, is_proportion) {
       .attr("fill", "#606060")
       .attr("stroke", "#606060");
 
-    firstLine = data[firstK];
+    const firstLine = data[firstK];
 
     svg.append("rect")
       .attr("x", x(0))
@@ -152,11 +152,6 @@ function get_list_of_selected_countries_CountryDetails() {
       list_code.push(code);
   });
 
-  if (list_code.length===0) {
-    document.getElementById("CountryDetails_list_country-AFG").checked = true;
-    list_code.push("AFG");
-  }
-
   return list_code;
 }
 
@@ -208,6 +203,8 @@ function init_CountryDetails_list_country() {
 
   list_all_code.forEach(cause => {
     document.getElementById("CountryDetails_list_country-" + cause).addEventListener("change",  (ev) => {
+      if (get_list_of_selected_countries_CountryDetails().length == 0)
+      document.getElementById("CountryDetails_list_country-" + cause).checked = true;
       update_CountryDetails();
     })
   });

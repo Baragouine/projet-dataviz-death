@@ -147,49 +147,53 @@
       <hr class="solid" style="margin-left: auto; margin-right: auto;">
       <h3 style="text-align: center; "> Corrélation entre deux causes en fonction des pays</h3>
       <div id="Scatter" class="Visualization" style="justify-content: center;">
-    <div class="checkboxes position-relative d-block" id="checkboxesCountries">
-      <input class="btn btn-outline-light btn-sm" type="button" value="All" onclick="selectContinent('All')">
-      <input class="btn btn-outline-light btn-sm" type="button" value="Europe" onclick="selectContinent('Europe')">
-      <input class="btn btn-outline-light btn-sm" type="button" value="Asia" onclick="selectContinent('Asia')">
-      <input class="btn btn-outline-light btn-sm" type="button" value="Americas" onclick="selectContinent('Americas')">
-      <input class="btn btn-outline-light btn-sm" type="button" value="Oceania" onclick="selectContinent('Oceania')">
-      <input class="btn btn-outline-light btn-sm" type="button" value="Africa" onclick="selectContinent('Africa')">
-      <div id="scatterplot_list_country"></div>
-    </div>
-    <div class="flex-column  ms-3" >
-      <div>
-        
-        <div><div class="checkboxes" id="checkboxesYears"> <div id="scatterplot_list_year"></div> </div></div>
-        
-        <label for="scatterplot_list_cause_x">Cause 1 (X):</label>
-        <select id="scatterplot_list_cause_x" onchange="onScatterPlotListCauseXChange()">
-          <option value="Dog">Dog</option>
-        </select>
-
-        <label for="scatterplot_list_cause_y">Cause 2 (Y):</label>
-        <select id="scatterplot_list_cause_y" onchange="onScatterPlotListCauseYChange()">
-          <option value="Cat">Cat</option>
-        </select>
-
-        <label class="toggle">
-          <input class="toggle-checkbox" id="scatterplot_proportion" type="checkbox">
-          <span class="toggle-label">% scale</span>
-        </label>
+      <div class="checkboxes position-relative d-block" id="checkboxesCountries">
+        <input class="btn btn-outline-light btn-sm" type="button" value="All" onclick="selectContinent('All')">
+        <input class="btn btn-outline-light btn-sm" type="button" value="Europe" onclick="selectContinent('Europe')">
+        <input class="btn btn-outline-light btn-sm" type="button" value="Asia" onclick="selectContinent('Asia')">
+        <input class="btn btn-outline-light btn-sm" type="button" value="Americas" onclick="selectContinent('Americas')">
+        <input class="btn btn-outline-light btn-sm" type="button" value="Oceania" onclick="selectContinent('Oceania')">
+        <input class="btn btn-outline-light btn-sm" type="button" value="Africa" onclick="selectContinent('Africa')">
+        <div id="scatterplot_list_country"></div>
       </div>
-      <div>
-        <svg id="scatterplot" width="100%" style="max-width: 65vh;"></svg>
+      <div class="flex-column  ms-3" >
+        <div>
+          
+          <div>
+            <div class="checkboxes" id="checkboxesYears">
+              <div id="scatterplot_list_year"></div>
+            </div>
+          </div>
+          
+          <label for="scatterplot_list_cause_x">Cause 1 (X):</label>
+          <select id="scatterplot_list_cause_x" onchange="onScatterPlotListCauseXChange()">
+            <option value="Dog">Dog</option>
+          </select>
 
-        <svg id="scatterplot_legend"></svg>
-        <div id="scatterplot_info" style="display: inline;"></div>
+          <label for="scatterplot_list_cause_y">Cause 2 (Y):</label>
+          <select id="scatterplot_list_cause_y" onchange="onScatterPlotListCauseYChange()">
+            <option value="Cat">Cat</option>
+          </select>
+
+          <label class="toggle">
+            <input class="toggle-checkbox" id="scatterplot_proportion" type="checkbox">
+            <span class="toggle-label">% scale</span>
+          </label>
+        </div>
+        <div>
+          <svg id="scatterplot" width="100%" style="max-width: 65vh;"></svg>
+
+          <svg id="scatterplot_legend"></svg>
+          <div id="scatterplot_info" style="display: inline;"></div>
+        </div>
+        <Input class="range" type="range" name="slider_scatter_start" id="slider_scatter_start" value="1999" min="1990" max="2019" onChange="rangeSlideScatter(0, this.value)"></Input>
+        <Input class="range" type="range" name="slider_scatter_end" id="slider_scatter_end" value="2010" min="1990" max="2019" onChange="rangeSlideScatter(1, this.value)"></Input>
+        <div class="box-minmax pt-5 mt-1" style="
+            width: 40vw;
+        ">
+          <span class="rangeValue">1990</span><span class="rangeValue" id="rangeScatterValue">[1999,2010]</span><span class="rangeValue" >2019</span>
+        </div>
       </div>
-      <Input class="range" type="range" name="slider_scatter_start" id="slider_scatter_start" value="1999" min="1990" max="2019" onChange="rangeSlideScatter(0, this.value)"></Input>
-      <Input class="range" type="range" name="slider_scatter_end" id="slider_scatter_end" value="2010" min="1990" max="2019" onChange="rangeSlideScatter(1, this.value)"></Input>
-      <div class="box-minmax pt-5 mt-1" style="
-          width: 40vw;
-      ">
-        <span class="rangeValue">1990</span><span class="rangeValue" id="rangeScatterValue">[1999,2010]</span><span class="rangeValue" >2019</span>
-      </div>
-    </div>
       </div>
     </div>
 
