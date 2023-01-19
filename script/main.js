@@ -309,6 +309,14 @@ async function load_data() {
   });
 }
 
+//  update the good visualization
+function update_visualizations() {
+  LOCK_COUNTRY = false;
+  update_scatterplot();
+  update_CountryDetails();
+  update_geomap();
+}
+
 // 
 function getTopCausesByCountries(data, countries) {
   let dataFiltered = {}
@@ -401,7 +409,7 @@ async function main() {
 
   //  update visualisation size automatically
   window.addEventListener('resize', (ev) => {
-    update_good_visualization();
+    update_visualizations();
   }, true);
 }
 
