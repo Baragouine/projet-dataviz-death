@@ -171,35 +171,6 @@ function update_scatterplot() {
                   document.getElementById("scatterplot_proportion").checked);
 }
 
-//  init list year
-function init_scatterplot_list_year() {
-  const list_all_years = get_list_year();
-  list_all_years.sort();
-  var l = document.getElementById("scatterplot_list_year");
-
-  l.innerHTML = '';
-  
-  for (let i = 0; i < list_all_years.length; ++i) {
-    l.innerHTML +=
-      '<p style="margin:0; display="flex">'+
-        '<label for="scatterplot_list_year-' + list_all_years[i] + '">'+
-          '<input class="checkbox" type="checkbox" id="scatterplot_list_year-' + list_all_years[i] + '" ' + (i == 0 ? 'checked' : '') + '>' +
-           list_all_years[i] + 
-        '</label>' +
-      '</p>'+
-      '<hr class="hrList">';
-  }
-
-  list_all_years.forEach(cause => {
-    document.getElementById("scatterplot_list_year-" + cause).addEventListener("change",  (ev) => {
-      //  garder aux moins une cause coché
-      if (get_list_of_selected_cause_geomap().length == 0)
-        document.getElementById("scatterplot_list_year-" + cause).checked = true;
-        update_scatterplot();
-    })
-  });
-}
-
 //  init list country
 function init_scatterplot_list_country() {
   const list_all_code = get_list_code();
@@ -228,10 +199,10 @@ function init_scatterplot_list_country() {
       '<hr class="hrList">';
   }
 
-  list_all_code.forEach(cause => {
-    document.getElementById("scatterplot_list_country-" + cause).addEventListener("change",  (ev) => {
+  list_all_code.forEach(code => {
+    document.getElementById("scatterplot_list_country-" + code).addEventListener("change",  (ev) => {
       //  garder aux moins une cause coché
-      if (get_list_of_selected_cause_geomap().length == 0)
+      if (get_list_of_selected_countries_scatterplot().length == 0)
         document.getElementById("scatterplot_list_country-" + cause).checked = true;
         update_scatterplot();
     })
@@ -269,7 +240,6 @@ function init_scatterplot_list_cause_y() {
 function init_scatterplot_input() {
   init_scatterplot_list_cause_x();
   init_scatterplot_list_cause_y();
-  init_scatterplot_list_year();
   init_scatterplot_list_country();
 
   //  % proportion
@@ -277,6 +247,22 @@ function init_scatterplot_input() {
   checkbox.addEventListener("change", (ev) => {
     update_scatterplot();
   });
+}
+
+//  select on country on scatterplot
+function scatterplot_select_country(code) {
+  //  unselect all
+  const list_all_code = get_list_code();
+
+  list_all_code.forEach(c => {
+    document.getElementById("scatterplot_list_country-" + c).checked = false;
+  });
+
+  //  select code
+  document.getElementById("scatterplot_list_country-" + code).checked = true;
+
+  //  update
+  update_scatterplot();
 }
 
 //  scatterplot

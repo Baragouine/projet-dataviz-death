@@ -213,6 +213,22 @@ function init_CountryDetails_list_country() {
   });
 }
 
+//  select on country on scatterplot
+function country_details_select_country(code) {
+  //  unselect all
+  const list_all_code = get_list_code();
+
+  list_all_code.forEach(c => {
+    document.getElementById("CountryDetails_list_country-" + c).checked = false;
+  });
+
+  //  select code
+  document.getElementById("CountryDetails_list_country-" + code).checked = true;
+
+  //  update
+  update_CountryDetails();
+}
+
 //  init input
 function init_CountryDetails_input() {
   init_CountryDetails_list_country();

@@ -88,6 +88,11 @@ function geomap_mouseclick_country(svg, ev, code, name) {
         LOCK_COUNTRY = true;
         LAST_ACTION_LOCK_COUNTRY = "click";
         // $("#geomap_help").html("Cliquer quelque part pour déverouiller.");
+        //  If synchro
+        if (document.getElementById("synchro_geomap").checked) {
+          scatterplot_select_country(code);
+          country_details_select_country(code);
+        }
       }
     }
   }, 30);
