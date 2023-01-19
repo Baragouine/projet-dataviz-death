@@ -1,4 +1,4 @@
-# Visualiser l'evolution de la mortalité en fonction des causes de décès a travers le monde
+#Visualizing the evolution of mortality according to causes of death worldwide
 <p align="center">
   <img src="https://github.com/Baragouine/visualization-number-of-deaths-by-cause-around-world-per-year/blob/main/Miniature.png?raw=true"/>
 </p>
