@@ -17,8 +17,23 @@ function gen_color_scale(list_year) {
   return res;
 }
 
+function scatterplot_mouseover_point(code, name, year, nb_deaths_cause_x, nb_deaths_cause_y) {
+  $("#scatterplot_info").html(
+    `
+      <h6>${name} (${code}) en ${year}</h6>
+      <p style="font-size: 12px;">
+        ${nb_deaths_cause_x} morts (cause X), ${nb_deaths_cause_y} morts (cause Y).
+      </p>
+    `
+  );
+}
+
+function scatterplot_mouseout_point() {
+  $("#scatterplot_info").html("");
+}
+
 //  draw scatterplot
-function draw_scatterplot(years, countries, cause_x, cause_y, is_proportion, is_log_x, is_log_y) {
+function draw_scatterplot(years, countries, cause_x, cause_y, is_proportion) {
   const margin = ({top: 40, right: 50, bottom: 50, left: 100});
 
   const w = $("#scatterplot").width();
@@ -28,13 +43,10 @@ function draw_scatterplot(years, countries, cause_x, cause_y, is_proportion, is_
 
   const data = filter_data_for_years_for_countries(is_proportion ? get_data_prop() : get_data_raw(), years, countries);
 
-  const eps_x = is_log_x ? 1.0 / 10e8 : 0;
-  const eps_y = is_log_y ? 1.0 / 10e8 : 0;
-
-  const min_deaths_x = eps_x + get_min_deaths(data, [cause_x]);
-  var max_deaths_x = eps_x + get_max_deaths(data, [cause_x]);
-  const min_deaths_y = eps_y + get_min_deaths(data, [cause_y]);
-  var max_deaths_y = eps_y + get_max_deaths(data, [cause_y]);
+  const min_deaths_x = get_min_deaths(data, [cause_x]);
+  var max_deaths_x = get_max_deaths(data, [cause_x]);
+  const min_deaths_y = get_min_deaths(data, [cause_y]);
+  var max_deaths_y = get_max_deaths(data, [cause_y]);
 
   if (min_deaths_x == max_deaths_x)
     max_deaths_x += is_proportion ? 1.0 / 10e8 : 1;
@@ -42,8 +54,8 @@ function draw_scatterplot(years, countries, cause_x, cause_y, is_proportion, is_
   if (min_deaths_y == max_deaths_y)
     max_deaths_y += is_proportion ? 1.0 / 10e8 : 1;
 
-  const x  = (is_log_x ? d3.scaleLog() : d3.scaleLinear()).domain([min_deaths_x, max_deaths_x]).range([margin.left, w - margin.right]);
-  const y  = (is_log_y ? d3.scaleLog() : d3.scaleLinear()).domain([min_deaths_y, max_deaths_y]).range([h-margin.bottom, margin.top]);
+  const x  = d3.scaleLinear().domain([min_deaths_x, max_deaths_x]).range([margin.left, w - margin.right]);
+  const y  = d3.scaleLinear().domain([min_deaths_y, max_deaths_y]).range([h-margin.bottom, margin.top]);
 
   //  clear svgs
   svg.selectAll('*').remove();
@@ -72,10 +84,16 @@ function draw_scatterplot(years, countries, cause_x, cause_y, is_proportion, is_
   data.forEach((line) => {
     yearIndex = yearRanges.findIndex(y=>y>line.Year.getFullYear())-1;
     if (yearIndex===-2) yearIndex=0;
+
+    const nb_deaths_cause_x = get_sum_deaths_line(line, [cause_x]);
+    const nb_deaths_cause_y = get_sum_deaths_line(line, [cause_y]);
+
     svg.append("path")
        .attr("d", d3.symbol().type(d3.symbolCircle).size(30))
-       .attr("transform", "translate(" + x(eps_x + get_sum_deaths_line(line, [cause_x])) + "," + y(eps_y + get_sum_deaths_line(line, [cause_y])) + ")")
-       .attr("fill", color_scale[yearRanges[yearIndex]]);
+       .attr("transform", "translate(" + x(nb_deaths_cause_x) + "," + y(nb_deaths_cause_y) + ")")
+       .attr("fill", color_scale[yearRanges[yearIndex]])
+       .on("mouseover", (e, d) => { scatterplot_mouseover_point(line["Code"], line["Country/Territory"], line.Year.getFullYear(), nb_deaths_cause_x, nb_deaths_cause_y);})
+       .on("mouseout",  (e, d) => {  scatterplot_mouseout_point();});
   });
 
   const limit_hl = 10;
@@ -150,9 +168,7 @@ function update_scatterplot() {
                   get_list_of_selected_countries_scatterplot(),
                   $("#scatterplot_list_cause_x").val(),
                   $("#scatterplot_list_cause_y").val(),
-                  document.getElementById("scatterplot_proportion").checked,
-                  false,
-                  false);
+                  document.getElementById("scatterplot_proportion").checked);
 }
 
 //  init list year

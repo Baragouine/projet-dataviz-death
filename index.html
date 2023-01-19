@@ -172,7 +172,9 @@
       </div>
       <div>
         <svg id="scatterplot" width="100%" style="max-width: 65vh;"></svg>
+
         <svg id="scatterplot_legend"></svg>
+          <div id="scatterplot_info" style="display: inline;"></div>
       </div>
       <Input class="range" type="range" name="slider_scatter_start" id="slider_scatter_start" value="1999" min="1990" max="2019" onChange="rangeSlideScatter(0, this.value)"></Input>
       <Input class="range" type="range" name="slider_scatter_end" id="slider_scatter_end" value="2010" min="1990" max="2019" onChange="rangeSlideScatter(1, this.value)"></Input>
