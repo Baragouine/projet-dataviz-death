@@ -334,7 +334,7 @@ function getTopCausesByCountries(data, countries) {
       }
     })
   });
-
+ 
   dataFiltered["top"] = Object.keys(dataFiltered).sort((a, b) =>  dataFiltered[b] - dataFiltered[a]);
 
   return dataFiltered;
